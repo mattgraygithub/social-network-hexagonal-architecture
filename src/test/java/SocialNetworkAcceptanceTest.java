@@ -1,13 +1,14 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SocialNetworkAcceptanceTest {
 
@@ -38,11 +39,15 @@ public class SocialNetworkAcceptanceTest {
     private static final String AT_1_MINUTE_BEFORE_12PM = "2019-6-21T11:59:00.00Z";
 
     ByteArrayOutputStream byteArrayOutputStream;
+    SocialNetwork socialNetwork;
+    Clock clockStub;
 
     @BeforeEach
     void setUp() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
+        clockStub = mock(Clock.class);
+        socialNetwork = new SocialNetwork(new CommandProcessor(new TimelineService(), new FollowerService()), clockStub);
     }
 
     @Test
@@ -60,7 +65,7 @@ public class SocialNetworkAcceptanceTest {
 
         runAliceAndBobPostCommands();
 
-        runCommand(READ_BOB_TIMELINE , AT_12PM);
+        runCommand(READ_BOB_TIMELINE, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
                 BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE +
@@ -93,11 +98,10 @@ public class SocialNetworkAcceptanceTest {
         runCommand(BOB_EXAMPLE_POST_COMMAND_TWO, AT_1_MINUTE_BEFORE_12PM);
     }
 
-    private void runCommand(String command, String time) {
-        try (MockedStatic<Time> timeStub = mockStatic(Time.class)) {
-            timeStub.when(Time::now).thenReturn(time);
-            SocialNetwork.main(new String[]{command});
-        }
+    private void runCommand(String command, String timeOfCommand) {
+        System.setIn(new ByteArrayInputStream(command.getBytes()));
+        when(clockStub.now()).thenReturn(timeOfCommand);
+        socialNetwork.run();
     }
 
     private String getConsoleOutput() throws IOException {
