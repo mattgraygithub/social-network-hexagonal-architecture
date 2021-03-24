@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class CommandProcessor {
 
     private TimelineService timelineService;
@@ -8,7 +10,7 @@ public class CommandProcessor {
         this.followerService = followerService;
     }
 
-    public void process(String command, String time) {
+    public void process(String command, LocalDateTime time) {
 
         throw new UnsupportedOperationException();
     }
