@@ -36,11 +36,11 @@ public class SocialNetworkAcceptanceTest {
     private static final String CHARLIE_FOLLOWS_BOB = CHARLIE_USER_NAME + FOLLOW_COMMAND + BOB_USER_NAME;
     private static final String READ_CHARLIE_WALL = CHARLIE_USER_NAME + READ_WALL_COMMAND;
     private static final String NEW_LINE = System.getProperty("line.separator");
-    private static final LocalDateTime AT_12PM = LocalDateTime.of(2019,6,21,12,0,0);
-    private static final LocalDateTime AT_15_SECONDS_BEFORE_12PM = LocalDateTime.of(2019,6,21,11,59,45);
-    private static final LocalDateTime AT_5_MINUTES_BEFORE_12PM = LocalDateTime.of(2019,6,21,11,55,0);
-    private static final LocalDateTime AT_2_MINUTES_BEFORE_12PM = LocalDateTime.of(2019,6,21,11,58,0);
-    private static final LocalDateTime AT_1_MINUTE_BEFORE_12PM = LocalDateTime.of(2019,6,21,11,59,0);
+    private static final LocalDateTime AT_12PM = LocalDateTime.of(2019, 6, 21, 12, 0, 0);
+    private static final LocalDateTime AT_15_SECONDS_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 45);
+    private static final LocalDateTime AT_5_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 55, 0);
+    private static final LocalDateTime AT_2_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 58, 0);
+    private static final LocalDateTime AT_1_MINUTE_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 0);
 
     ByteArrayOutputStream byteArrayOutputStream;
     SocialNetwork socialNetwork;
@@ -109,7 +109,7 @@ public class SocialNetworkAcceptanceTest {
     }
 
     private void setUpClockStubWith(LocalDateTime timeOfCommand) {
-        Clock fixedClock = Clock.fixed(timeOfCommand.toInstant(ZoneOffset.UTC),ZoneId.systemDefault());
+        Clock fixedClock = Clock.fixed(timeOfCommand.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         when(clockStub.instant()).thenReturn(fixedClock.instant());
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
     }

@@ -4,9 +4,8 @@ import java.util.Scanner;
 
 public class SocialNetwork {
 
-    private CommandProcessor commandProcessor;
-
-    private Clock clock;
+    private final CommandProcessor commandProcessor;
+    private final Clock clock;
 
     public SocialNetwork(CommandProcessor commandProcessor, Clock clock) {
         this.commandProcessor = commandProcessor;
