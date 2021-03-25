@@ -16,7 +16,7 @@ class CommandProcessorShould {
     void setUp() {
         mockTimelineService = mock(TimelineService.class);
         mockFollowerService = mock(FollowerService.class);
-        commandProcessor = new CommandProcessor(mockTimelineService,mockFollowerService);
+        commandProcessor = new CommandProcessor(mockTimelineService, mockFollowerService);
     }
 
     @Test
