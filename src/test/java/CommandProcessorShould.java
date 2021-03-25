@@ -20,7 +20,7 @@ class CommandProcessorShould {
     }
 
     @Test
-    void shouldDelegatePostCommandsToTimelineService() {
+    void delegatePostCommandsToTimelineService() {
 
         LocalDateTime now = LocalDateTime.now();
 

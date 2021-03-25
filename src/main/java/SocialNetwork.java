@@ -23,7 +23,7 @@ public class SocialNetwork {
 
     public static void main(String[] args) {
 
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new TimelineService(), new FollowerService()), Clock.systemDefaultZone());
+        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new TimelineService(new TimelineRepository()), new FollowerService()), Clock.systemDefaultZone());
 
         socialNetwork.run();
     }
