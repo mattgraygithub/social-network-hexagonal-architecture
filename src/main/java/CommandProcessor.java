@@ -1,9 +1,12 @@
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class CommandProcessor {
 
-    private TimelineService timelineService;
-    private FollowerService followerService;
+    static final String POST_COMMAND = "->";
+
+    private final TimelineService timelineService;
+    private final FollowerService followerService;
 
     public CommandProcessor(TimelineService timelineService, FollowerService followerService) {
         this.timelineService = timelineService;
@@ -12,6 +15,8 @@ public class CommandProcessor {
 
     public void process(String command, LocalDateTime time) {
 
-        throw new UnsupportedOperationException();
+        if (Arrays.asList(command.split(" ")).contains(POST_COMMAND)){
+            timelineService.post(command, time);
+        }
     }
 }
