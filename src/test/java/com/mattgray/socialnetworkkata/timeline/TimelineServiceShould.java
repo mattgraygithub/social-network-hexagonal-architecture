@@ -12,22 +12,22 @@ import static org.mockito.Mockito.verify;
 
 class TimelineServiceShould {
 
-    TimelineRepositoryImpl mockTimelineRepository;
+    TimelineRepository mockTimelineRepository;
     TimelineService timelineService;
 
     @BeforeEach
     void setUp() {
-        mockTimelineRepository = mock(TimelineRepositoryImpl.class);
+        mockTimelineRepository = mock(TimelineRepository.class);
         timelineService = new TimelineService(mockTimelineRepository);
     }
 
     @Test
-    void saveMessagesToTimelineRepository() {
+    void savePostsToTimelineRepository() {
 
         LocalDateTime now = LocalDateTime.now();
 
-        timelineService.post(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
+        timelineService.addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
 
-        verify(mockTimelineRepository).add(TestCommands.ALICE_EXAMPLE_POST, now);
+        verify(mockTimelineRepository).add(TestCommands.ALICE_EXAMPLE_POST, TestCommands.ALICE_USER_NAME, now);
     }
 }

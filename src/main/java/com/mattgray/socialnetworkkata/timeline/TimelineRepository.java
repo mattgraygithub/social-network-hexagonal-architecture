@@ -4,5 +4,5 @@ import java.time.LocalDateTime;
 
 public interface TimelineRepository {
 
-    void add(String post, LocalDateTime now);
+    void add(String post, String userName, LocalDateTime now);
 }

@@ -20,7 +20,7 @@ public class CommandProcessor {
     public void process(String command, LocalDateTime time) {
 
         if (Arrays.asList(command.split(" ")).contains(POST_COMMAND)){
-            timelineService.post(command, time);
+            timelineService.addPost(command, time);
         }
     }
 }

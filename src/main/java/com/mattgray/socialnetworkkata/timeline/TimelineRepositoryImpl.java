@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class TimelineRepositoryImpl implements TimelineRepository {
 
     @Override
-    public void add(String post, LocalDateTime now) {
+    public void add(String post, String userName, LocalDateTime now) {
 
     }
 

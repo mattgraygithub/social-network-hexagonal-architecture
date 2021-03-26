@@ -29,6 +29,6 @@ class CommandProcessorShould {
 
         commandProcessor.process(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
 
-        verify(mockTimelineService).post(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
+        verify(mockTimelineService).addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
     }
 }
