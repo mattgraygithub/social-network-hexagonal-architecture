@@ -1,3 +1,7 @@
+package com.mattgray.socialnetworkkata;
+
+import com.mattgray.socialnetworkkata.timeline.TimelineService;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 

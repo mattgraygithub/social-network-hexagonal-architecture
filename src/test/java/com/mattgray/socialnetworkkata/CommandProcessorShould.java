@@ -1,3 +1,6 @@
+package com.mattgray.socialnetworkkata;
+
+import com.mattgray.socialnetworkkata.timeline.TimelineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

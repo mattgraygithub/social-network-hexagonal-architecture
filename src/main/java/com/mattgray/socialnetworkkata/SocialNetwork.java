@@ -1,3 +1,8 @@
+package com.mattgray.socialnetworkkata;
+
+import com.mattgray.socialnetworkkata.timeline.TimelineRepositoryImpl;
+import com.mattgray.socialnetworkkata.timeline.TimelineService;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -23,7 +28,7 @@ public class SocialNetwork {
 
     public static void main(String[] args) {
 
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new TimelineService(new TimelineRepository()), new FollowerService()), Clock.systemDefaultZone());
+        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new TimelineService(new TimelineRepositoryImpl()), new FollowerService()), Clock.systemDefaultZone());
 
         socialNetwork.run();
     }

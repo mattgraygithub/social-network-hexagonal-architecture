@@ -1,20 +1,23 @@
+package com.mattgray.socialnetworkkata.timeline;
+
+import com.mattgray.socialnetworkkata.TestCommands;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class TimelineServiceShould {
 
-    TimelineRepository mockTimelineRepository;
+    TimelineRepositoryImpl mockTimelineRepository;
     TimelineService timelineService;
 
     @BeforeEach
     void setUp() {
-        mockTimelineRepository = mock(TimelineRepository.class);
+        mockTimelineRepository = mock(TimelineRepositoryImpl.class);
         timelineService = new TimelineService(mockTimelineRepository);
     }
 
@@ -25,6 +28,6 @@ class TimelineServiceShould {
 
         timelineService.post(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
 
-        verify(mockTimelineRepository).addPost(TestCommands.ALICE_EXAMPLE_POST, now);
+        verify(mockTimelineRepository).add(TestCommands.ALICE_EXAMPLE_POST, now);
     }
 }
