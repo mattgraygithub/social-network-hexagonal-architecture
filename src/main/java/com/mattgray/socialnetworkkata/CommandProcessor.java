@@ -17,7 +17,7 @@ public class CommandProcessor {
 
     public void process(String command, LocalDateTime time) {
 
-        if (Arrays.asList(command.split(" ")).contains(POST_COMMAND)){
+        if (Arrays.asList(command.split(" ")).contains(POST_COMMAND)) {
             userService.addPost(command, time);
         }
     }

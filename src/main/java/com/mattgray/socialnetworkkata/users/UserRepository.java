@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.timeline.Timeline;
+
 import java.time.LocalDateTime;
 
 public interface UserRepository {

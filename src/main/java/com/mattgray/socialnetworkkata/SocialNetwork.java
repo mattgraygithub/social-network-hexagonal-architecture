@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata;
 
-import com.mattgray.socialnetworkkata.users.UserService;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
+import com.mattgray.socialnetworkkata.users.UserService;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -17,6 +17,13 @@ public class SocialNetwork {
         this.clock = clock;
     }
 
+    public static void main(String[] args) {
+
+        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository())), Clock.systemDefaultZone());
+
+        socialNetwork.run();
+    }
+
     public void run() {
 
         System.out.println("Welcome to the social network. Please enter a command");
@@ -26,12 +33,5 @@ public class SocialNetwork {
         while (scanner.hasNext()) {
             commandProcessor.process(scanner.nextLine(), LocalDateTime.now(clock));
         }
-    }
-
-    public static void main(String[] args) {
-
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository())), Clock.systemDefaultZone());
-
-        socialNetwork.run();
     }
 }
