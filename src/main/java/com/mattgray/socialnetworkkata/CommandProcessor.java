@@ -1,6 +1,6 @@
 package com.mattgray.socialnetworkkata;
 
-import com.mattgray.socialnetworkkata.timeline.TimelineService;
+import com.mattgray.socialnetworkkata.users.UserService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -9,18 +9,16 @@ public class CommandProcessor {
 
     static final String POST_COMMAND = "->";
 
-    private final TimelineService timelineService;
-    private final FollowerService followerService;
+    private final UserService userService;
 
-    public CommandProcessor(TimelineService timelineService, FollowerService followerService) {
-        this.timelineService = timelineService;
-        this.followerService = followerService;
+    public CommandProcessor(UserService userService) {
+        this.userService = userService;
     }
 
     public void process(String command, LocalDateTime time) {
 
         if (Arrays.asList(command.split(" ")).contains(POST_COMMAND)){
-            timelineService.addPost(command, time);
+            userService.addPost(command, time);
         }
     }
 }
