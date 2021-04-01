@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
+import com.mattgray.socialnetworkkata.users.TimelineService;
 import com.mattgray.socialnetworkkata.users.UserService;
 
 import java.time.Clock;
@@ -19,7 +20,7 @@ public class SocialNetwork {
 
     public static void main(String[] args) {
 
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository())), Clock.systemDefaultZone());
+        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineService())), Clock.systemDefaultZone());
 
         socialNetwork.run();
     }

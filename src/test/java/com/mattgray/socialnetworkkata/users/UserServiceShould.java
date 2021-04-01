@@ -12,21 +12,31 @@ import static org.mockito.Mockito.verify;
 class UserServiceShould {
 
     UserRepository mockUserRepository;
+    TimelineService mockTimelineService;
     UserService userService;
 
     @BeforeEach
     void setUp() {
         mockUserRepository = mock(UserRepository.class);
-        userService = new UserService(mockUserRepository);
+        mockTimelineService = mock(TimelineService.class);
+        userService = new UserService(mockUserRepository, mockTimelineService);
     }
 
     @Test
-    void callsUserRepositoryToAddPost() {
+    void callUserRepositoryToAddPost() {
 
         LocalDateTime now = LocalDateTime.now();
 
         userService.addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
 
         verify(mockUserRepository).addPost(TestCommands.ALICE_USER_NAME, TestCommands.ALICE_EXAMPLE_POST, now);
+    }
+
+    @Test
+    void callTimelineServiceToPrintTimelineForAUser() {
+
+        userService.getTimeLine(TestCommands.ALICE_USER_NAME);
+
+        verify(mockTimelineService).displayTimeLineFor(TestCommands.ALICE_USER_NAME);
     }
 }

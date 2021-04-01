@@ -5,9 +5,11 @@ import java.util.Arrays;
 
 public class UserService {
     private final UserRepository userRepository;
+    private final TimelineService timelineService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, TimelineService timelineService) {
         this.userRepository = userRepository;
+        this.timelineService = timelineService;
     }
 
     public void addPost(String command, LocalDateTime time) {
@@ -24,7 +26,7 @@ public class UserService {
         return String.join(" ", post);
     }
 
-    public void displayTimeLine(String userName) {
-        throw new UnsupportedOperationException();
+    public void getTimeLine(String userName) {
+        timelineService.displayTimeLineFor(userName);
     }
 }
