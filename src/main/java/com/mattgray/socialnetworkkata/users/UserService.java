@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -22,5 +22,9 @@ public class UserService {
         String[] commandAsArray = command.split(" ");
         String[] post = Arrays.copyOfRange(commandAsArray, 2, commandAsArray.length);
         return String.join(" ", post);
+    }
+
+    public void displayTimeLine(String userName) {
+        throw new UnsupportedOperationException();
     }
 }

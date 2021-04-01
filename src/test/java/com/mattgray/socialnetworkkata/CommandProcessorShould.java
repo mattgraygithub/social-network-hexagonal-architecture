@@ -11,22 +11,30 @@ import static org.mockito.Mockito.verify;
 
 class CommandProcessorShould {
 
+    LocalDateTime now;
     CommandProcessor commandProcessor;
     UserService mockUserService;
 
     @BeforeEach
     void setUp() {
+        now = LocalDateTime.now();
         mockUserService = mock(UserService.class);
         commandProcessor = new CommandProcessor(mockUserService);
     }
 
     @Test
-    void delegatePostCommandsToTimelineService() {
-
-        LocalDateTime now = LocalDateTime.now();
+    void delegatePostCommandsToUserService() {
 
         commandProcessor.process(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
 
         verify(mockUserService).addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
+    }
+
+    @Test
+    void delegateReadTimelineCommandsToUserService() {
+
+        commandProcessor.process(TestCommands.READ_ALICE_TIMELINE, now);
+
+        verify(mockUserService).displayTimeLine(TestCommands.ALICE_USER_NAME);
     }
 }
