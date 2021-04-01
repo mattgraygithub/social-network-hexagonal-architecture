@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.TestCommands;
+import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +13,13 @@ import static org.mockito.Mockito.verify;
 class UserServiceShould {
 
     UserRepository mockUserRepository;
-    TimelineService mockTimelineService;
+    TimelineServiceImpl mockTimelineService;
     UserService userService;
 
     @BeforeEach
     void setUp() {
         mockUserRepository = mock(UserRepository.class);
-        mockTimelineService = mock(TimelineService.class);
+        mockTimelineService = mock(TimelineServiceImpl.class);
         userService = new UserService(mockUserRepository, mockTimelineService);
     }
 

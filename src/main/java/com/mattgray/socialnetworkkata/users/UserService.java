@@ -1,13 +1,15 @@
 package com.mattgray.socialnetworkkata.users;
 
+import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class UserService {
     private final UserRepository userRepository;
-    private final TimelineService timelineService;
+    private final TimelineServiceImpl timelineService;
 
-    public UserService(UserRepository userRepository, TimelineService timelineService) {
+    public UserService(UserRepository userRepository, TimelineServiceImpl timelineService) {
         this.userRepository = userRepository;
         this.timelineService = timelineService;
     }

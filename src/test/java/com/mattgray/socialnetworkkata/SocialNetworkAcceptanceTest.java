@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.users.TimelineService;
+import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.users.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class SocialNetworkAcceptanceTest {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockStub = mock(Clock.class);
-        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineService())), clockStub);
+        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineServiceImpl())), clockStub);
     }
 
     @Test
