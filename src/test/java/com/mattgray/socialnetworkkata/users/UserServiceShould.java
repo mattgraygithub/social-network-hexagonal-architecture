@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 
@@ -41,7 +42,7 @@ class UserServiceShould {
     void callTimelineServiceToPrintTimelineForAUser() {
 
         userService.addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
-        ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(new Post(TestCommands.ALICE_EXAMPLE_POST, now)));
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, now)));
 
         when(mockUserRepository.getTimelineFor((TestCommands.ALICE_USER_NAME))).thenReturn(new Timeline(timeline));
 
