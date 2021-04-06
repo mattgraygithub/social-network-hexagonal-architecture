@@ -16,7 +16,6 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TimelineServiceShould {
 
@@ -41,7 +40,6 @@ public class TimelineServiceShould {
 
         Clock readCommandClock = Clock.fixed(TestCommands.AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         LocalDateTime timeOfReadCommand = LocalDateTime.now(readCommandClock);
-
 
         timelineService.displayTimeLine(timeline, timeOfReadCommand);
 
