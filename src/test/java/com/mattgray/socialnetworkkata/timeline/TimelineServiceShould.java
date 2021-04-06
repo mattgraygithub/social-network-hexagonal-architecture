@@ -38,16 +38,41 @@ public class TimelineServiceShould {
         LocalDateTime timeOfPost = LocalDateTime.now(postCommandClock);
         ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(new Post(TestCommands.ALICE_EXAMPLE_POST, timeOfPost)));
 
-        Clock readCommandClock = Clock.fixed(TestCommands.AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-        LocalDateTime timeOfReadCommand = LocalDateTime.now(readCommandClock);
+        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
 
-        timelineService.displayTimeLine(timeline, timeOfReadCommand);
+        assertThat(getConsoleOutput()).isEqualTo(TestCommands.ALICE_EXAMPLE_POST + " (5 minutes ago)" + TestCommands.NEW_LINE);
+    }
 
-        assertThat(getConsoleOutput()).isEqualTo("I love the weather today (5 minutes ago)" + TestCommands.NEW_LINE);
+    @Test
+    void printAtTimelineWithTwoPosts() throws IOException {
+
+        Clock postOneClock = Clock.fixed(TestCommands.AT_5_MINUTES_BEFORE_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+        LocalDateTime timeOfPostOne = LocalDateTime.now(postOneClock);
+
+        Clock postTwoClock = Clock.fixed(TestCommands.AT_2_MINUTES_BEFORE_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+        LocalDateTime timeOfPostTwo = LocalDateTime.now(postTwoClock);
+
+        ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(
+                new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE, timeOfPostOne),
+                new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO, timeOfPostTwo)
+        ));
+
+        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
+
+        assertThat(getConsoleOutput()).isEqualTo(
+                TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE + " (5 minutes ago)" + TestCommands.NEW_LINE +
+                        TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO + " (2 minutes ago)" + TestCommands.NEW_LINE
+        );
+
     }
 
     private String getConsoleOutput() throws IOException {
         byteArrayOutputStream.flush();
         return new String(byteArrayOutputStream.toByteArray());
+    }
+
+    private LocalDateTime stubbedLocalTimeOf(LocalDateTime time) {
+        Clock readCommandClock = Clock.fixed(time.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+        return LocalDateTime.now(readCommandClock);
     }
 }

@@ -8,7 +8,8 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void displayTimeLine(ArrayList<Post> timeline, LocalDateTime timeOfCommand) {
-
-        System.out.println(timeline.get(0).getPost() + " (" + ChronoUnit.MINUTES.between(timeline.get(0).getTimeOfPost(), timeOfCommand) + " minutes ago)");
+        for (Post post: timeline) {
+            System.out.println(post.getPost() + " (" + ChronoUnit.MINUTES.between(post.getTimeOfPost(), timeOfCommand) + " minutes ago)");
+        }
     }
 }
