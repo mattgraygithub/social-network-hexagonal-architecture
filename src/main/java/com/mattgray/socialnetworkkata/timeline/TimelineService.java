@@ -1,6 +1,8 @@
 package com.mattgray.socialnetworkkata.timeline;
 
+import java.util.ArrayList;
+
 public interface TimelineService {
 
-    void displayTimeLineFor(String userName);
+    void displayTimeLine(ArrayList<Post> posts);
 }

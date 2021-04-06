@@ -29,6 +29,6 @@ public class UserService {
     }
 
     public void getTimeLine(String userName) {
-        timelineService.displayTimeLineFor(userName);
+        timelineService.displayTimeLine(userRepository.getTimelineFor(userName).getPosts());
     }
 }
