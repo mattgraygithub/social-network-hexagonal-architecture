@@ -63,7 +63,6 @@ public class TimelineServiceShould {
                 TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE + " (5 minutes ago)" + TestCommands.NEW_LINE +
                         TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO + " (2 minutes ago)" + TestCommands.NEW_LINE
         );
-
     }
 
     private String getConsoleOutput() throws IOException {
