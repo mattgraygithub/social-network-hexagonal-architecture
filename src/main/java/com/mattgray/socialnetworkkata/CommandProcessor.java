@@ -22,7 +22,7 @@ public class CommandProcessor {
         }
 
         if (Arrays.asList(command.split(" ")).size() == 1) {
-            userService.getTimeLine(command);
+            userService.getTimeLine(command, time);
         }
     }
 }

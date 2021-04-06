@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -46,8 +45,8 @@ class UserServiceShould {
 
         when(mockUserRepository.getTimelineFor((TestCommands.ALICE_USER_NAME))).thenReturn(new Timeline(timeline));
 
-        userService.getTimeLine(TestCommands.ALICE_USER_NAME);
+        userService.getTimeLine(TestCommands.ALICE_USER_NAME, now);
 
-        verify(mockTimelineService).displayTimeLine(timeline);
+        verify(mockTimelineService).displayTimeLine(timeline, now);
     }
 }

@@ -35,6 +35,6 @@ class CommandProcessorShould {
 
         commandProcessor.process(TestCommands.READ_ALICE_TIMELINE, now);
 
-        verify(mockUserService).getTimeLine(TestCommands.ALICE_USER_NAME);
+        verify(mockUserService).getTimeLine(TestCommands.ALICE_USER_NAME, now);
     }
 }

@@ -20,14 +20,14 @@ public class SocialNetwork {
 
     public static void main(String[] args) {
 
+        System.out.println("Welcome to the Social Network. Please enter a command");
+
         SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineServiceImpl())), Clock.systemDefaultZone());
 
         socialNetwork.run();
     }
 
     public void run() {
-
-        System.out.println("Welcome to the social network. Please enter a command");
 
         Scanner scanner = new Scanner(System.in);
 

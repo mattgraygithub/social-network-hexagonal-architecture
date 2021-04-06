@@ -11,4 +11,12 @@ public class Post {
         this.post = post;
         this.timeOfPost = timeOfPost;
     }
+
+    public String getPost() {
+        return post;
+    }
+
+    public LocalDateTime getTimeOfPost() {
+        return timeOfPost;
+    }
 }

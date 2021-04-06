@@ -28,7 +28,7 @@ public class UserService {
         return String.join(" ", post);
     }
 
-    public void getTimeLine(String userName) {
-        timelineService.displayTimeLine(userRepository.getTimelineFor(userName).getPosts());
+    public void getTimeLine(String userName, LocalDateTime time) {
+        timelineService.displayTimeLine(userRepository.getTimelineFor(userName).getPosts(),time);
     }
 }
