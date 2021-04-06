@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -34,9 +35,7 @@ public class TimelineServiceShould {
     @Test
     void printATimelineWithOnePost() throws IOException {
 
-        Clock postCommandClock = Clock.fixed(TestCommands.AT_5_MINUTES_BEFORE_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-        LocalDateTime timeOfPost = LocalDateTime.now(postCommandClock);
-        ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(new Post(TestCommands.ALICE_EXAMPLE_POST, timeOfPost)));
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, stubbedLocalTimeOf(TestCommands.AT_5_MINUTES_BEFORE_12PM))));
 
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
 
@@ -44,17 +43,11 @@ public class TimelineServiceShould {
     }
 
     @Test
-    void printAtTimelineWithTwoPosts() throws IOException {
-
-        Clock postOneClock = Clock.fixed(TestCommands.AT_5_MINUTES_BEFORE_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-        LocalDateTime timeOfPostOne = LocalDateTime.now(postOneClock);
-
-        Clock postTwoClock = Clock.fixed(TestCommands.AT_2_MINUTES_BEFORE_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-        LocalDateTime timeOfPostTwo = LocalDateTime.now(postTwoClock);
+    void printATimelineWithTwoPosts() throws IOException {
 
         ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(
-                new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE, timeOfPostOne),
-                new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO, timeOfPostTwo)
+                new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE, stubbedLocalTimeOf(TestCommands.AT_5_MINUTES_BEFORE_12PM)),
+                new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO, stubbedLocalTimeOf(TestCommands.AT_2_MINUTES_BEFORE_12PM))
         ));
 
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
