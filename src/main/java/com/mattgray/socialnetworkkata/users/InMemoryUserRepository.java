@@ -5,12 +5,12 @@ import com.mattgray.socialnetworkkata.timeline.Timeline;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class InMemoryUserRepository implements UserRepository {
 
-    private List<User> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
     @Override
     public void addPost(String userName, String post, LocalDateTime time) {
@@ -41,7 +41,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     private void addPostForNewUser(String userName, String post, LocalDateTime time) {
 
-        Timeline timeline = new Timeline(new ArrayList<>(Arrays.asList(new Post(post, time))));
+        Timeline timeline = new Timeline(new ArrayList<>(Collections.singletonList(new Post(post, time))));
         users.add(new User(userName, timeline));
     }
 }
