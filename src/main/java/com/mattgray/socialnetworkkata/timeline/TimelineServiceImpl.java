@@ -14,13 +14,12 @@ public class TimelineServiceImpl implements TimelineService {
     }
 
     private String getTimeBetween(LocalDateTime timeOfPost, LocalDateTime timeOfCommand) {
-
         long timeDifference = ChronoUnit.SECONDS.between(timeOfPost, timeOfCommand);
 
         if (timeDifference < 60) {
-            return " (" + timeDifference + " seconds ago)";
+            return timeDifference == 1 ? " (" + timeDifference + " second ago)" : " (" + timeDifference + " seconds ago)";
         } else {
-            return " (" + (timeDifference / 60) + " minutes ago)";
+            return timeDifference / 60 == 1 ? " (" + (timeDifference / 60) + " minute ago)" : " (" + (timeDifference / 60) + " minutes ago)";
         }
     }
 }

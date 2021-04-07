@@ -24,6 +24,7 @@ public class TestCommands {
     public static final String READ_CHARLIE_WALL = CHARLIE_USER_NAME + READ_WALL_COMMAND;
     public static final String NEW_LINE = System.getProperty("line.separator");
     public static final LocalDateTime AT_12PM = LocalDateTime.of(2019, 6, 21, 12, 0, 0);
+    public static final LocalDateTime AT_1_SECOND_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 59);
     public static final LocalDateTime AT_15_SECONDS_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 45);
     public static final LocalDateTime AT_5_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 55, 0);
     public static final LocalDateTime AT_2_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 58, 0);
