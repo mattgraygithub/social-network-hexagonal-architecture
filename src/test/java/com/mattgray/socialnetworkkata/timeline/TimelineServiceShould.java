@@ -33,7 +33,7 @@ public class TimelineServiceShould {
     }
 
     @Test
-    void printATimelineWithOnePost() throws IOException {
+    void printATimelineWithOnePostPostedMinutesAgo() throws IOException {
 
         ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, stubbedLocalTimeOf(TestCommands.AT_5_MINUTES_BEFORE_12PM))));
 
@@ -43,7 +43,7 @@ public class TimelineServiceShould {
     }
 
     @Test
-    void printATimelineWithTwoPosts() throws IOException {
+    void printATimelineWithTwoPostsPostedMinutesAgo() throws IOException {
 
         ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(
                 new Post(TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE, stubbedLocalTimeOf(TestCommands.AT_5_MINUTES_BEFORE_12PM)),
@@ -56,6 +56,16 @@ public class TimelineServiceShould {
                 TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE + " (5 minutes ago)" + TestCommands.NEW_LINE +
                         TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO + " (2 minutes ago)" + TestCommands.NEW_LINE
         );
+    }
+
+    @Test
+    void printATimelineWithOnePostPostedSecondsAgo() throws IOException {
+
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, stubbedLocalTimeOf(TestCommands.AT_15_SECONDS_BEFORE_12PM))));
+
+        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
+
+        assertThat(getConsoleOutput()).isEqualTo(TestCommands.ALICE_EXAMPLE_POST + " (15 seconds ago)" + TestCommands.NEW_LINE);
     }
 
     private String getConsoleOutput() throws IOException {
