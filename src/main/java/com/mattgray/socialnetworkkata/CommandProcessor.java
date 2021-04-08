@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 public class CommandProcessor {
 
-    static final String POST_COMMAND = "->";
+    private static final String POST_COMMAND = "->";
+    private static final String FOLLOW_COMMAND = "follows";
 
     private final UserService userService;
 
@@ -16,7 +17,6 @@ public class CommandProcessor {
     }
 
     public void process(String command, LocalDateTime time) {
-
         if (isPost(command)) {
             userService.addPost(command, time);
         }
@@ -24,13 +24,21 @@ public class CommandProcessor {
         if (isRead(command)) {
             userService.getTimeLine(command, time);
         }
+
+        if (isFollow(command)){
+            userService.addFollowee(command);
+        }
+    }
+
+    private boolean isPost(String command) {
+        return Arrays.asList(command.split(" ")).contains(POST_COMMAND);
     }
 
     private boolean isRead(String command) {
         return Arrays.asList(command.split(" ")).size() == 1;
     }
 
-    private boolean isPost(String command) {
-        return Arrays.asList(command.split(" ")).contains(POST_COMMAND);
+    private boolean isFollow (String command) {
+        return Arrays.asList(command.split(" ")).contains(FOLLOW_COMMAND);
     }
 }

@@ -31,4 +31,8 @@ public class UserService {
     public void getTimeLine(String userName, LocalDateTime time) {
         timelineService.displayTimeLine(userRepository.getTimelineFor(userName).getPosts(), time);
     }
+
+    public void addFollowee(String command) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -36,4 +36,11 @@ class CommandProcessorShould {
 
         verify(mockUserService).getTimeLine(ALICE_USER_NAME, now);
     }
+
+    @Test
+    void delegateFollowCommandsToUserService() {
+        commandProcessor.process(CHARLIE_FOLLOWS_ALICE, now);
+
+        verify(mockUserService).addFollowee(CHARLIE_FOLLOWS_ALICE);
+    }
 }
