@@ -51,8 +51,8 @@ public class SocialNetworkAcceptanceTest {
         runCommand(TestCommands.READ_BOB_TIMELINE, TestCommands.AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
-                TestCommands.BOB_EXAMPLE_POST_TWO + minutesAgo(1) + TestCommands.NEW_LINE +
-                        TestCommands.BOB_EXAMPLE_POST_ONE + minutesAgo(2) + TestCommands.NEW_LINE
+                TestCommands.BOB_EXAMPLE_POST_ONE + minutesAgo(2) + TestCommands.NEW_LINE +
+                        TestCommands.BOB_EXAMPLE_POST_TWO + minutesAgo(1) + TestCommands.NEW_LINE
         );
     }
 
@@ -95,7 +95,7 @@ public class SocialNetworkAcceptanceTest {
 
     private String getConsoleOutput() throws IOException {
         byteArrayOutputStream.flush();
-        return new String(byteArrayOutputStream.toByteArray());
+        return byteArrayOutputStream.toString();
     }
 
     private String minutesAgo(int minutes) {

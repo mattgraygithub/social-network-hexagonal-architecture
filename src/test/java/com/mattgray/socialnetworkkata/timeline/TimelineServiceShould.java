@@ -88,9 +88,29 @@ public class TimelineServiceShould {
         assertThat(getConsoleOutput()).isEqualTo(TestCommands.ALICE_EXAMPLE_POST + " (1 minute ago)" + TestCommands.NEW_LINE);
     }
 
+    @Test
+    void printAPostPostedHoursAgo() throws IOException {
+
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, stubbedLocalTimeOf(TestCommands.AT_2_HOURS_BEFORE_12PM))));
+
+        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
+
+        assertThat(getConsoleOutput()).isEqualTo(TestCommands.ALICE_EXAMPLE_POST + " (2 hours ago)" + TestCommands.NEW_LINE);
+    }
+
+    @Test
+    void printAPostPostedOneHourAgo() throws IOException {
+
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, stubbedLocalTimeOf(TestCommands.AT_1_HOUR_BEFORE_12PM))));
+
+        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(TestCommands.AT_12PM));
+
+        assertThat(getConsoleOutput()).isEqualTo(TestCommands.ALICE_EXAMPLE_POST + " (1 hour ago)" + TestCommands.NEW_LINE);
+    }
+
     private String getConsoleOutput() throws IOException {
         byteArrayOutputStream.flush();
-        return new String(byteArrayOutputStream.toByteArray());
+        return byteArrayOutputStream.toString();
     }
 
     private LocalDateTime stubbedLocalTimeOf(LocalDateTime time) {

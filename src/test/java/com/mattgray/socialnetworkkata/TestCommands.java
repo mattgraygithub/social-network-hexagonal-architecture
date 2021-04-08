@@ -29,4 +29,6 @@ public class TestCommands {
     public static final LocalDateTime AT_5_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 55, 0);
     public static final LocalDateTime AT_2_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 58, 0);
     public static final LocalDateTime AT_1_MINUTE_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 0);
+    public static final LocalDateTime AT_1_HOUR_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 0, 0);
+    public static final LocalDateTime AT_2_HOURS_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 10, 0, 0);
 }

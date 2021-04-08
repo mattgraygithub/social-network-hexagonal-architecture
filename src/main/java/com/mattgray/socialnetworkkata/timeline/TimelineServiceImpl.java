@@ -18,8 +18,13 @@ public class TimelineServiceImpl implements TimelineService {
 
         if (timeDifference < 60) {
             return timeDifference == 1 ? " (" + timeDifference + " second ago)" : " (" + timeDifference + " seconds ago)";
-        } else {
+        }
+        if (timeDifference < 3600) {
             return timeDifference / 60 == 1 ? " (" + (timeDifference / 60) + " minute ago)" : " (" + (timeDifference / 60) + " minutes ago)";
         }
+        if (timeDifference < 216000) {
+            return timeDifference / 60 / 60 == 1 ? " (" + (timeDifference / 60 / 60) + " hour ago)" : " (" + (timeDifference / 60 / 60) + " hours ago)";
+        }
+        throw new UnsupportedOperationException();
     }
 }
