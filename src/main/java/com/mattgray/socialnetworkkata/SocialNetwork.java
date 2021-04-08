@@ -1,5 +1,6 @@
 package com.mattgray.socialnetworkkata;
 
+import com.mattgray.socialnetworkkata.common.ClockServiceImpl;
 import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
 import com.mattgray.socialnetworkkata.users.UserService;
@@ -22,7 +23,7 @@ public class SocialNetwork {
 
         System.out.println("Welcome to the Social Network. Please enter a command");
 
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineServiceImpl())), Clock.systemDefaultZone());
+        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineServiceImpl(new ClockServiceImpl()))), Clock.systemDefaultZone());
 
         socialNetwork.run();
     }

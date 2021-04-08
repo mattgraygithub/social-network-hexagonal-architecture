@@ -1,14 +1,17 @@
 package com.mattgray.socialnetworkkata.timeline;
 
 import com.mattgray.socialnetworkkata.common.ClockService;
-import com.mattgray.socialnetworkkata.common.ClockServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TimelineServiceImpl implements TimelineService {
 
-    private final ClockService clockService = new ClockServiceImpl();
+    private final ClockService clockService;
+
+    public TimelineServiceImpl(ClockService clockService) {
+        this.clockService = clockService;
+    }
 
     @Override
     public void displayTimeLine(ArrayList<Post> timeline, LocalDateTime timeOfReadCommand) {
