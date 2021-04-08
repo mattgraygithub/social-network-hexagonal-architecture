@@ -5,23 +5,23 @@ public enum Clock {
     SECONDS(60) {
         @Override
         public String getFormattedTimeDifference(long timeDifferenceInSeconds) {
-            return timeDifferenceInSeconds == 1 ? " (1 second ago)" : " (" + timeDifferenceInSeconds + " seconds ago)";
+            return isSingular(timeDifferenceInSeconds) ? " (1 second ago)" : " (" + timeDifferenceInSeconds + " seconds ago)";
         }
     },
 
     MINUTES(3600) {
         @Override
         public String getFormattedTimeDifference(long timeDifferenceInSeconds) {
-            long TimeDifferenceInMinutes = timeDifferenceInSeconds / SECONDS.timeUnitUpperLimit;
-            return TimeDifferenceInMinutes == 1 ? " (1 minute ago)" : " (" + TimeDifferenceInMinutes + " minutes ago)";
+            long timeDifferenceInMinutes = timeDifferenceInSeconds / SECONDS.timeUnitUpperLimit;
+            return isSingular(timeDifferenceInMinutes) ? " (1 minute ago)" : " (" + timeDifferenceInMinutes + " minutes ago)";
         }
     },
 
     HOURS(216000) {
         @Override
         public String getFormattedTimeDifference(long timeDifferenceInSeconds) {
-            long TimeDifferenceInHours = timeDifferenceInSeconds / MINUTES.timeUnitUpperLimit;
-            return TimeDifferenceInHours == 1 ? " (1 hour ago)" : " (" + TimeDifferenceInHours + " hours ago)";
+            long timeDifferenceInHours = timeDifferenceInSeconds / MINUTES.timeUnitUpperLimit;
+            return isSingular(timeDifferenceInHours) ? " (1 hour ago)" : " (" + timeDifferenceInHours + " hours ago)";
         }
     };
 
@@ -33,6 +33,10 @@ public enum Clock {
 
     public long getTimeUnitUpperLimit() {
         return this.timeUnitUpperLimit;
+    }
+
+    public boolean isSingular(long timeDifference) {
+        return timeDifference == 1;
     }
 
     public abstract String getFormattedTimeDifference(long timeDifferenceInSeconds);
