@@ -25,7 +25,6 @@ class CommandProcessorShould {
 
     @Test
     void delegatePostCommandsToUserService() {
-
         commandProcessor.process(ALICE_EXAMPLE_POST_COMMAND, now);
 
         verify(mockUserService).addPost(ALICE_EXAMPLE_POST_COMMAND, now);
@@ -33,7 +32,6 @@ class CommandProcessorShould {
 
     @Test
     void delegateReadTimelineCommandsToUserService() {
-
         commandProcessor.process(READ_ALICE_TIMELINE, now);
 
         verify(mockUserService).getTimeLine(ALICE_USER_NAME, now);

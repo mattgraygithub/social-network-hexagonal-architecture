@@ -37,7 +37,6 @@ public class SocialNetworkAcceptanceTest {
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndAUsersTimelineCanBeRead() throws IOException {
-
         runAliceAndBobPostCommands();
 
         runCommand(READ_ALICE_TIMELINE, AT_12PM);
@@ -47,7 +46,6 @@ public class SocialNetworkAcceptanceTest {
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndADifferentUsersTimelineCanBeRead() throws IOException {
-
         runAliceAndBobPostCommands();
 
         runCommand(READ_BOB_TIMELINE, AT_12PM);
@@ -60,7 +58,6 @@ public class SocialNetworkAcceptanceTest {
 
     @Test
     void usersCanFollowOtherUsersAndViewAnAggregatedListOfTheirsAndTheirFollowedUsersPostsOnTheirWall() throws IOException {
-
         runAliceAndBobPostCommands();
 
         runCommand(CHARLIE_EXAMPLE_POST_COMMAND, AT_15_SECONDS_BEFORE_12PM);

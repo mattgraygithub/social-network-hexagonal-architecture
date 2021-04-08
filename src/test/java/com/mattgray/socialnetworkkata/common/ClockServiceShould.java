@@ -25,20 +25,20 @@ class ClockServiceShould {
 
     @Test
     void getFormattedTimeInSeconds() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(AT_15_SECONDS_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).isEqualTo(" (15 seconds ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_15_SECONDS_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (15 seconds ago)");
     }
 
     @Test
     void getFormattedTimeInMinutes() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).isEqualTo(" (2 minutes ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (2 minutes ago)");
     }
 
     @Test
     void getFormattedTimeInHours() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(AT_2_HOURS_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).isEqualTo(" (2 hours ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_2_HOURS_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (2 hours ago)");
     }
 
-    private LocalDateTime stubbedLocalTimeOf(LocalDateTime time) {
+    private LocalDateTime stubbedLocalTime(LocalDateTime time) {
         Clock readCommandClock = Clock.fixed(time.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         return LocalDateTime.now(readCommandClock);
     }

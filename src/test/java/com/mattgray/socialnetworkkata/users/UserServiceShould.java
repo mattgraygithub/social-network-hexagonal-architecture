@@ -31,7 +31,6 @@ class UserServiceShould {
 
     @Test
     void callUserRepositoryToAddPost() {
-
         userService.addPost(ALICE_EXAMPLE_POST_COMMAND, now);
 
         verify(mockUserRepository).addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, now);
@@ -39,7 +38,6 @@ class UserServiceShould {
 
     @Test
     void callTimelineServiceToPrintTimelineForAUser() {
-
         userService.addPost(ALICE_EXAMPLE_POST_COMMAND, now);
         ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, now)));
 

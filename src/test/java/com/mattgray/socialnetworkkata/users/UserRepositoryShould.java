@@ -19,7 +19,6 @@ class UserRepositoryShould {
 
     @Test
     void addUserAndPostIfUserDoesNotAlreadyExist() {
-
         userRepository.addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, LocalDateTime.now());
 
         assertThat(userRepository.getTimelineFor(ALICE_USER_NAME).getPosts().size()).isEqualTo(1);
@@ -27,7 +26,6 @@ class UserRepositoryShould {
 
     @Test
     void addPostToTimeLineIfUserAlreadyExists() {
-
         userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, LocalDateTime.now());
 
         assertThat(userRepository.getTimelineFor(BOB_USER_NAME).getPosts().size()).isEqualTo(1);
