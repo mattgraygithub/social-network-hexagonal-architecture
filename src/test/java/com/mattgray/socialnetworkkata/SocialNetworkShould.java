@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import static com.mattgray.socialnetworkkata.TestCommands.ALICE_USER_NAME;
+import static com.mattgray.socialnetworkkata.TestCommands.AT_12PM;
 import static org.mockito.Mockito.*;
 
 class SocialNetworkShould {
@@ -26,14 +28,13 @@ class SocialNetworkShould {
 
     @Test
     void callCommandProcessorWithCommandEnteredAndTimeOfCommandWhenAnythingIsEnteredInConsole() {
-
-        Clock fixedClock = Clock.fixed(TestCommands.AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+        Clock fixedClock = Clock.fixed(AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         when(clockStub.instant()).thenReturn(fixedClock.instant());
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
 
-        System.setIn(new ByteArrayInputStream(TestCommands.ALICE_USER_NAME.getBytes()));
+        System.setIn(new ByteArrayInputStream(ALICE_USER_NAME.getBytes()));
         socialNetwork.run();
 
-        verify(mockCommandProcessor).process(TestCommands.ALICE_USER_NAME, LocalDateTime.now(clockStub));
+        verify(mockCommandProcessor).process(ALICE_USER_NAME, LocalDateTime.now(clockStub));
     }
 }

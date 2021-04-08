@@ -1,6 +1,5 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.TestCommands;
 import com.mattgray.socialnetworkkata.timeline.Post;
 import com.mattgray.socialnetworkkata.timeline.Timeline;
 import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
@@ -11,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.mattgray.socialnetworkkata.TestCommands.*;
 import static org.mockito.Mockito.*;
 
 class UserServiceShould {
@@ -32,20 +32,20 @@ class UserServiceShould {
     @Test
     void callUserRepositoryToAddPost() {
 
-        userService.addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
+        userService.addPost(ALICE_EXAMPLE_POST_COMMAND, now);
 
-        verify(mockUserRepository).addPost(TestCommands.ALICE_USER_NAME, TestCommands.ALICE_EXAMPLE_POST, now);
+        verify(mockUserRepository).addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, now);
     }
 
     @Test
     void callTimelineServiceToPrintTimelineForAUser() {
 
-        userService.addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
-        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(TestCommands.ALICE_EXAMPLE_POST, now)));
+        userService.addPost(ALICE_EXAMPLE_POST_COMMAND, now);
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, now)));
 
-        when(mockUserRepository.getTimelineFor((TestCommands.ALICE_USER_NAME))).thenReturn(new Timeline(timeline));
+        when(mockUserRepository.getTimelineFor((ALICE_USER_NAME))).thenReturn(new Timeline(timeline));
 
-        userService.getTimeLine(TestCommands.ALICE_USER_NAME, now);
+        userService.getTimeLine(ALICE_USER_NAME, now);
 
         verify(mockTimelineService).displayTimeLine(timeline, now);
     }

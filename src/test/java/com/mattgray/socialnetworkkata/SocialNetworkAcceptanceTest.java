@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import static com.mattgray.socialnetworkkata.TestCommands.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -39,9 +40,9 @@ public class SocialNetworkAcceptanceTest {
 
         runAliceAndBobPostCommands();
 
-        runCommand(TestCommands.READ_ALICE_TIMELINE, TestCommands.AT_12PM);
+        runCommand(READ_ALICE_TIMELINE, AT_12PM);
 
-        assertThat(getConsoleOutput()).isEqualTo(TestCommands.ALICE_EXAMPLE_POST + minutesAgo(5) + TestCommands.NEW_LINE);
+        assertThat(getConsoleOutput()).isEqualTo(ALICE_EXAMPLE_POST + minutesAgo(5) + NEW_LINE);
     }
 
     @Test
@@ -49,11 +50,11 @@ public class SocialNetworkAcceptanceTest {
 
         runAliceAndBobPostCommands();
 
-        runCommand(TestCommands.READ_BOB_TIMELINE, TestCommands.AT_12PM);
+        runCommand(READ_BOB_TIMELINE, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
-                TestCommands.BOB_EXAMPLE_POST_ONE + minutesAgo(2) + TestCommands.NEW_LINE +
-                        TestCommands.BOB_EXAMPLE_POST_TWO + minutesAgo(1) + TestCommands.NEW_LINE
+                BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE +
+                        BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE
         );
     }
 
@@ -62,24 +63,24 @@ public class SocialNetworkAcceptanceTest {
 
         runAliceAndBobPostCommands();
 
-        runCommand(TestCommands.CHARLIE_EXAMPLE_POST_COMMAND, TestCommands.AT_15_SECONDS_BEFORE_12PM);
+        runCommand(CHARLIE_EXAMPLE_POST_COMMAND, AT_15_SECONDS_BEFORE_12PM);
 
-        SocialNetwork.main(new String[]{TestCommands.CHARLIE_FOLLOWS_ALICE, TestCommands.CHARLIE_FOLLOWS_BOB});
+        SocialNetwork.main(new String[]{CHARLIE_FOLLOWS_ALICE, CHARLIE_FOLLOWS_BOB});
 
-        runCommand(TestCommands.READ_CHARLIE_WALL, TestCommands.AT_12PM);
+        runCommand(READ_CHARLIE_WALL, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
-                TestCommands.CHARLIE_USER_NAME + " - " + TestCommands.CHARLIE_EXAMPLE_POST + secondsAgo(15) + TestCommands.NEW_LINE +
-                        TestCommands.BOB_USER_NAME + " - " + TestCommands.BOB_EXAMPLE_POST_TWO + minutesAgo(1) + TestCommands.NEW_LINE +
-                        TestCommands.BOB_USER_NAME + " - " + TestCommands.BOB_EXAMPLE_POST_ONE + minutesAgo(2) + TestCommands.NEW_LINE +
-                        TestCommands.ALICE_USER_NAME + " - " + TestCommands.ALICE_EXAMPLE_POST + minutesAgo(5) + TestCommands.NEW_LINE
+                CHARLIE_USER_NAME + " - " + CHARLIE_EXAMPLE_POST + secondsAgo(15) + NEW_LINE +
+                        BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE +
+                        BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE +
+                        ALICE_USER_NAME + " - " + ALICE_EXAMPLE_POST + minutesAgo(5) + NEW_LINE
         );
     }
 
     private void runAliceAndBobPostCommands() {
-        runCommand(TestCommands.ALICE_EXAMPLE_POST_COMMAND, TestCommands.AT_5_MINUTES_BEFORE_12PM);
-        runCommand(TestCommands.BOB_EXAMPLE_POST_COMMAND_ONE, TestCommands.AT_2_MINUTES_BEFORE_12PM);
-        runCommand(TestCommands.BOB_EXAMPLE_POST_COMMAND_TWO, TestCommands.AT_1_MINUTE_BEFORE_12PM);
+        runCommand(ALICE_EXAMPLE_POST_COMMAND, AT_5_MINUTES_BEFORE_12PM);
+        runCommand(BOB_EXAMPLE_POST_COMMAND_ONE, AT_2_MINUTES_BEFORE_12PM);
+        runCommand(BOB_EXAMPLE_POST_COMMAND_TWO, AT_1_MINUTE_BEFORE_12PM);
     }
 
     private void runCommand(String command, LocalDateTime timeOfCommand) {

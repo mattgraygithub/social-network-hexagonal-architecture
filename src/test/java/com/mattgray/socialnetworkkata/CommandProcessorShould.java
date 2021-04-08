@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import static com.mattgray.socialnetworkkata.TestCommands.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -25,16 +26,16 @@ class CommandProcessorShould {
     @Test
     void delegatePostCommandsToUserService() {
 
-        commandProcessor.process(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
+        commandProcessor.process(ALICE_EXAMPLE_POST_COMMAND, now);
 
-        verify(mockUserService).addPost(TestCommands.ALICE_EXAMPLE_POST_COMMAND, now);
+        verify(mockUserService).addPost(ALICE_EXAMPLE_POST_COMMAND, now);
     }
 
     @Test
     void delegateReadTimelineCommandsToUserService() {
 
-        commandProcessor.process(TestCommands.READ_ALICE_TIMELINE, now);
+        commandProcessor.process(READ_ALICE_TIMELINE, now);
 
-        verify(mockUserService).getTimeLine(TestCommands.ALICE_USER_NAME, now);
+        verify(mockUserService).getTimeLine(ALICE_USER_NAME, now);
     }
 }

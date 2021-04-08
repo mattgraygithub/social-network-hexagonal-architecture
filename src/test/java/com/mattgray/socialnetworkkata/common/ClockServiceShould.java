@@ -1,6 +1,5 @@
 package com.mattgray.socialnetworkkata.common;
 
-import com.mattgray.socialnetworkkata.TestCommands;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import static com.mattgray.socialnetworkkata.TestCommands.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -25,17 +25,17 @@ class ClockServiceShould {
 
     @Test
     void getFormattedTimeInSeconds() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(TestCommands.AT_15_SECONDS_BEFORE_12PM), stubbedLocalTimeOf(TestCommands.AT_12PM))).isEqualTo(" (15 seconds ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(AT_15_SECONDS_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).isEqualTo(" (15 seconds ago)");
     }
 
     @Test
     void getFormattedTimeInMinutes() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(TestCommands.AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(TestCommands.AT_12PM))).isEqualTo(" (2 minutes ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).isEqualTo(" (2 minutes ago)");
     }
 
     @Test
     void getFormattedTimeInHours() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(TestCommands.AT_2_HOURS_BEFORE_12PM), stubbedLocalTimeOf(TestCommands.AT_12PM))).isEqualTo(" (2 hours ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTimeOf(AT_2_HOURS_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).isEqualTo(" (2 hours ago)");
     }
 
     private LocalDateTime stubbedLocalTimeOf(LocalDateTime time) {
