@@ -2,11 +2,15 @@ package com.mattgray.socialnetworkkata.common;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.stream.Stream;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,17 +28,17 @@ class ClockServiceShould {
     }
 
     @Test
-    void getFormattedTimeInSeconds() {
+    void getFormattedElapsedTimeInSeconds() {
         assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_15_SECONDS_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (15 seconds ago)");
     }
 
     @Test
-    void getFormattedTimeInMinutes() {
+    void getFormattedElapsedTimeInMinutes() {
         assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (2 minutes ago)");
     }
 
     @Test
-    void getFormattedTimeInHours() {
+    void getFormattedElapsedTimeInHours() {
         assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_2_HOURS_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (2 hours ago)");
     }
 
