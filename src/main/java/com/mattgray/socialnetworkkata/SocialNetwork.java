@@ -20,7 +20,6 @@ public class SocialNetwork {
     }
 
     public static void main(String[] args) {
-
         System.out.println("Welcome to the Social Network. Please enter a command");
 
         SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineServiceImpl(new ClockServiceImpl()))), Clock.systemDefaultZone());
@@ -29,7 +28,6 @@ public class SocialNetwork {
     }
 
     public void run() {
-
         Scanner scanner = new Scanner(System.in);
 
         while (scanner.hasNext()) {
