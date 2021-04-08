@@ -17,12 +17,20 @@ public class CommandProcessor {
 
     public void process(String command, LocalDateTime time) {
 
-        if (Arrays.asList(command.split(" ")).contains(POST_COMMAND)) {
+        if (isPost(command)) {
             userService.addPost(command, time);
         }
 
-        if (Arrays.asList(command.split(" ")).size() == 1) {
+        if (isRead(command)) {
             userService.getTimeLine(command, time);
         }
+    }
+
+    private boolean isRead(String command) {
+        return Arrays.asList(command.split(" ")).size() == 1;
+    }
+
+    private boolean isPost(String command) {
+        return Arrays.asList(command.split(" ")).contains(POST_COMMAND);
     }
 }
