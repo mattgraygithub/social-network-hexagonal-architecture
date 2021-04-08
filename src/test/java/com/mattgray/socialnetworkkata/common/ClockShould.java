@@ -15,6 +15,14 @@ class ClockShould {
     private static final int ONE_MINUTE = 60;
     private static final int ONE_HOUR = 60 * ONE_MINUTE;
 
+    private static Stream<Arguments> singularTimeUnitsProvider() {
+        return Stream.of(
+                Arguments.of(Clock.SECONDS.getFormattedTimeDifference(ONE_SECOND), " (1 second ago)"),
+                Arguments.of(Clock.MINUTES.getFormattedTimeDifference(ONE_MINUTE), " (1 minute ago)"),
+                Arguments.of(Clock.HOURS.getFormattedTimeDifference(ONE_HOUR), " (1 hour ago)")
+        );
+    }
+
     @Test
     void giveCorrectlyFormattedElapsedTimeInSeconds() {
         long thirtySeconds = 30;
@@ -37,13 +45,5 @@ class ClockShould {
     @MethodSource("singularTimeUnitsProvider")
     void giveCorrectFormattingForSingularTimeUnits(String formattedTimeDifference, String expectedOutput) {
         assertThat(formattedTimeDifference).isEqualTo(expectedOutput);
-    }
-
-    private static Stream<Arguments> singularTimeUnitsProvider() {
-        return Stream.of(
-                Arguments.of(Clock.SECONDS.getFormattedTimeDifference(ONE_SECOND), " (1 second ago)"),
-                Arguments.of(Clock.MINUTES.getFormattedTimeDifference(ONE_MINUTE), " (1 minute ago)"),
-                Arguments.of(Clock.HOURS.getFormattedTimeDifference(ONE_HOUR), " (1 hour ago)")
-        );
     }
 }
