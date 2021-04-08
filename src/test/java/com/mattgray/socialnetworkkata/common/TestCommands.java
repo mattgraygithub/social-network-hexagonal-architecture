@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata;
+package com.mattgray.socialnetworkkata.common;
 
 import java.time.LocalDateTime;
 

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.mattgray.socialnetworkkata.TestCommands.*;
+import static com.mattgray.socialnetworkkata.common.TestCommands.*;
 import static org.mockito.Mockito.*;
 
 class UserServiceShould {
