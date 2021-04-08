@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.mattgray.socialnetworkkata.common.TestCommands.*;
+import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 

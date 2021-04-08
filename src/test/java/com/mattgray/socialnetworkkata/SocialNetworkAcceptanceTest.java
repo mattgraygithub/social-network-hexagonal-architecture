@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import static com.mattgray.socialnetworkkata.common.TestCommands.*;
+import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

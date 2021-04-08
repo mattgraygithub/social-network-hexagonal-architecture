@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static com.mattgray.socialnetworkkata.common.TestCommands.*;
+import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserRepositoryShould {

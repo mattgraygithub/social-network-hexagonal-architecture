@@ -2,7 +2,7 @@ package com.mattgray.socialnetworkkata.common;
 
 import java.time.LocalDateTime;
 
-public class TestCommands {
+public class TestData {
     public static final String POST_COMMAND = " -> ";
     public static final String FOLLOW_COMMAND = " follows ";
     public static final String READ_WALL_COMMAND = " wall ";
