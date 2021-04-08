@@ -1,30 +1,19 @@
 package com.mattgray.socialnetworkkata.timeline;
 
+import com.mattgray.socialnetworkkata.common.ClockService;
+import com.mattgray.socialnetworkkata.common.ClockServiceImpl;
+
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class TimelineServiceImpl implements TimelineService {
 
+    private final ClockService clockService = new ClockServiceImpl();
+
     @Override
     public void displayTimeLine(ArrayList<Post> timeline, LocalDateTime timeOfReadCommand) {
         for (Post post : timeline) {
-            System.out.println(post.getPost() + getTimeBetween(post.getTimeOfPost(), timeOfReadCommand));
+            System.out.println(post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand));
         }
-    }
-
-    private String getTimeBetween(LocalDateTime timeOfPost, LocalDateTime timeOfCommand) {
-        long timeDifference = ChronoUnit.SECONDS.between(timeOfPost, timeOfCommand);
-
-        if (timeDifference < 60) {
-            return timeDifference == 1 ? " (" + timeDifference + " second ago)" : " (" + timeDifference + " seconds ago)";
-        }
-        if (timeDifference < 3600) {
-            return timeDifference / 60 == 1 ? " (" + (timeDifference / 60) + " minute ago)" : " (" + (timeDifference / 60) + " minutes ago)";
-        }
-        if (timeDifference < 216000) {
-            return timeDifference / 60 / 60 == 1 ? " (" + (timeDifference / 60 / 60) + " hour ago)" : " (" + (timeDifference / 60 / 60) + " hours ago)";
-        }
-        throw new UnsupportedOperationException();
     }
 }
