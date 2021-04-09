@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.timeline.Post;
-import com.mattgray.socialnetworkkata.timeline.Timeline;
+import com.mattgray.socialnetworkkata.timeline.InMemoryPostRepository;
 import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class UserServiceShould {
         userService.addPost(ALICE_EXAMPLE_POST_COMMAND, now);
         ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, now)));
 
-        when(mockUserRepository.getTimelineFor((ALICE_USER_NAME))).thenReturn(new Timeline(timeline));
+        when(mockUserRepository.getTimelineFor((ALICE_USER_NAME))).thenReturn(new InMemoryPostRepository(timeline));
 
         userService.getTimeLine(ALICE_USER_NAME, now);
 

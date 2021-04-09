@@ -1,17 +1,17 @@
 package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
-import com.mattgray.socialnetworkkata.timeline.Timeline;
+import com.mattgray.socialnetworkkata.timeline.PostRepository;
 
 public class User {
 
     private final String userName;
-    private final Timeline timeline;
+    private final PostRepository postRepository;
     private final FolloweeRepository followeeRepository;
 
-    public User(String userName, Timeline timeline, FolloweeRepository followeeRepository) {
+    public User(String userName, PostRepository postRepository, FolloweeRepository followeeRepository) {
         this.userName = userName;
-        this.timeline = timeline;
+        this.postRepository = postRepository;
         this.followeeRepository = followeeRepository;
     }
 
@@ -19,8 +19,8 @@ public class User {
         return userName;
     }
 
-    public Timeline getTimeline() {
-        return timeline;
+    public PostRepository getTimeline() {
+        return postRepository;
     }
 
     public FolloweeRepository getFollowees() {

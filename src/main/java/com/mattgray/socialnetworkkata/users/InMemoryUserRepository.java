@@ -3,7 +3,8 @@ package com.mattgray.socialnetworkkata.users;
 import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
 import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.timeline.Post;
-import com.mattgray.socialnetworkkata.timeline.Timeline;
+import com.mattgray.socialnetworkkata.timeline.InMemoryPostRepository;
+import com.mattgray.socialnetworkkata.timeline.PostRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public Timeline getTimelineFor(String userName) {
+    public PostRepository getTimelineFor(String userName) {
         return users.get(getUserIndexOf(userName)).getTimeline();
     }
 
@@ -57,34 +58,34 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private void addPostToExistingUser(String userName, String post, LocalDateTime time) {
-        Timeline userTimeline = getTimelineFor(userName);
-        userTimeline.addPost(post, time);
+        PostRepository postRepository = getTimelineFor(userName);
+        postRepository.addPost(post, time);
         FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
-        updateUser(userName, userTimeline, followeeRepository);
+        updateUser(userName, postRepository, followeeRepository);
     }
 
     private void addNewUserAndPost(String userName, String post, LocalDateTime time) {
-        Timeline timeline = new Timeline(new ArrayList<>(Collections.singletonList(new Post(post, time))));
-        addUser(userName, timeline, new InMemoryFolloweeRepository());
+        PostRepository postRepository = new InMemoryPostRepository(new ArrayList<>(Collections.singletonList(new Post(post, time))));
+        addUser(userName, postRepository, new InMemoryFolloweeRepository());
     }
 
     private void addFolloweeToExistingUser(String userName, String followeeUserName) {
-        Timeline userTimeline = getTimelineFor(userName);
+        PostRepository postRepository = getTimelineFor(userName);
         FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
         followeeRepository.addFollowee(followeeUserName);
-        updateUser(userName, userTimeline, followeeRepository);
+        updateUser(userName, postRepository, followeeRepository);
     }
 
     private void addNewUserAndFollowee(String userName, String followeeUserName) {
         followeeRepository.addFollowee(followeeUserName);
-        users.add(new User(userName, new Timeline(new ArrayList<>()), followeeRepository));
+        users.add(new User(userName, new InMemoryPostRepository(new ArrayList<>()), followeeRepository));
     }
 
-    private void updateUser(String userName, Timeline userTimeline, FolloweeRepository followeeRepository) {
-        users.set(getUserIndexOf(userName), new User(userName, userTimeline, followeeRepository));
+    private void updateUser(String userName, PostRepository postRepository, FolloweeRepository followeeRepository) {
+        users.set(getUserIndexOf(userName), new User(userName, postRepository, followeeRepository));
     }
 
-    private void addUser(String userName, Timeline timeline, FolloweeRepository followeeRepository) {
-        users.add(new User(userName, timeline, followeeRepository));
+    private void addUser(String userName, PostRepository postRepository, FolloweeRepository followeeRepository) {
+        users.add(new User(userName, postRepository, followeeRepository));
     }
 }
