@@ -47,4 +47,11 @@ class UserServiceShould {
 
         verify(mockTimelineService).displayTimeLine(timeline, now);
     }
+
+    @Test
+    void callUserRepositoryToAddFollowee() {
+        userService.addFollowee(CHARLIE_FOLLOWS_ALICE);
+
+        verify(mockUserRepository).addFollowee(CHARLIE_USER_NAME, ALICE_USER_NAME);
+    }
 }

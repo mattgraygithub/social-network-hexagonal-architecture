@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.common.ClockServiceImpl;
+import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.timeline.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
 import com.mattgray.socialnetworkkata.users.UserService;
@@ -15,6 +16,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +34,7 @@ public class SocialNetworkAcceptanceTest {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockStub = mock(Clock.class);
-        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(), new TimelineServiceImpl(new ClockServiceImpl()))), clockStub);
+        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(new InMemoryFolloweeRepository(), new ArrayList<>()), new TimelineServiceImpl(new ClockServiceImpl()))), clockStub);
     }
 
     @Test
