@@ -23,7 +23,7 @@ public class User {
         return postRepository;
     }
 
-    public FolloweeRepository getFollowees() {
+    public FolloweeRepository getFolloweeRepository() {
         return followeeRepository;
     }
 }

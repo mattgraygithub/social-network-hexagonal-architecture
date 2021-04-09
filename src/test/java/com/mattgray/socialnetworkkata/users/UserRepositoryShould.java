@@ -1,7 +1,5 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
-import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,20 +9,17 @@ import java.util.List;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class UserRepositoryShould {
 
-    private FolloweeRepository mockFolloweeRepository;
     private List<User> usersMock;
     private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
-        mockFolloweeRepository = mock(InMemoryFolloweeRepository.class);
         usersMock = new ArrayList<>();
-        userRepository = new InMemoryUserRepository(mockFolloweeRepository, usersMock);
+        userRepository = new InMemoryUserRepository(usersMock);
     }
 
     @Test
@@ -43,7 +38,7 @@ class UserRepositoryShould {
     }
 
     @Test
-    void addPostToNewUsersTimelineIfAPostCommandIsReceivedAndTheUserDoesNotAlreadyExist() {
+    void addPostToNewUsersTimelineIfAPostCommandIsReceivedAndTheUserDidNotAlreadyExist() {
         userRepository.addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, LocalDateTime.now());
 
         assertThat(userRepository.getTimelineFor(ALICE_USER_NAME).getPosts().size()).isEqualTo(1);
@@ -73,9 +68,9 @@ class UserRepositoryShould {
     }
 
     @Test
-    void callFolloweeRepositoryToAddFolloweeWhenAFollowCommandIsReceived() {
+    void addFolloweeToNewUsersFolloweeRepositoryIfAFollowCommandIsReceivedAndTheUserDidNotAlreadyExist () {
         userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
 
-        verify(mockFolloweeRepository).addFollowee(BOB_USER_NAME);
+        assertThat(usersMock.get(0).getFolloweeRepository().getFollowedUsers().size()).isEqualTo(1);
     }
 }

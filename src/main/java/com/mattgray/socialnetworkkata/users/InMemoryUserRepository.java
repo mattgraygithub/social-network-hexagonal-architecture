@@ -13,11 +13,9 @@ import java.util.List;
 
 public class InMemoryUserRepository implements UserRepository {
 
-    private final FolloweeRepository followeeRepository;
     private final List<User> users;
 
-    public InMemoryUserRepository(FolloweeRepository followeeRepository, List<User> users) {
-        this.followeeRepository = followeeRepository;
+    public InMemoryUserRepository(List<User> users) {
         this.users = users;
     }
 
@@ -60,24 +58,24 @@ public class InMemoryUserRepository implements UserRepository {
     private void addPostToExistingUser(String userName, String post, LocalDateTime time) {
         PostRepository postRepository = getTimelineFor(userName);
         postRepository.addPost(post, time);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
         updateUser(userName, postRepository, followeeRepository);
     }
 
     private void addNewUserAndPost(String userName, String post, LocalDateTime time) {
         PostRepository postRepository = new InMemoryPostRepository(new ArrayList<>(Collections.singletonList(new Post(post, time))));
-        addUser(userName, postRepository, new InMemoryFolloweeRepository());
+        addUser(userName, postRepository, new InMemoryFolloweeRepository(new ArrayList<>()));
     }
 
     private void addFolloweeToExistingUser(String userName, String followeeUserName) {
         PostRepository postRepository = getTimelineFor(userName);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
         followeeRepository.addFollowee(followeeUserName);
         updateUser(userName, postRepository, followeeRepository);
     }
 
     private void addNewUserAndFollowee(String userName, String followeeUserName) {
-        followeeRepository.addFollowee(followeeUserName);
+        FolloweeRepository followeeRepository = new InMemoryFolloweeRepository(new ArrayList<>(Collections.singletonList(followeeUserName)));
         users.add(new User(userName, new InMemoryPostRepository(new ArrayList<>()), followeeRepository));
     }
 

@@ -20,7 +20,6 @@ class UserServiceShould {
     UserService userService;
     LocalDateTime now;
 
-
     @BeforeEach
     void setUp() {
         now = LocalDateTime.now();
