@@ -25,7 +25,7 @@ public class CommandProcessor {
             userService.getTimeLine(command, time);
         }
 
-        if (isFollow(command)){
+        if (isFollow(command)) {
             userService.addFollowee(command);
         }
     }
@@ -38,7 +38,7 @@ public class CommandProcessor {
         return Arrays.asList(command.split(" ")).size() == 1;
     }
 
-    private boolean isFollow (String command) {
+    private boolean isFollow(String command) {
         return Arrays.asList(command.split(" ")).contains(FOLLOW_COMMAND);
     }
 }

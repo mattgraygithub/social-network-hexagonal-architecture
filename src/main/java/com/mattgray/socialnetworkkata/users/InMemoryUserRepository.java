@@ -60,12 +60,19 @@ public class InMemoryUserRepository implements UserRepository {
         Timeline userTimeline = getTimelineFor(userName);
         userTimeline.addPost(post, time);
         FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
-        users.set(getUserIndexOf(userName), new User(userName, userTimeline, followeeRepository));
+        updateUser(userName, userTimeline, followeeRepository);
     }
 
     private void addNewUserAndPost(String userName, String post, LocalDateTime time) {
         Timeline timeline = new Timeline(new ArrayList<>(Collections.singletonList(new Post(post, time))));
-        users.add(new User(userName, timeline, new InMemoryFolloweeRepository()));
+        addUser(userName, timeline, new InMemoryFolloweeRepository());
+    }
+
+    private void addFolloweeToExistingUser(String userName, String followeeUserName) {
+        Timeline userTimeline = getTimelineFor(userName);
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
+        followeeRepository.addFollowee(followeeUserName);
+        updateUser(userName, userTimeline, followeeRepository);
     }
 
     private void addNewUserAndFollowee(String userName, String followeeUserName) {
@@ -73,10 +80,11 @@ public class InMemoryUserRepository implements UserRepository {
         users.add(new User(userName, new Timeline(new ArrayList<>()), followeeRepository));
     }
 
-    private void addFolloweeToExistingUser(String userName, String followeeUserName) {
-        Timeline userTimeline = getTimelineFor(userName);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowees();
-        followeeRepository.addFollowee(followeeUserName);
+    private void updateUser(String userName, Timeline userTimeline, FolloweeRepository followeeRepository) {
         users.set(getUserIndexOf(userName), new User(userName, userTimeline, followeeRepository));
+    }
+
+    private void addUser(String userName, Timeline timeline, FolloweeRepository followeeRepository) {
+        users.add(new User(userName, timeline, followeeRepository));
     }
 }
