@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
-import com.mattgray.socialnetworkkata.timeline.PostRepository;
+import com.mattgray.socialnetworkkata.posts.PostRepository;
 
 public class User {
 
