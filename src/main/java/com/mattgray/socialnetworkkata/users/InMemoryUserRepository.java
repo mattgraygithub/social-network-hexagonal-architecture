@@ -2,8 +2,8 @@ package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
 import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
-import com.mattgray.socialnetworkkata.timeline.Post;
 import com.mattgray.socialnetworkkata.timeline.InMemoryPostRepository;
+import com.mattgray.socialnetworkkata.timeline.Post;
 import com.mattgray.socialnetworkkata.timeline.PostRepository;
 
 import java.time.LocalDateTime;

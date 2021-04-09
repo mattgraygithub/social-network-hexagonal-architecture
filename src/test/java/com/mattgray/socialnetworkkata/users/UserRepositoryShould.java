@@ -28,17 +28,30 @@ class UserRepositoryShould {
     }
 
     @Test
-    void addUserAndPostIfUserDoesNotAlreadyExist() {
+    void addUserIfAPostCommandIsReceivedAndTheUserDoesNotAlreadyExist() {
         userRepository.addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, LocalDateTime.now());
+
+        assertThat(usersMock.get(0).getUserName()).isEqualTo(ALICE_USER_NAME);
+    }
+
+    @Test
+    void notAddANewUserIfAPostCommandIsReceivedAndTheUserAlreadyExists() {
+        userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, LocalDateTime.now());
+        userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, LocalDateTime.now());
+
+        assertThat(usersMock.size()).isEqualTo(1);
+    }
+
+    @Test
+    void addPostToNewUsersTimelineIfAPostCommandIsReceivedAndTheUserDoesNotAlreadyExist() {
+        userRepository.addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, LocalDateTime.now());
+
         assertThat(userRepository.getTimelineFor(ALICE_USER_NAME).getPosts().size()).isEqualTo(1);
     }
 
     @Test
-    void addPostToTimeLineIfUserAlreadyExists() {
+    void addPostToExistingUsersTimelineIfAPostCommandIsReceivedAndTheUserDoesAlreadyExist() {
         userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, LocalDateTime.now());
-
-        assertThat(userRepository.getTimelineFor(BOB_USER_NAME).getPosts().size()).isEqualTo(1);
-
         userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, LocalDateTime.now());
 
         assertThat(userRepository.getTimelineFor(BOB_USER_NAME).getPosts().size()).isEqualTo(2);
@@ -52,17 +65,17 @@ class UserRepositoryShould {
     }
 
     @Test
-    void callFolloweeRepositoryToAddFolloweeWhenAFollowCommandIsReceived() {
-        userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
-
-        verify(mockFolloweeRepository).addFollowee(BOB_USER_NAME);
-    }
-
-    @Test
-    void onlyAddNewUserIfUserDoesNotAlreadyExistWhenFollowCommandIsReceived() {
+    void notAddANewUserIfAFollowCommandIsReceivedAndTheUserAlreadyExists() {
         userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
         userRepository.addFollowee(ALICE_USER_NAME, CHARLIE_USER_NAME);
 
         assertThat(usersMock.size()).isEqualTo(1);
+    }
+
+    @Test
+    void callFolloweeRepositoryToAddFolloweeWhenAFollowCommandIsReceived() {
+        userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
+
+        verify(mockFolloweeRepository).addFollowee(BOB_USER_NAME);
     }
 }
