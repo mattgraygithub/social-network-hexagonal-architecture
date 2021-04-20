@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
 import com.mattgray.socialnetworkkata.posts.TimelineService;
+import com.mattgray.socialnetworkkata.posts.WallService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -8,18 +9,28 @@ import java.util.Arrays;
 public class UserService {
     private final UserRepository userRepository;
     private final TimelineService timelineService;
+    private final WallService wallService;
 
-    public UserService(UserRepository userRepository, TimelineService timelineService) {
+    public UserService(UserRepository userRepository, TimelineService timelineService, WallService wallService) {
         this.userRepository = userRepository;
         this.timelineService = timelineService;
+        this.wallService = wallService;
     }
 
     public void addPost(String command, LocalDateTime time) {
         userRepository.addPost(getUserName(command), getCommandArgument(command), time);
     }
 
+    public void getTimeLine(String userName, LocalDateTime time) {
+        timelineService.displayTimeLine(userRepository.getTimelineFor(userName).getPosts(), time);
+    }
+
     public void addFollowee(String command) {
         userRepository.addFollowee(getUserName(command), getCommandArgument(command));
+    }
+
+    public void getWall(String command, LocalDateTime time) {
+        wallService.displayWall(getUserName(command), time);
     }
 
     private String getUserName(String command) {
@@ -30,9 +41,5 @@ public class UserService {
         String[] commandAsArray = command.split(" ");
         String[] post = Arrays.copyOfRange(commandAsArray, 2, commandAsArray.length);
         return String.join(" ", post);
-    }
-
-    public void getTimeLine(String userName, LocalDateTime time) {
-        timelineService.displayTimeLine(userRepository.getTimelineFor(userName).getPosts(), time);
     }
 }

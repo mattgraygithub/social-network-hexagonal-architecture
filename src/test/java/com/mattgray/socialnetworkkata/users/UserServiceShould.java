@@ -1,8 +1,6 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.posts.InMemoryPostRepository;
-import com.mattgray.socialnetworkkata.posts.Post;
-import com.mattgray.socialnetworkkata.posts.TimelineServiceImpl;
+import com.mattgray.socialnetworkkata.posts.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,16 +14,18 @@ import static org.mockito.Mockito.*;
 class UserServiceShould {
 
     UserRepository mockUserRepository;
-    TimelineServiceImpl mockTimelineService;
+    TimelineService mockTimelineService;
     UserService userService;
     LocalDateTime now;
+    WallService mockWallService;
 
     @BeforeEach
     void setUp() {
         now = LocalDateTime.now();
         mockUserRepository = mock(UserRepository.class);
-        mockTimelineService = mock(TimelineServiceImpl.class);
-        userService = new UserService(mockUserRepository, mockTimelineService);
+        mockTimelineService = mock(TimelineService.class);
+        mockWallService = mock(WallService.class);
+        userService = new UserService(mockUserRepository, mockTimelineService, mockWallService);
     }
 
     @Test
@@ -52,5 +52,12 @@ class UserServiceShould {
         userService.addFollowee(CHARLIE_FOLLOWS_ALICE);
 
         verify(mockUserRepository).addFollowee(CHARLIE_USER_NAME, ALICE_USER_NAME);
+    }
+
+    @Test
+    void callWallServiceToConstructAndPrintWallForAUser() {
+        userService.getWall(READ_CHARLIE_WALL, now);
+
+        verify(mockWallService).displayWall(CHARLIE_USER_NAME, now);
     }
 }

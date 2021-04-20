@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class TestData {
     public static final String POST_COMMAND = " -> ";
     public static final String FOLLOW_COMMAND = " follows ";
-    public static final String READ_WALL_COMMAND = " wall ";
+    public static final String READ_WALL_COMMAND = " wall";
     public static final String ALICE_USER_NAME = "Alice";
     public static final String ALICE_EXAMPLE_POST = "I love the weather today";
     public static final String ALICE_EXAMPLE_POST_COMMAND = ALICE_USER_NAME + POST_COMMAND + ALICE_EXAMPLE_POST;

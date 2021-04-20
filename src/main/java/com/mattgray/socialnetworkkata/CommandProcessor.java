@@ -9,6 +9,7 @@ public class CommandProcessor {
 
     private static final String POST_COMMAND = "->";
     private static final String FOLLOW_COMMAND = "follows";
+    private static final String WALL_COMMAND = "wall";
 
     private final UserService userService;
 
@@ -28,6 +29,10 @@ public class CommandProcessor {
         if (isFollow(command)) {
             userService.addFollowee(command);
         }
+
+        if (isWall(command)) {
+            userService.getWall(command, time);
+        }
     }
 
     private boolean isPost(String command) {
@@ -40,5 +45,9 @@ public class CommandProcessor {
 
     private boolean isFollow(String command) {
         return Arrays.asList(command.split(" ")).contains(FOLLOW_COMMAND);
+    }
+
+    private boolean isWall(String command) {
+        return Arrays.asList(command.split(" ")).contains(WALL_COMMAND);
     }
 }

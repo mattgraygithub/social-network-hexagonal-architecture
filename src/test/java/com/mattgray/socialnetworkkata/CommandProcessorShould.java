@@ -43,4 +43,11 @@ class CommandProcessorShould {
 
         verify(mockUserService).addFollowee(CHARLIE_FOLLOWS_ALICE);
     }
+
+    @Test
+    void delegateReadWallCommandsToUserService() {
+        commandProcessor.process(READ_CHARLIE_WALL, now);
+
+        verify(mockUserService).getWall(READ_CHARLIE_WALL, now);
+    }
 }
