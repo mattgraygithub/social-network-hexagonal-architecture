@@ -1,6 +1,9 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.posts.*;
+import com.mattgray.socialnetworkkata.posts.InMemoryPostRepository;
+import com.mattgray.socialnetworkkata.posts.Post;
+import com.mattgray.socialnetworkkata.posts.TimelineService;
+import com.mattgray.socialnetworkkata.posts.WallService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

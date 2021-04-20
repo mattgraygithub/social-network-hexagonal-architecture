@@ -2,12 +2,6 @@ package com.mattgray.socialnetworkkata.posts;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import static com.mattgray.socialnetworkkata.common.TestData.*;
-import static org.mockito.Mockito.verify;
-
 class WallServiceShould {
 
 //    @Test

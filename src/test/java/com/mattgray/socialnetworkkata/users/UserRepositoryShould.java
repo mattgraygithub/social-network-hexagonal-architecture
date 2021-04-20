@@ -9,7 +9,6 @@ import java.util.List;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 
 class UserRepositoryShould {
 
@@ -68,7 +67,7 @@ class UserRepositoryShould {
     }
 
     @Test
-    void addFolloweeToNewUsersFolloweeRepositoryIfAFollowCommandIsReceivedAndTheUserDidNotAlreadyExist () {
+    void addFolloweeToNewUsersFolloweeRepositoryIfAFollowCommandIsReceivedAndTheUserDidNotAlreadyExist() {
         userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
 
         assertThat(usersMock.get(0).getFollowedUsers().getFollowedUsers().size()).isEqualTo(1);
