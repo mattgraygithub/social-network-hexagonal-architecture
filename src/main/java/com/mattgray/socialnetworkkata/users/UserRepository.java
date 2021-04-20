@@ -9,7 +9,7 @@ public interface UserRepository {
 
     void addPost(String userName, String examplePost, LocalDateTime now);
 
-    PostRepository getTimelineFor(String userName);
+    PostRepository getPostsFor(String userName);
 
     void addFollowee(String userName, String followee);
 

@@ -29,8 +29,8 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public PostRepository getTimelineFor(String userName) {
-        return users.get(getUserIndexOf(userName)).getTimeline();
+    public PostRepository getPostsFor(String userName) {
+        return users.get(getUserIndexOf(userName)).getPosts();
     }
 
     @Override
@@ -56,9 +56,9 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private void addPostToExistingUser(String userName, String post, LocalDateTime time) {
-        PostRepository postRepository = getTimelineFor(userName);
+        PostRepository postRepository = getPostsFor(userName);
         postRepository.addPost(post, time);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowedUsers();
         updateUser(userName, postRepository, followeeRepository);
     }
 
@@ -68,8 +68,8 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     private void addFolloweeToExistingUser(String userName, String followeeUserName) {
-        PostRepository postRepository = getTimelineFor(userName);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
+        PostRepository postRepository = getPostsFor(userName);
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowedUsers();
         followeeRepository.addFollowee(followeeUserName);
         updateUser(userName, postRepository, followeeRepository);
     }

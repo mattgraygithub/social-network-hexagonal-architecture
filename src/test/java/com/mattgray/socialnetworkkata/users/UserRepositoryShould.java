@@ -41,7 +41,7 @@ class UserRepositoryShould {
     void addPostToNewUsersTimelineIfAPostCommandIsReceivedAndTheUserDidNotAlreadyExist() {
         userRepository.addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, LocalDateTime.now());
 
-        assertThat(userRepository.getTimelineFor(ALICE_USER_NAME).getPosts().size()).isEqualTo(1);
+        assertThat(userRepository.getPostsFor(ALICE_USER_NAME).getPosts().size()).isEqualTo(1);
     }
 
     @Test
@@ -49,7 +49,7 @@ class UserRepositoryShould {
         userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, LocalDateTime.now());
         userRepository.addPost(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, LocalDateTime.now());
 
-        assertThat(userRepository.getTimelineFor(BOB_USER_NAME).getPosts().size()).isEqualTo(2);
+        assertThat(userRepository.getPostsFor(BOB_USER_NAME).getPosts().size()).isEqualTo(2);
     }
 
     @Test
@@ -71,6 +71,6 @@ class UserRepositoryShould {
     void addFolloweeToNewUsersFolloweeRepositoryIfAFollowCommandIsReceivedAndTheUserDidNotAlreadyExist () {
         userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
 
-        assertThat(usersMock.get(0).getFolloweeRepository().getFollowedUsers().size()).isEqualTo(1);
+        assertThat(usersMock.get(0).getFollowedUsers().getFollowedUsers().size()).isEqualTo(1);
     }
 }

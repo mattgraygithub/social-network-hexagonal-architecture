@@ -19,11 +19,11 @@ public class User {
         return userName;
     }
 
-    public PostRepository getTimeline() {
+    public PostRepository getPosts() {
         return postRepository;
     }
 
-    public FolloweeRepository getFolloweeRepository() {
+    public FolloweeRepository getFollowedUsers() {
         return followeeRepository;
     }
 }

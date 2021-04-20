@@ -37,14 +37,12 @@ class UserServiceShould {
 
     @Test
     void callTimelineServiceToPrintTimelineForAUser() {
-        userService.addPost(ALICE_EXAMPLE_POST_COMMAND, now);
-        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, now)));
-
-        when(mockUserRepository.getTimelineFor((ALICE_USER_NAME))).thenReturn(new InMemoryPostRepository(timeline));
+        ArrayList<Post> posts = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, now)));
+        when(mockUserRepository.getPostsFor((ALICE_USER_NAME))).thenReturn(new InMemoryPostRepository(posts));
 
         userService.getTimeLine(ALICE_USER_NAME, now);
 
-        verify(mockTimelineService).displayTimeLine(timeline, now);
+        verify(mockTimelineService).displayTimeLine(posts, now);
     }
 
     @Test
@@ -55,7 +53,7 @@ class UserServiceShould {
     }
 
     @Test
-    void callWallServiceToConstructAndPrintWallForAUser() {
+    void callWallServiceToPrintWallForAUser() {
         userService.getWall(READ_CHARLIE_WALL, now);
 
         verify(mockWallService).displayWall(CHARLIE_USER_NAME, now);

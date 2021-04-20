@@ -19,7 +19,7 @@ import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
-public class PostRepositoryServiceShould {
+public class TimelineServiceShould {
 
     private static final String FIVE_MINUTES_AGO = " (5 minutes ago)";
     private static final String TWO_MINUTES_AGO = " (2 minutes ago)";
