@@ -1,14 +1,19 @@
 package com.mattgray.socialnetworkkata.users;
 
+import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
+import com.mattgray.socialnetworkkata.posts.InMemoryPostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserRepositoryShould {
 
@@ -70,6 +75,24 @@ class UserRepositoryShould {
     void addFolloweeToNewUsersFolloweeRepositoryIfAFollowCommandIsReceivedAndTheUserDidNotAlreadyExist() {
         userRepository.addFollowee(ALICE_USER_NAME, BOB_USER_NAME);
 
-        assertThat(usersMock.get(0).getFollowedUsers().getFollowedUsers().size()).isEqualTo(1);
+        assertThat(usersMock.get(0).getFolloweeRepository().getFollowedUsers().size()).isEqualTo(1);
+    }
+
+    @Test
+    void returnAListOfFollowedUsersForAGivenUser() {
+
+        userRepository = new InMemoryUserRepository(new ArrayList<>(Arrays.asList(
+                new User(BOB_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
+                new User(CHARLIE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
+                new User(ALICE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>(
+                        Arrays.asList(BOB_USER_NAME,CHARLIE_USER_NAME))))
+        )));
+
+        ArrayList<User> expectedUsers = new ArrayList<>(Arrays.asList(
+                new User(BOB_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
+                new User(CHARLIE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>()))
+        ));
+
+        assertThat(userRepository.getFollowedUsersFor(ALICE_USER_NAME)).isEqualTo(expectedUsers);
     }
 }

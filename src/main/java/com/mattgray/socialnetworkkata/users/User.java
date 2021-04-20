@@ -3,6 +3,8 @@ package com.mattgray.socialnetworkkata.users;
 import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
 import com.mattgray.socialnetworkkata.posts.PostRepository;
 
+import java.util.Objects;
+
 public class User {
 
     private final String userName;
@@ -23,7 +25,20 @@ public class User {
         return postRepository;
     }
 
-    public FolloweeRepository getFollowedUsers() {
+    public FolloweeRepository getFolloweeRepository() {
         return followeeRepository;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userName, user.userName) && Objects.equals(postRepository, user.postRepository) && Objects.equals(followeeRepository, user.followeeRepository);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, postRepository, followeeRepository);
     }
 }

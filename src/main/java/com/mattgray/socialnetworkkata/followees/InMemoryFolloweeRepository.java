@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata.followees;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class InMemoryFolloweeRepository implements FolloweeRepository {
 
@@ -17,7 +17,20 @@ public class InMemoryFolloweeRepository implements FolloweeRepository {
     }
 
     @Override
-    public List<String> getFollowedUsers() {
+    public ArrayList<String> getFollowedUsers() {
         return followedUsers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InMemoryFolloweeRepository that = (InMemoryFolloweeRepository) o;
+        return Objects.equals(followedUsers, that.followedUsers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(followedUsers);
     }
 }

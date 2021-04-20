@@ -1,10 +1,10 @@
 package com.mattgray.socialnetworkkata.followees;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface FolloweeRepository {
 
     void addFollowee(String userName);
 
-    List<String> getFollowedUsers();
+    ArrayList<String> getFollowedUsers();
 }

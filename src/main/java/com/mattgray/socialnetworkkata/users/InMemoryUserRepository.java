@@ -13,11 +13,14 @@ import java.util.List;
 
 public class InMemoryUserRepository implements UserRepository {
 
+
+
     private final List<User> users;
 
     public InMemoryUserRepository(List<User> users) {
         this.users = users;
     }
+
 
     @Override
     public void addPost(String userName, String post, LocalDateTime time) {
@@ -44,7 +47,16 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public ArrayList<User> getFollowedUsersFor(String userName) {
-        throw new UnsupportedOperationException();
+
+        ArrayList<String> followedUserNames = users.get(getUserIndexOf(userName)).getFolloweeRepository().getFollowedUsers();
+
+        ArrayList<User> followedUsers = new ArrayList<>();
+
+        for (String followedUserName : followedUserNames) {
+            followedUsers.add(users.get(getUserIndexOf(followedUserName)));
+        }
+
+        return followedUsers;
     }
 
     private boolean userExists(String userName) {
@@ -58,7 +70,7 @@ public class InMemoryUserRepository implements UserRepository {
     private void addPostToExistingUser(String userName, String post, LocalDateTime time) {
         PostRepository postRepository = getPostsFor(userName);
         postRepository.addPost(post, time);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowedUsers();
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
         updateUser(userName, postRepository, followeeRepository);
     }
 
@@ -69,7 +81,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     private void addFolloweeToExistingUser(String userName, String followeeUserName) {
         PostRepository postRepository = getPostsFor(userName);
-        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFollowedUsers();
+        FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
         followeeRepository.addFollowee(followeeUserName);
         updateUser(userName, postRepository, followeeRepository);
     }
