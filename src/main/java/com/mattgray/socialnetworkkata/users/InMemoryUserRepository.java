@@ -43,7 +43,7 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public FolloweeRepository getFollowedUsersFor(String userName) {
+    public ArrayList<User> getFollowedUsersFor(String userName) {
         throw new UnsupportedOperationException();
     }
 

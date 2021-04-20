@@ -1,5 +1,6 @@
 package com.mattgray.socialnetworkkata.users;
 
+import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.posts.InMemoryPostRepository;
 import com.mattgray.socialnetworkkata.posts.Post;
 import com.mattgray.socialnetworkkata.posts.TimelineService;
@@ -40,7 +41,7 @@ class UserServiceShould {
 
     @Test
     void callTimelineServiceToPrintTimelineForAUser() {
-        ArrayList<Post> posts = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, now)));
+        ArrayList<Post> posts = generatePosts(ALICE_EXAMPLE_POST);
         when(mockUserRepository.getPostsFor((ALICE_USER_NAME))).thenReturn(new InMemoryPostRepository(posts));
 
         userService.getTimeLine(ALICE_USER_NAME, now);
@@ -57,8 +58,19 @@ class UserServiceShould {
 
     @Test
     void callWallServiceToPrintWallForAUser() {
+        ArrayList<Post> posts = generatePosts(CHARLIE_EXAMPLE_POST);
+        when(mockUserRepository.getPostsFor((CHARLIE_USER_NAME))).thenReturn(new InMemoryPostRepository(posts));
+
+        ArrayList<Post> alicePosts = generatePosts(ALICE_EXAMPLE_POST);
+        ArrayList<User> followedUsers = new ArrayList<>(Collections.singletonList(new User(ALICE_USER_NAME, new InMemoryPostRepository(alicePosts), new InMemoryFolloweeRepository(new ArrayList<>()))));
+        when(mockUserRepository.getFollowedUsersFor(CHARLIE_USER_NAME)).thenReturn(followedUsers);
+
         userService.getWall(READ_CHARLIE_WALL, now);
 
-        verify(mockWallService).displayWall(CHARLIE_USER_NAME, now);
+        verify(mockWallService).displayWall(posts, followedUsers, now);
+    }
+
+    private ArrayList<Post> generatePosts(String post) {
+        return new ArrayList<>(Collections.singletonList(new Post(post, now)));
     }
 }

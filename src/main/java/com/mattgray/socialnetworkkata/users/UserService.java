@@ -30,7 +30,8 @@ public class UserService {
     }
 
     public void getWall(String command, LocalDateTime time) {
-        wallService.displayWall(getUserName(command), time);
+        String user = getUserName(command);
+        wallService.displayWall(userRepository.getPostsFor(user).getPosts(), userRepository.getFollowedUsersFor(user), time);
     }
 
     private String getUserName(String command) {
