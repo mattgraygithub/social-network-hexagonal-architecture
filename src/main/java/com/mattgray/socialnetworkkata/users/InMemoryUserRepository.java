@@ -14,7 +14,6 @@ import java.util.List;
 public class InMemoryUserRepository implements UserRepository {
 
 
-
     private final List<User> users;
 
     public InMemoryUserRepository(List<User> users) {

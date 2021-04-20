@@ -12,8 +12,6 @@ import java.util.List;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserRepositoryShould {
 
@@ -85,7 +83,7 @@ class UserRepositoryShould {
                 new User(BOB_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
                 new User(CHARLIE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
                 new User(ALICE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>(
-                        Arrays.asList(BOB_USER_NAME,CHARLIE_USER_NAME))))
+                        Arrays.asList(BOB_USER_NAME, CHARLIE_USER_NAME))))
         )));
 
         ArrayList<User> expectedUsers = new ArrayList<>(Arrays.asList(
