@@ -69,10 +69,10 @@ public class SocialNetworkAcceptanceTest {
         runCommand(READ_CHARLIE_WALL, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
-                CHARLIE_USER_NAME + " - " + CHARLIE_EXAMPLE_POST + secondsAgo(15) + NEW_LINE +
-                        BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE +
-                        BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE +
-                        ALICE_USER_NAME + " - " + ALICE_EXAMPLE_POST + minutesAgo(5) + NEW_LINE
+                CHARLIE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + CHARLIE_EXAMPLE_POST + secondsAgo(15) + NEW_LINE +
+                        BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE +
+                        BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE +
+                        ALICE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + ALICE_EXAMPLE_POST + minutesAgo(5) + NEW_LINE
         );
     }
 

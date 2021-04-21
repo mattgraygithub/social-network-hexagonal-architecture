@@ -23,6 +23,7 @@ public class TestData {
     public static final String CHARLIE_FOLLOWS_BOB = CHARLIE_USER_NAME + FOLLOW_COMMAND + BOB_USER_NAME;
     public static final String READ_CHARLIE_WALL = CHARLIE_USER_NAME + READ_WALL_COMMAND;
     public static final String NEW_LINE = System.getProperty("line.separator");
+    public static final String DELIMITER_BETWEEN_USERNAME_AND_POST = " - ";
     public static final LocalDateTime AT_12PM = LocalDateTime.of(2019, 6, 21, 12, 0, 0);
     public static final LocalDateTime AT_15_SECONDS_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 45);
     public static final LocalDateTime AT_5_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 55, 0);

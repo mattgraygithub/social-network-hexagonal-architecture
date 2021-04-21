@@ -58,7 +58,7 @@ class WallServiceShould {
 
         wallService.displayWall(charlie, followedUsers, stubbedLocalTimeOf(AT_12PM));
 
-        assertThat(getConsoleOutput()).isEqualTo(CHARLIE_USER_NAME + " - " + CHARLIE_EXAMPLE_POST + FIVE_MINUTES_AGO + NEW_LINE);
+        assertThat(getConsoleOutput()).isEqualTo(CHARLIE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + CHARLIE_EXAMPLE_POST + FIVE_MINUTES_AGO + NEW_LINE);
     }
 
     @Test
@@ -75,8 +75,8 @@ class WallServiceShould {
         wallService.displayWall(bob, followedUsers, stubbedLocalTimeOf(AT_12PM));
 
         assertThat(getConsoleOutput()).isEqualTo(
-                BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_TWO + ONE_MINUTE_AGO + NEW_LINE +
-                        BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_ONE + TWO_MINUTES_AGO + NEW_LINE);
+                BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_TWO + ONE_MINUTE_AGO + NEW_LINE +
+                        BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_ONE + TWO_MINUTES_AGO + NEW_LINE);
     }
 
     private ArrayList<Post> generatePosts(String post, LocalDateTime time) {

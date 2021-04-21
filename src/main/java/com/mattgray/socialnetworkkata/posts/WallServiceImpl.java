@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class WallServiceImpl implements WallService {
 
+    private static final String DELIMITER_BETWEEN_USERNAME_AND_POST = " - ";
     private final ClockService clockService;
 
     public WallServiceImpl(ClockService clockService) {
@@ -20,7 +21,7 @@ public class WallServiceImpl implements WallService {
         ArrayList<Post> posts = user.getPosts().getPosts();
 
         for (int i = posts.size() - 1; i >= 0; i--) {
-            System.out.println(user.getUserName() + " - " + posts.get(i).getPost() + clockService.getTimeBetween(posts.get(i).getTimeOfPost(), timeOfCommand));
+            System.out.println(user.getUserName() + DELIMITER_BETWEEN_USERNAME_AND_POST + posts.get(i).getPost() + clockService.getTimeBetween(posts.get(i).getTimeOfPost(), timeOfCommand));
         }
     }
 }
