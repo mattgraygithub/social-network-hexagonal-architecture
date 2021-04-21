@@ -71,13 +71,13 @@ public class InMemoryUserRepository implements UserRepository {
 
     private void addPostToExistingUser(String userName, String post, LocalDateTime time) {
         PostRepository postRepository = getPostsFor(userName);
-        postRepository.addPost(post, time);
+        postRepository.addPost(userName, post, time);
         FolloweeRepository followeeRepository = users.get(getUserIndexOf(userName)).getFolloweeRepository();
         updateUser(userName, postRepository, followeeRepository);
     }
 
     private void addNewUserAndPost(String userName, String post, LocalDateTime time) {
-        PostRepository postRepository = new InMemoryPostRepository(new ArrayList<>(Collections.singletonList(new Post(post, time))));
+        PostRepository postRepository = new InMemoryPostRepository(new ArrayList<>(Collections.singletonList(new Post(userName, post, time))));
         addUser(userName, postRepository, new InMemoryFolloweeRepository(new ArrayList<>()));
     }
 

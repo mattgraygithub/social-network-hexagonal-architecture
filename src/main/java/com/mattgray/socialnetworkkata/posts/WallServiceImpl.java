@@ -5,6 +5,7 @@ import com.mattgray.socialnetworkkata.users.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class WallServiceImpl implements WallService {
 
@@ -17,11 +18,16 @@ public class WallServiceImpl implements WallService {
 
     @Override
     public void displayWall(User user, ArrayList<User> followedUsers, LocalDateTime timeOfCommand) {
+        ArrayList<Post> posts = new ArrayList<>(user.getPosts().getPosts());
 
-        ArrayList<Post> posts = user.getPosts().getPosts();
+        for (User followedUser : followedUsers) {
+            posts.addAll(followedUser.getPosts().getPosts());
+        }
 
-        for (int i = posts.size() - 1; i >= 0; i--) {
-            System.out.println(user.getUserName() + DELIMITER_BETWEEN_USERNAME_AND_POST + posts.get(i).getPost() + clockService.getTimeBetween(posts.get(i).getTimeOfPost(), timeOfCommand));
+        posts.sort(Comparator.comparing(Post::getTimeOfPost).reversed());
+
+        for (Post post : posts) {
+            System.out.println(post.getUserName() + DELIMITER_BETWEEN_USERNAME_AND_POST + post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfCommand));
         }
     }
 }

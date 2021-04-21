@@ -37,7 +37,7 @@ public class TimelineServiceShould {
 
     @Test
     void callClockServiceToGetTimeBetweenPostAndReadCommand() {
-        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
         verify(clockServiceMock).getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
@@ -45,7 +45,7 @@ public class TimelineServiceShould {
 
     @Test
     void printATimelineWithOnePost() throws IOException {
-        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
+        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
@@ -55,8 +55,8 @@ public class TimelineServiceShould {
     @Test
     void printATimelineMultiplePosts() throws IOException {
         ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(
-                new Post(BOB_EXAMPLE_POST_COMMAND_ONE, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM)),
-                new Post(BOB_EXAMPLE_POST_COMMAND_TWO, stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM))
+                new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM)),
+                new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM))
         ));
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(TWO_MINUTES_AGO);

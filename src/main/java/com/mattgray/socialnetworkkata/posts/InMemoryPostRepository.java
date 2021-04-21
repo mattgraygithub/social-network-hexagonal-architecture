@@ -13,8 +13,8 @@ public class InMemoryPostRepository implements PostRepository {
     }
 
     @Override
-    public void addPost(String post, LocalDateTime time) {
-        posts.add(new Post(post, time));
+    public void addPost(String userName, String post, LocalDateTime time) {
+        posts.add(new Post(userName, post, time));
     }
 
     @Override
