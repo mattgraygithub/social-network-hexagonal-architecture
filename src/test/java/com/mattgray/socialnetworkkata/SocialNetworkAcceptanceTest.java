@@ -34,7 +34,7 @@ public class SocialNetworkAcceptanceTest {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockStub = mock(Clock.class);
-        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(new ArrayList<>()), new TimelineServiceImpl(new ClockServiceImpl()), new WallServiceImpl())), clockStub);
+        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(new ArrayList<>()), new TimelineServiceImpl(new ClockServiceImpl()), new WallServiceImpl(new ClockServiceImpl()))), clockStub);
     }
 
     @Test

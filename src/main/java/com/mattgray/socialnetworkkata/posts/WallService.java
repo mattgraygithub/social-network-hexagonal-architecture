@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface WallService {
-    void displayWall(ArrayList<Post> posts, ArrayList<User> followedUsers, LocalDateTime time);
+    void displayWall(User user, ArrayList<User> followedUsers, LocalDateTime time);
 }

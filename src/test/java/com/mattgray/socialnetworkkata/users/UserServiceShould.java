@@ -58,16 +58,15 @@ class UserServiceShould {
 
     @Test
     void callWallServiceToPrintWallForAUser() {
-        ArrayList<Post> posts = generatePosts(CHARLIE_EXAMPLE_POST);
-        when(mockUserRepository.getPostsFor((CHARLIE_USER_NAME))).thenReturn(new InMemoryPostRepository(posts));
+        User charlie = new User(CHARLIE_USER_NAME, new InMemoryPostRepository(generatePosts(CHARLIE_EXAMPLE_POST)), new InMemoryFolloweeRepository(new ArrayList<>()));
+        when(mockUserRepository.getUser(CHARLIE_USER_NAME)).thenReturn(charlie);
 
-        ArrayList<Post> alicePosts = generatePosts(ALICE_EXAMPLE_POST);
-        ArrayList<User> followedUsers = new ArrayList<>(Collections.singletonList(new User(ALICE_USER_NAME, new InMemoryPostRepository(alicePosts), new InMemoryFolloweeRepository(new ArrayList<>()))));
+        ArrayList<User> followedUsers = new ArrayList<>(Collections.singletonList(new User(ALICE_USER_NAME, new InMemoryPostRepository(generatePosts(ALICE_EXAMPLE_POST)), new InMemoryFolloweeRepository(new ArrayList<>()))));
         when(mockUserRepository.getFollowedUsersFor(CHARLIE_USER_NAME)).thenReturn(followedUsers);
 
         userService.getWall(READ_CHARLIE_WALL, now);
 
-        verify(mockWallService).displayWall(posts, followedUsers, now);
+        verify(mockWallService).displayWall(charlie, followedUsers, now);
     }
 
     private ArrayList<Post> generatePosts(String post) {

@@ -13,5 +13,7 @@ public interface UserRepository {
 
     void addFollowee(String userName, String followee);
 
+    User getUser(String userName);
+
     ArrayList<User> getFollowedUsersFor(String userName);
 }

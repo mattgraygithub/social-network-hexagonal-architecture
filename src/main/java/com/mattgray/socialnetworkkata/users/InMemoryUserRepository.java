@@ -13,13 +13,11 @@ import java.util.List;
 
 public class InMemoryUserRepository implements UserRepository {
 
-
     private final List<User> users;
 
     public InMemoryUserRepository(List<User> users) {
         this.users = users;
     }
-
 
     @Override
     public void addPost(String userName, String post, LocalDateTime time) {
@@ -42,6 +40,11 @@ public class InMemoryUserRepository implements UserRepository {
         } else {
             addNewUserAndFollowee(userName, followeeUserName);
         }
+    }
+
+    @Override
+    public User getUser(String userName) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
