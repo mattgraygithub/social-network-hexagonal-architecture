@@ -4,6 +4,7 @@ import com.mattgray.socialnetworkkata.common.ClockService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TimelineServiceImpl implements TimelineService {
 
@@ -15,6 +16,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void displayTimeLine(ArrayList<Post> posts, LocalDateTime timeOfReadCommand) {
+        Collections.reverse(posts);
         for (Post post : posts) {
             System.out.println(post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand));
         }

@@ -53,8 +53,8 @@ public class SocialNetworkAcceptanceTest {
         runCommand(READ_BOB_TIMELINE, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
-                BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE +
-                        BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE
+                BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE +
+                        BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE
         );
     }
 

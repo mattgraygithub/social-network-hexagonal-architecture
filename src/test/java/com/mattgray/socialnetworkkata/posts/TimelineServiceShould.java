@@ -64,8 +64,9 @@ public class TimelineServiceShould {
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
         assertThat(getConsoleOutput()).isEqualTo(
-                BOB_EXAMPLE_POST_COMMAND_ONE + " (5 minutes ago)" + NEW_LINE +
-                        BOB_EXAMPLE_POST_COMMAND_TWO + TWO_MINUTES_AGO + NEW_LINE
+                BOB_EXAMPLE_POST_COMMAND_TWO + TWO_MINUTES_AGO + NEW_LINE +
+                BOB_EXAMPLE_POST_COMMAND_ONE + FIVE_MINUTES_AGO + NEW_LINE
+
         );
     }
 
