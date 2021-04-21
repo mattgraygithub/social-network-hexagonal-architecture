@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
@@ -78,7 +79,6 @@ class UserRepositoryShould {
 
     @Test
     void returnAListOfFollowedUsersForAGivenUser() {
-
         userRepository = new InMemoryUserRepository(new ArrayList<>(Arrays.asList(
                 new User(BOB_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
                 new User(CHARLIE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())),
@@ -92,5 +92,14 @@ class UserRepositoryShould {
         ));
 
         assertThat(userRepository.getFollowedUsersFor(ALICE_USER_NAME)).isEqualTo(expectedUsers);
+    }
+
+    @Test
+    void returnAUserBasedOnTheirUsername() {
+        userRepository = new InMemoryUserRepository(new ArrayList<>(Collections.singletonList(new User(ALICE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>())))));
+
+        User alice = new User(ALICE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>()));
+
+        assertThat(userRepository.getUser(ALICE_USER_NAME)).isEqualTo(alice);
     }
 }

@@ -44,7 +44,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public User getUser(String userName) {
-        throw new UnsupportedOperationException();
+        return users.get(getUserIndexOf(userName));
     }
 
     @Override

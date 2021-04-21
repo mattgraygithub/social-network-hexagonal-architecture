@@ -63,9 +63,8 @@ public class SocialNetworkAcceptanceTest {
         runAliceAndBobPostCommands();
 
         runCommand(CHARLIE_EXAMPLE_POST_COMMAND, AT_15_SECONDS_BEFORE_12PM);
-
-        SocialNetwork.main(new String[]{CHARLIE_FOLLOWS_ALICE, CHARLIE_FOLLOWS_BOB});
-
+        runCommand(CHARLIE_FOLLOWS_ALICE, AT_12PM);
+        runCommand(CHARLIE_FOLLOWS_BOB, AT_12PM);
         runCommand(READ_CHARLIE_WALL, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
