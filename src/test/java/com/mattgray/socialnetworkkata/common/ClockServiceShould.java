@@ -30,7 +30,7 @@ class ClockServiceShould {
 
     @Test
     void getFormattedElapsedTimeInMinutes() {
-        assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(" (2 minutes ago)");
+        assertThat(clockService.getTimeBetween(stubbedLocalTime(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTime(AT_12PM))).isEqualTo(TWO_MINUTES_AGO);
     }
 
     @Test

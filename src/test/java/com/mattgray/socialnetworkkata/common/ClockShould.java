@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static com.mattgray.socialnetworkkata.common.TestData.ONE_MINUTE_AGO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ClockShould {
@@ -18,7 +19,7 @@ class ClockShould {
     private static Stream<Arguments> singularTimeUnitsProvider() {
         return Stream.of(
                 Arguments.of(Clock.SECONDS.getFormattedTimeDifference(ONE_SECOND), " (1 second ago)"),
-                Arguments.of(Clock.MINUTES.getFormattedTimeDifference(ONE_MINUTE), " (1 minute ago)"),
+                Arguments.of(Clock.MINUTES.getFormattedTimeDifference(ONE_MINUTE), ONE_MINUTE_AGO),
                 Arguments.of(Clock.HOURS.getFormattedTimeDifference(ONE_HOUR), " (1 hour ago)")
         );
     }

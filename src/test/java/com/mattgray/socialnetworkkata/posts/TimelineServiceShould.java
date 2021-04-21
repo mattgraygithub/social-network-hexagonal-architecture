@@ -21,7 +21,6 @@ import static org.mockito.Mockito.*;
 
 public class TimelineServiceShould {
 
-    private static final String TWO_MINUTES_AGO = " (2 minutes ago)";
     ByteArrayOutputStream byteArrayOutputStream;
     Clock clockStub;
     ClockService clockServiceMock;

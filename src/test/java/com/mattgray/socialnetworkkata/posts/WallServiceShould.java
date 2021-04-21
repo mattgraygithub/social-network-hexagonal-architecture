@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.mattgray.socialnetworkkata.common.TestData.*;
@@ -49,7 +50,7 @@ class WallServiceShould {
     }
 
     @Test
-    void printAUsersTimelineWithOnePostFromThatUser() throws IOException {
+    void printAUsersTimelineWithOnePostFromThatUserAndNoFollowedUsers() throws IOException {
         User charlie = new User(CHARLIE_USER_NAME, new InMemoryPostRepository(generatePosts(CHARLIE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))), new InMemoryFolloweeRepository(new ArrayList<>()));
         ArrayList<User> followedUsers = new ArrayList<>();
 
@@ -58,6 +59,24 @@ class WallServiceShould {
         wallService.displayWall(charlie, followedUsers, stubbedLocalTimeOf(AT_12PM));
 
         assertThat(getConsoleOutput()).isEqualTo(CHARLIE_USER_NAME + " - " + CHARLIE_EXAMPLE_POST + FIVE_MINUTES_AGO + NEW_LINE);
+    }
+
+    @Test
+    void printAUsersTimelineWithTwoPostsAndNoFollowedUsers() throws IOException {
+        User bob = new User(BOB_USER_NAME,
+                new InMemoryPostRepository(new ArrayList<>(Arrays.asList(new Post(BOB_EXAMPLE_POST_ONE, stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM)), new Post(BOB_EXAMPLE_POST_TWO, stubbedLocalTimeOf(AT_1_MINUTE_BEFORE_12PM))))),
+                new InMemoryFolloweeRepository(new ArrayList<>()));
+
+        ArrayList<User> followedUsers = new ArrayList<>();
+
+        when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_1_MINUTE_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(ONE_MINUTE_AGO);
+        when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(TWO_MINUTES_AGO);
+
+        wallService.displayWall(bob, followedUsers, stubbedLocalTimeOf(AT_12PM));
+
+        assertThat(getConsoleOutput()).isEqualTo(
+                BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_TWO + ONE_MINUTE_AGO + NEW_LINE +
+                        BOB_USER_NAME + " - " + BOB_EXAMPLE_POST_ONE + TWO_MINUTES_AGO + NEW_LINE);
     }
 
     private ArrayList<Post> generatePosts(String post, LocalDateTime time) {
@@ -73,5 +92,4 @@ class WallServiceShould {
         byteArrayOutputStream.flush();
         return byteArrayOutputStream.toString();
     }
-
 }

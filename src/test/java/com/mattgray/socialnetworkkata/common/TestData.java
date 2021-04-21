@@ -29,5 +29,7 @@ public class TestData {
     public static final LocalDateTime AT_2_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 58, 0);
     public static final LocalDateTime AT_1_MINUTE_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 0);
     public static final LocalDateTime AT_2_HOURS_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 10, 0, 0);
+    public static final String ONE_MINUTE_AGO = " (1 minute ago)";
+    public static final String TWO_MINUTES_AGO = " (2 minutes ago)";
     public static final String FIVE_MINUTES_AGO = " (5 minutes ago)";
 }

@@ -17,9 +17,10 @@ public class WallServiceImpl implements WallService {
     @Override
     public void displayWall(User user, ArrayList<User> followedUsers, LocalDateTime timeOfCommand) {
 
-        String post = user.getPosts().getPosts().get(0).getPost();
-        LocalDateTime timeOfPost = user.getPosts().getPosts().get(0).getTimeOfPost();
+        ArrayList<Post> posts = user.getPosts().getPosts();
 
-        System.out.println(user.getUserName() + " - " + post + clockService.getTimeBetween(timeOfPost, timeOfCommand));
+        for (int i = posts.size() - 1; i >= 0; i--) {
+            System.out.println(user.getUserName() + " - " + posts.get(i).getPost() + clockService.getTimeBetween(posts.get(i).getTimeOfPost(), timeOfCommand));
+        }
     }
 }
