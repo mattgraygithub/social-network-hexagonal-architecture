@@ -1,9 +1,14 @@
 package com.mattgray.socialnetworkkata;
 
+import com.mattgray.socialnetworkkata.clock.ClockService;
 import com.mattgray.socialnetworkkata.clock.ClockServiceImpl;
+import com.mattgray.socialnetworkkata.following.WallService;
 import com.mattgray.socialnetworkkata.following.WallServiceImpl;
+import com.mattgray.socialnetworkkata.posting.TimelineService;
 import com.mattgray.socialnetworkkata.posting.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
+import com.mattgray.socialnetworkkata.users.User;
+import com.mattgray.socialnetworkkata.users.UserRepository;
 import com.mattgray.socialnetworkkata.users.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,15 +31,27 @@ import static org.mockito.Mockito.when;
 public class SocialNetworkAcceptanceTest {
 
     ByteArrayOutputStream byteArrayOutputStream;
-    SocialNetwork socialNetwork;
     Clock clockStub;
+    ArrayList<User> users;
+    UserRepository userRepository;
+    ClockService clockService;
+    TimelineService timelineService;
+    WallService wallService;
+    UserService userService;
+    SocialNetwork socialNetwork;
 
     @BeforeEach
     void setUp() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockStub = mock(Clock.class);
-        socialNetwork = new SocialNetwork(new CommandProcessor(new UserService(new InMemoryUserRepository(new ArrayList<>()), new TimelineServiceImpl(new ClockServiceImpl()), new WallServiceImpl(new ClockServiceImpl()))), clockStub);
+        users = new ArrayList<>();
+        userRepository = new InMemoryUserRepository(users);
+        clockService = new ClockServiceImpl();
+        timelineService = new TimelineServiceImpl(clockService);
+        wallService = new WallServiceImpl(clockService);
+        userService = new UserService(userRepository, timelineService, wallService);
+        socialNetwork = new SocialNetwork(new CommandProcessor(userService), clockStub);
     }
 
     @Test
