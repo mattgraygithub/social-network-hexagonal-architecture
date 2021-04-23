@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata.posting;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Post {
 
@@ -24,5 +25,18 @@ public class Post {
 
     public String getUserName() {
         return userName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post1 = (Post) o;
+        return Objects.equals(userName, post1.userName) && Objects.equals(post, post1.post) && Objects.equals(timeOfPost, post1.timeOfPost);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, post, timeOfPost);
     }
 }
