@@ -3,15 +3,15 @@ package com.mattgray.socialnetworkkata.posting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.openMocks;
 
-class InMemoryPostRepositoryShould {
+class PostRepositoryShould {
 
     @Mock
     ArrayList<Post> postsMock;
@@ -20,7 +20,7 @@ class InMemoryPostRepositoryShould {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        openMocks(this);
         postRepository = new InMemoryPostRepository(postsMock);
     }
 

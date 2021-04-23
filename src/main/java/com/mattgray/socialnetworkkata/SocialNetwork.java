@@ -18,15 +18,14 @@ import java.util.Scanner;
 
 public class SocialNetwork {
 
-    private final CommandProcessor commandProcessor;
-    private final Clock clock;
-
     private static final ArrayList<User> users = new ArrayList<>();
     private static final UserRepository userRepository = new InMemoryUserRepository(users);
     private static final ClockService clockService = new ClockServiceImpl();
     private static final TimelineService timelineService = new TimelineServiceImpl(clockService);
     private static final WallService wallService = new WallServiceImpl(clockService);
     private static final UserService userService = new UserService(userRepository, timelineService, wallService);
+    private final CommandProcessor commandProcessor;
+    private final Clock clock;
 
     public SocialNetwork(CommandProcessor commandProcessor, Clock clock) {
         this.commandProcessor = commandProcessor;
