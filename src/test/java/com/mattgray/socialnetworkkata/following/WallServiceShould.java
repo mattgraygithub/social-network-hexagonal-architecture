@@ -1,9 +1,6 @@
 package com.mattgray.socialnetworkkata.following;
 
 import com.mattgray.socialnetworkkata.clock.ClockService;
-import com.mattgray.socialnetworkkata.following.InMemoryFolloweeRepository;
-import com.mattgray.socialnetworkkata.following.WallService;
-import com.mattgray.socialnetworkkata.following.WallServiceImpl;
 import com.mattgray.socialnetworkkata.posting.InMemoryPostRepository;
 import com.mattgray.socialnetworkkata.posting.Post;
 import com.mattgray.socialnetworkkata.users.User;

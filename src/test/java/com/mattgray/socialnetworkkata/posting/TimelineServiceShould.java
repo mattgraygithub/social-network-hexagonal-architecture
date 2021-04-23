@@ -65,7 +65,7 @@ public class TimelineServiceShould {
 
         assertThat(getConsoleOutput()).isEqualTo(
                 BOB_EXAMPLE_POST_COMMAND_TWO + TWO_MINUTES_AGO + NEW_LINE +
-                BOB_EXAMPLE_POST_COMMAND_ONE + FIVE_MINUTES_AGO + NEW_LINE
+                        BOB_EXAMPLE_POST_COMMAND_ONE + FIVE_MINUTES_AGO + NEW_LINE
 
         );
     }
