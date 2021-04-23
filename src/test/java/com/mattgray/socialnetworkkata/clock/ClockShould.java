@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.common;
+package com.mattgray.socialnetworkkata.clock;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.mattgray.socialnetworkkata.common.TestData.ONE_MINUTE_AGO;
+import static com.mattgray.socialnetworkkata.TestData.ONE_MINUTE_AGO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ClockShould {

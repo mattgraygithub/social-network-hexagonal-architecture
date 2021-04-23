@@ -1,6 +1,6 @@
 package com.mattgray.socialnetworkkata;
 
-import com.mattgray.socialnetworkkata.common.ClockServiceImpl;
+import com.mattgray.socialnetworkkata.clock.ClockServiceImpl;
 import com.mattgray.socialnetworkkata.posts.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.posts.WallServiceImpl;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
@@ -18,7 +18,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 
-import static com.mattgray.socialnetworkkata.common.TestData.*;
+import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

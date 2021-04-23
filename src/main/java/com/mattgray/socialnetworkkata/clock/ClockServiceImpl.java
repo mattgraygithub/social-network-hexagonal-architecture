@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.common;
+package com.mattgray.socialnetworkkata.clock;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

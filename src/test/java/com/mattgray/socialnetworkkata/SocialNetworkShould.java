@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import static com.mattgray.socialnetworkkata.common.TestData.ALICE_USER_NAME;
-import static com.mattgray.socialnetworkkata.common.TestData.AT_12PM;
+import static com.mattgray.socialnetworkkata.TestData.ALICE_USER_NAME;
+import static com.mattgray.socialnetworkkata.TestData.AT_12PM;
 import static org.mockito.Mockito.*;
 
 class SocialNetworkShould {

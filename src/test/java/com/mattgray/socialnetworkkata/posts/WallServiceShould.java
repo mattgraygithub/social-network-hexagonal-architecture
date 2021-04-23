@@ -1,6 +1,6 @@
 package com.mattgray.socialnetworkkata.posts;
 
-import com.mattgray.socialnetworkkata.common.ClockService;
+import com.mattgray.socialnetworkkata.clock.ClockService;
 import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.users.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.mattgray.socialnetworkkata.common.TestData.*;
+import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 

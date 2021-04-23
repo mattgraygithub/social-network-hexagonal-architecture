@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.mattgray.socialnetworkkata.common.TestData.*;
+import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserRepositoryShould {

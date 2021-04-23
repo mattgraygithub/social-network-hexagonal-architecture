@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static com.mattgray.socialnetworkkata.common.TestData.*;
+import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 

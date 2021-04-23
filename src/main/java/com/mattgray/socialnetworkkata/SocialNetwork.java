@@ -1,6 +1,6 @@
 package com.mattgray.socialnetworkkata;
 
-import com.mattgray.socialnetworkkata.common.ClockServiceImpl;
+import com.mattgray.socialnetworkkata.clock.ClockServiceImpl;
 import com.mattgray.socialnetworkkata.posts.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.posts.WallServiceImpl;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
