@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.posts;
+package com.mattgray.socialnetworkkata.following;
 
 import com.mattgray.socialnetworkkata.users.User;
 

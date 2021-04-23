@@ -1,7 +1,11 @@
-package com.mattgray.socialnetworkkata.posts;
+package com.mattgray.socialnetworkkata.following;
 
 import com.mattgray.socialnetworkkata.clock.ClockService;
-import com.mattgray.socialnetworkkata.followees.InMemoryFolloweeRepository;
+import com.mattgray.socialnetworkkata.following.InMemoryFolloweeRepository;
+import com.mattgray.socialnetworkkata.following.WallService;
+import com.mattgray.socialnetworkkata.following.WallServiceImpl;
+import com.mattgray.socialnetworkkata.posting.InMemoryPostRepository;
+import com.mattgray.socialnetworkkata.posting.Post;
 import com.mattgray.socialnetworkkata.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

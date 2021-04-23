@@ -1,6 +1,6 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.posts.PostRepository;
+import com.mattgray.socialnetworkkata.posting.PostRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

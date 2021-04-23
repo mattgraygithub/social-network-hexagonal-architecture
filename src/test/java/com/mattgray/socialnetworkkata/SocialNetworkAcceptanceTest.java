@@ -1,8 +1,8 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.clock.ClockServiceImpl;
-import com.mattgray.socialnetworkkata.posts.TimelineServiceImpl;
-import com.mattgray.socialnetworkkata.posts.WallServiceImpl;
+import com.mattgray.socialnetworkkata.posting.TimelineServiceImpl;
+import com.mattgray.socialnetworkkata.following.WallServiceImpl;
 import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
 import com.mattgray.socialnetworkkata.users.UserService;
 import org.junit.jupiter.api.BeforeEach;

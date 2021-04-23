@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.followees.FolloweeRepository;
-import com.mattgray.socialnetworkkata.posts.PostRepository;
+import com.mattgray.socialnetworkkata.following.FolloweeRepository;
+import com.mattgray.socialnetworkkata.posting.PostRepository;
 
 import java.util.Objects;
 

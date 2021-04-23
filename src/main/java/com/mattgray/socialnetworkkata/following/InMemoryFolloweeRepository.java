@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.followees;
+package com.mattgray.socialnetworkkata.following;
 
 import java.util.ArrayList;
 import java.util.Objects;

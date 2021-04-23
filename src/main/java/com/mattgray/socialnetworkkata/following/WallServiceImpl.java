@@ -1,6 +1,7 @@
-package com.mattgray.socialnetworkkata.posts;
+package com.mattgray.socialnetworkkata.following;
 
 import com.mattgray.socialnetworkkata.clock.ClockService;
+import com.mattgray.socialnetworkkata.posting.Post;
 import com.mattgray.socialnetworkkata.users.User;
 
 import java.time.LocalDateTime;
