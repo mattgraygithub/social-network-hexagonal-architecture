@@ -37,7 +37,7 @@ public class TimelineServiceShould {
 
     @Test
     void callClockServiceToGetTimeBetweenPostAndReadCommand() {
-        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
+        ArrayList<Post> timeline = getAliceTimelineWithOnePost();
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
         verify(clockServiceMock).getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
@@ -45,7 +45,7 @@ public class TimelineServiceShould {
 
     @Test
     void printATimelineWithOnePost() throws IOException {
-        ArrayList<Post> timeline = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
+        ArrayList<Post> timeline = getAliceTimelineWithOnePost();
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
         timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
@@ -68,6 +68,10 @@ public class TimelineServiceShould {
                         BOB_EXAMPLE_POST_COMMAND_ONE + FIVE_MINUTES_AGO + NEW_LINE
 
         );
+    }
+
+    private ArrayList<Post> getAliceTimelineWithOnePost() {
+        return new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM))));
     }
 
     private LocalDateTime stubbedLocalTimeOf(LocalDateTime time) {
