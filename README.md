@@ -59,7 +59,7 @@ IMPORTANT: Focus on writing the best code you can produce. Do not rush. Take as 
 ## Running the Application
 
 - Have Java 11 installed
-- run ```./gradlew run  ```
+- Run ```./gradlew run  ```
 
 ## Running the Tests
 
