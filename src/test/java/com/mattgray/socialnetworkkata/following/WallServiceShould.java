@@ -74,11 +74,11 @@ class WallServiceShould {
     @Test
     void printAUsersWallWithNoPostsOfTheirOwnButOnePostFromOneFollowedUser() throws IOException {
         PostRepository alicePostRepository = new InMemoryPostRepository(new ArrayList<>());
-        User alice = getTestUser(ALICE_USER_NAME, alicePostRepository, getTestFolloweeRepository(new ArrayList<>(Collections.singletonList(BOB_USER_NAME))));
+        User alice = getTestUser(ALICE_USER_NAME, alicePostRepository, getTestFolloweeRepositoryWithOneUser());
 
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(TWO_MINUTES_AGO);
 
-        wallService.displayWall(alice, getListOfOneFollowedUserWIthOnePost(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
+        wallService.displayWall(alice, getListOfOneFollowedUserWithOnePost(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
 
         assertThat(getConsoleOutput()).isEqualTo(BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_ONE + TWO_MINUTES_AGO + NEW_LINE);
     }
@@ -86,13 +86,12 @@ class WallServiceShould {
     @Test
     void printAUsersWallWithOnePostOfTheirOwnAndOnePostFromOneFollowedUser() throws IOException {
         PostRepository alicePostRepository = getTestPostRepository(ALICE_USER_NAME, new String[]{ALICE_EXAMPLE_POST}, new LocalDateTime[]{AT_5_MINUTES_BEFORE_12PM});
-        FolloweeRepository followeeRepository = getTestFolloweeRepository(new ArrayList<>(Collections.singletonList(BOB_USER_NAME)));
-        User alice = getTestUser(ALICE_USER_NAME, alicePostRepository, followeeRepository);
+        User alice = getTestUser(ALICE_USER_NAME, alicePostRepository, getTestFolloweeRepositoryWithOneUser());
 
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(TWO_MINUTES_AGO);
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
 
-        wallService.displayWall(alice, getListOfOneFollowedUserWIthOnePost(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
+        wallService.displayWall(alice, getListOfOneFollowedUserWithOnePost(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
 
         assertThat(getConsoleOutput()).isEqualTo(
                 BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_ONE + TWO_MINUTES_AGO + NEW_LINE +
@@ -102,13 +101,12 @@ class WallServiceShould {
     @Test
     void printAUsersWallWithOnePostOfTheirOwnAndOnePostFromOneFollowedUserPostedBeforeTheirOwnPost() throws IOException {
         PostRepository alicePostRepository = getTestPostRepository(ALICE_USER_NAME, new String[]{ALICE_EXAMPLE_POST}, new LocalDateTime[]{AT_2_MINUTES_BEFORE_12PM});
-        FolloweeRepository followeeRepository = getTestFolloweeRepository(new ArrayList<>(Collections.singletonList(BOB_USER_NAME)));
-        User alice = getTestUser(ALICE_USER_NAME, alicePostRepository, followeeRepository);
+        User alice = getTestUser(ALICE_USER_NAME, alicePostRepository, getTestFolloweeRepositoryWithOneUser());
 
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(TWO_MINUTES_AGO);
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
 
-        wallService.displayWall(alice, getListOfOneFollowedUserWIthOnePost(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
+        wallService.displayWall(alice, getListOfOneFollowedUserWithOnePost(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
 
         assertThat(getConsoleOutput()).isEqualTo(
                 ALICE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + ALICE_EXAMPLE_POST + TWO_MINUTES_AGO + NEW_LINE +
@@ -134,10 +132,14 @@ class WallServiceShould {
         return new InMemoryPostRepository(posts);
     }
 
-    private ArrayList<User> getListOfOneFollowedUserWIthOnePost(LocalDateTime timeOfPost) {
+    private ArrayList<User> getListOfOneFollowedUserWithOnePost(LocalDateTime timeOfPost) {
         PostRepository bobPostRepository = getTestPostRepository(BOB_USER_NAME, new String[]{BOB_EXAMPLE_POST_ONE}, new LocalDateTime[]{timeOfPost});
         User bob = getTestUser(BOB_USER_NAME, bobPostRepository, emptyFolloweeRepository());
         return new ArrayList<>(Collections.singletonList(bob));
+    }
+
+    private FolloweeRepository getTestFolloweeRepositoryWithOneUser() {
+        return getTestFolloweeRepository(new ArrayList<>(Collections.singletonList(BOB_USER_NAME)));
     }
 
     private FolloweeRepository getTestFolloweeRepository(ArrayList<String> followedUsers) {
