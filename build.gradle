@@ -2,7 +2,9 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+apply plugin: 'application'
+
+group 'com.mattgray.socialnetworkkata'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -20,3 +22,6 @@ dependencies {
     testCompile('org.assertj:assertj-core:3.11.1', 'org.junit.jupiter:junit-jupiter-params:5.7.0')
 }
 
+mainClassName = 'com.mattgray.socialnetworkkata.SocialNetwork'
+
+run { standardInput = System.in }
