@@ -91,7 +91,7 @@ class UserRepositoryShould {
                 new User(CHARLIE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>()))
         ));
 
-        assertThat(userRepository.getFollowedUsersFor(ALICE_USER_NAME)).isEqualTo(expectedUsers);
+        assertThat(userRepository.getFollowedUsersFor(ALICE_USER_NAME)).usingRecursiveComparison().isEqualTo(expectedUsers);
     }
 
     @Test
@@ -100,6 +100,6 @@ class UserRepositoryShould {
 
         User alice = new User(ALICE_USER_NAME, new InMemoryPostRepository(new ArrayList<>()), new InMemoryFolloweeRepository(new ArrayList<>()));
 
-        assertThat(userRepository.getUser(ALICE_USER_NAME)).isEqualTo(alice);
+        assertThat(userRepository.getUser(ALICE_USER_NAME)).usingRecursiveComparison().isEqualTo(alice);
     }
 }

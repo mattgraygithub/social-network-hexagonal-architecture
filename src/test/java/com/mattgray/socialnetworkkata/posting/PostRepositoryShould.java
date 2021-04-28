@@ -2,6 +2,7 @@ package com.mattgray.socialnetworkkata.posting;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
@@ -28,11 +29,11 @@ class PostRepositoryShould {
     void addPosts() {
         postRepository.addPost(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_12PM);
 
-        verify(postsMock).add(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_12PM));
+        verify(postsMock).add(ArgumentMatchers.refEq(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_12PM)));
     }
 
     @Test
     void getPosts() {
-        assertThat(postRepository.getPosts()).isEqualTo(postsMock);
+        assertThat(postRepository.getPosts()).usingRecursiveComparison().isEqualTo(postsMock);
     }
 }
