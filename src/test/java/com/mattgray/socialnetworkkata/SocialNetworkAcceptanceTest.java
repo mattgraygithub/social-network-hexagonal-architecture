@@ -30,27 +30,21 @@ import static org.mockito.Mockito.when;
 
 public class SocialNetworkAcceptanceTest {
 
-    ByteArrayOutputStream byteArrayOutputStream;
-    Clock clockStub;
-    ArrayList<User> users;
-    UserRepository userRepository;
-    ClockService clockService;
-    TimelineService timelineService;
-    WallService wallService;
-    UserService userService;
-    SocialNetwork socialNetwork;
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private Clock clockStub;
+    private SocialNetwork socialNetwork;
 
     @BeforeEach
     void setUp() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockStub = mock(Clock.class);
-        users = new ArrayList<>();
-        userRepository = new InMemoryUserRepository(users);
-        clockService = new ClockServiceImpl();
-        timelineService = new TimelineServiceImpl(clockService);
-        wallService = new WallServiceImpl(clockService);
-        userService = new UserService(userRepository, timelineService, wallService);
+        ArrayList<User> users = new ArrayList<>();
+        UserRepository userRepository = new InMemoryUserRepository(users);
+        ClockService clockService = new ClockServiceImpl();
+        TimelineService timelineService = new TimelineServiceImpl(clockService);
+        WallService wallService = new WallServiceImpl(clockService);
+        UserService userService = new UserService(userRepository, timelineService, wallService);
         socialNetwork = new SocialNetwork(new CommandProcessor(userService), clockStub);
     }
 

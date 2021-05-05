@@ -21,16 +21,14 @@ import static org.mockito.Mockito.*;
 
 public class TimelineServiceShould {
 
-    ByteArrayOutputStream byteArrayOutputStream;
-    Clock clockStub;
-    ClockService clockServiceMock;
-    TimelineService timelineService;
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private ClockService clockServiceMock;
+    private TimelineService timelineService;
 
     @BeforeEach
     void setUp() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
-        clockStub = mock(Clock.class);
         clockServiceMock = mock(ClockService.class);
         timelineService = new TimelineServiceImpl(clockServiceMock);
     }

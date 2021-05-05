@@ -24,18 +24,14 @@ import static org.mockito.Mockito.*;
 
 class WallServiceShould {
 
-    ByteArrayOutputStream byteArrayOutputStream;
-    Clock clockStub;
-    ClockService clockServiceMock;
-    LocalDateTime now;
-    WallService wallService;
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private ClockService clockServiceMock;
+    private WallService wallService;
 
     @BeforeEach
     void setUp() {
-        now = LocalDateTime.now();
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
-        clockStub = mock(Clock.class);
         clockServiceMock = mock(ClockService.class);
         wallService = new WallServiceImpl(clockServiceMock);
     }

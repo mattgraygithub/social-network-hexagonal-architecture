@@ -12,9 +12,9 @@ import static org.mockito.Mockito.verify;
 
 class CommandProcessorShould {
 
-    LocalDateTime now;
-    CommandProcessor commandProcessor;
-    UserService mockUserService;
+    private LocalDateTime now;
+    private CommandProcessor commandProcessor;
+    private UserService mockUserService;
 
     @BeforeEach
     void setUp() {

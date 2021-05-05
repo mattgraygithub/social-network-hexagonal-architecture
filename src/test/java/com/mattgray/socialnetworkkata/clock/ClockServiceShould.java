@@ -10,16 +10,13 @@ import java.time.ZoneOffset;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class ClockServiceShould {
 
-    Clock clockStub;
-    ClockService clockService;
+    private ClockService clockService;
 
     @BeforeEach
     void setUp() {
-        clockStub = mock(Clock.class);
         clockService = new ClockServiceImpl();
     }
 
