@@ -21,9 +21,9 @@ import static org.mockito.Mockito.*;
 
 public class TimelineServiceShould {
 
-    private ByteArrayOutputStream byteArrayOutputStream;
-    private ClockService clockServiceMock;
-    private TimelineService timelineService;
+    private static ByteArrayOutputStream byteArrayOutputStream;
+    private static ClockService clockServiceMock;
+    private static TimelineService timelineService;
 
     @BeforeEach
     void setUp() {

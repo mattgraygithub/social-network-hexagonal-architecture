@@ -15,9 +15,9 @@ import static org.mockito.Mockito.*;
 
 class SocialNetworkShould {
 
-    private SocialNetwork socialNetwork;
-    private CommandProcessor mockCommandProcessor;
-    Clock clockStub;
+    private static SocialNetwork socialNetwork;
+    private static CommandProcessor mockCommandProcessor;
+    private static Clock clockStub;
 
     @BeforeEach
     void setUp() {

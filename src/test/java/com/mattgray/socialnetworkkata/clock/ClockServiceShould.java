@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ClockServiceShould {
 
-    private ClockService clockService;
+    private static ClockService clockService;
 
     @BeforeEach
     void setUp() {

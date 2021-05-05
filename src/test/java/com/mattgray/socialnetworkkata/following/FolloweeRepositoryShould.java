@@ -13,10 +13,10 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 class FolloweeRepositoryShould {
 
-    private FolloweeRepository followeeRepository;
+    private static FolloweeRepository followeeRepository;
 
     @Mock
-    private ArrayList<String> followedUsersMock;
+    private static ArrayList<String> followedUsersMock;
 
     @BeforeEach
     void setUp() {

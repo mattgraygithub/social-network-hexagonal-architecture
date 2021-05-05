@@ -16,8 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UserRepositoryShould {
 
-    private List<User> usersMock;
-    private UserRepository userRepository;
+    private static List<User> usersMock;
+    private static UserRepository userRepository;
 
     @BeforeEach
     void setUp() {

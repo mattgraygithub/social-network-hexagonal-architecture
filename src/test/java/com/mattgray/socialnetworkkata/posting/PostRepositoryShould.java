@@ -14,10 +14,10 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 class PostRepositoryShould {
 
-    private PostRepository postRepository;
+    private static PostRepository postRepository;
 
     @Mock
-    private ArrayList<Post> postsMock;
+    private static ArrayList<Post> postsMock;
 
     @BeforeEach
     void setUp() {

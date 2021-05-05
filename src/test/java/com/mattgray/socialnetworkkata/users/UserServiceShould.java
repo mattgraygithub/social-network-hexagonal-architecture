@@ -17,11 +17,11 @@ import static org.mockito.Mockito.*;
 
 class UserServiceShould {
 
-    private UserRepository mockUserRepository;
-    private TimelineService mockTimelineService;
-    private UserService userService;
-    private LocalDateTime now;
-    private WallService mockWallService;
+    private static UserRepository mockUserRepository;
+    private static TimelineService mockTimelineService;
+    private static UserService userService;
+    private static LocalDateTime now;
+    private static WallService mockWallService;
 
     @BeforeEach
     void setUp() {

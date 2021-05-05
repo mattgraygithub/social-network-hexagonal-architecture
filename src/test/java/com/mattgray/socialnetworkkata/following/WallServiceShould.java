@@ -24,9 +24,9 @@ import static org.mockito.Mockito.*;
 
 class WallServiceShould {
 
-    private ByteArrayOutputStream byteArrayOutputStream;
-    private ClockService clockServiceMock;
-    private WallService wallService;
+    private static ByteArrayOutputStream byteArrayOutputStream;
+    private static ClockService clockServiceMock;
+    private static WallService wallService;
 
     @BeforeEach
     void setUp() {

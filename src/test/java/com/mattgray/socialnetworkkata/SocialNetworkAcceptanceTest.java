@@ -30,9 +30,9 @@ import static org.mockito.Mockito.when;
 
 public class SocialNetworkAcceptanceTest {
 
-    private ByteArrayOutputStream byteArrayOutputStream;
-    private Clock clockStub;
-    private SocialNetwork socialNetwork;
+    private static ByteArrayOutputStream byteArrayOutputStream;
+    private static Clock clockStub;
+    private static SocialNetwork socialNetwork;
 
     @BeforeEach
     void setUp() {
