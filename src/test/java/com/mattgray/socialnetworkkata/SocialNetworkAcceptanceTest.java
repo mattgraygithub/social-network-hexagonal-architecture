@@ -79,10 +79,29 @@ public class SocialNetworkAcceptanceTest {
         runCommand(READ_CHARLIE_WALL, AT_12PM);
 
         assertThat(getConsoleOutput()).isEqualTo(
-                CHARLIE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + CHARLIE_EXAMPLE_POST + secondsAgo(15) + NEW_LINE +
+                CHARLIE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + CHARLIE_EXAMPLE_POST + fifteenSecondsAgo() + NEW_LINE +
                         BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_TWO + minutesAgo(1) + NEW_LINE +
                         BOB_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + BOB_EXAMPLE_POST_ONE + minutesAgo(2) + NEW_LINE +
                         ALICE_USER_NAME + DELIMITER_BETWEEN_USERNAME_AND_POST + ALICE_EXAMPLE_POST + minutesAgo(5) + NEW_LINE
+        );
+    }
+
+    @Test
+    void timelinesAreAlwaysDisplayedInReverseOrderEvenAfterDifferentCommandsAreEntered() throws IOException {
+        runCommand(BOB_EXAMPLE_POST_COMMAND_ONE, AT_2_HOURS_BEFORE_12PM);
+        runCommand(BOB_EXAMPLE_POST_COMMAND_TWO, AT_5_MINUTES_BEFORE_12PM);
+        runCommand(READ_BOB_TIMELINE, AT_2_MINUTES_BEFORE_12PM);
+
+        runCommand(BOB_EXAMPLE_POST_COMMAND_THREE, AT_15_SECONDS_BEFORE_12PM);
+        runCommand(READ_BOB_TIMELINE, AT_12PM);
+
+        assertThat(getConsoleOutput()).isEqualTo(
+                BOB_EXAMPLE_POST_TWO + minutesAgo(3) + NEW_LINE +
+                BOB_EXAMPLE_POST_ONE + hoursAgo(1) + NEW_LINE +
+
+                BOB_EXAMPLE_POST_THREE + fifteenSecondsAgo() + NEW_LINE +
+                BOB_EXAMPLE_POST_TWO + minutesAgo(5) + NEW_LINE +
+                BOB_EXAMPLE_POST_ONE + hoursAgo(2) + NEW_LINE
         );
     }
 
@@ -115,7 +134,13 @@ public class SocialNetworkAcceptanceTest {
                 : " (" + minutes + " minutes ago)";
     }
 
-    private String secondsAgo(int seconds) {
-        return " (" + seconds + " seconds ago)";
+    private String fifteenSecondsAgo() {
+        return " (15 seconds ago)";
+    }
+
+    private String hoursAgo(int hours) {
+        return hours == 1
+                ? " (" + hours + " hour ago)"
+                : " (" + hours + " hours ago)";
     }
 }

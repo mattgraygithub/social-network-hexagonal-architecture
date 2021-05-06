@@ -15,6 +15,8 @@ public class TestData {
     public static final String BOB_EXAMPLE_POST_COMMAND_ONE = BOB_USER_NAME + POST_COMMAND + BOB_EXAMPLE_POST_ONE;
     public static final String BOB_EXAMPLE_POST_TWO = "Good game though.";
     public static final String BOB_EXAMPLE_POST_COMMAND_TWO = BOB_USER_NAME + POST_COMMAND + BOB_EXAMPLE_POST_TWO;
+    public static final String BOB_EXAMPLE_POST_THREE = "Never mind.";
+    public static final String BOB_EXAMPLE_POST_COMMAND_THREE = BOB_USER_NAME + POST_COMMAND + BOB_EXAMPLE_POST_THREE;
     public static final String READ_BOB_TIMELINE = "Bob";
     public static final String CHARLIE_USER_NAME = "Charlie";
     public static final String CHARLIE_EXAMPLE_POST = "I'm in New York today! Anyone want to have a coffee?";

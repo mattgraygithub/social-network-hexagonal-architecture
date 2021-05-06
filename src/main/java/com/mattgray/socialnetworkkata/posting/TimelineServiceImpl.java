@@ -16,8 +16,9 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void displayTimeLine(ArrayList<Post> posts, LocalDateTime timeOfReadCommand) {
-        Collections.reverse(posts);
-        for (Post post : posts) {
+        ArrayList<Post> usersTimeline = new ArrayList<>(posts);
+        Collections.reverse(usersTimeline);
+        for (Post post : usersTimeline) {
             System.out.println(post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand));
         }
     }
