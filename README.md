@@ -63,4 +63,4 @@ IMPORTANT: Focus on writing the best code you can produce. Do not rush. Take as 
 
 ## Running the Tests
 
-- ```./gradlew test  ```
+- ```./gradlew test -i  ```
