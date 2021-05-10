@@ -115,7 +115,7 @@ public class SocialNetworkAcceptanceTest {
     private void runCommand(String command, LocalDateTime timeOfCommand) {
         setUpClockStubWith(timeOfCommand);
         System.setIn(new ByteArrayInputStream(command.getBytes()));
-        socialNetwork.run();
+        socialNetwork.runCLI();
     }
 
     private void setUpClockStubWith(LocalDateTime timeOfCommand) {

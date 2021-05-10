@@ -16,7 +16,6 @@ import com.mattgray.socialnetworkkata.service.clock.ClockServiceImpl;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class SocialNetwork {
 
@@ -37,16 +36,19 @@ public class SocialNetwork {
     public static void main(String[] args) {
         System.out.println("Welcome to the Social Network. Please enter a command");
 
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(USER_SERVICE), Clock.systemDefaultZone());
+        SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE), Clock.systemDefaultZone());
+        consoleApp.runCLI();
 
-        socialNetwork.run();
+        SocialNetwork webApp = new SocialNetwork(new CommandProcessor(USER_SERVICE), Clock.systemDefaultZone());
+        webApp.runWebApp();
     }
 
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
+    public void runCLI() {
+        userController.process(LocalDateTime.now(clock));
+    }
 
-        while (scanner.hasNext()) {
-            userController.process(scanner.nextLine(), LocalDateTime.now(clock));
-        }
+    public void runWebApp() {
+
+
     }
 }

@@ -5,6 +5,7 @@ import com.mattgray.socialnetworkkata.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class CommandProcessor implements UserController {
 
@@ -19,22 +20,31 @@ public class CommandProcessor implements UserController {
     }
 
     @Override
-    public void process(String command, LocalDateTime time) {
-        if (isPost(command)) {
-            userService.addPost(command, time);
+    public void process(LocalDateTime time) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (scanner.hasNext()) {
+
+            String command = scanner.nextLine();
+            if (isPost(command)) {
+                userService.addPost(command, time);
+            }
+
+            if (isRead(command)) {
+                userService.getTimeLine(command, time);
+            }
+
+            if (isFollow(command)) {
+                userService.addFollowee(command);
+            }
+
+            if (isWall(command)) {
+                userService.getWall(command, time);
+            }
         }
 
-        if (isRead(command)) {
-            userService.getTimeLine(command, time);
-        }
 
-        if (isFollow(command)) {
-            userService.addFollowee(command);
-        }
-
-        if (isWall(command)) {
-            userService.getWall(command, time);
-        }
     }
 
     private boolean isPost(String command) {

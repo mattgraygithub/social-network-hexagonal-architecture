@@ -1,10 +1,10 @@
 package com.mattgray.socialnetworkkata.adapter.console;
 
-import com.mattgray.socialnetworkkata.adapter.console.CommandProcessor;
 import com.mattgray.socialnetworkkata.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
@@ -26,29 +26,34 @@ class CommandProcessorShould {
 
     @Test
     void delegatePostCommandsToUserService() {
-        commandProcessor.process(ALICE_EXAMPLE_POST_COMMAND, now);
+        runCommand(ALICE_EXAMPLE_POST_COMMAND);
 
         verify(mockUserService).addPost(ALICE_EXAMPLE_POST_COMMAND, now);
     }
 
     @Test
     void delegateReadTimelineCommandsToUserService() {
-        commandProcessor.process(READ_ALICE_TIMELINE, now);
+        runCommand(READ_ALICE_TIMELINE);
 
         verify(mockUserService).getTimeLine(ALICE_USER_NAME, now);
     }
 
     @Test
     void delegateFollowCommandsToUserService() {
-        commandProcessor.process(CHARLIE_FOLLOWS_ALICE, now);
+        runCommand(CHARLIE_FOLLOWS_ALICE);
 
         verify(mockUserService).addFollowee(CHARLIE_FOLLOWS_ALICE);
     }
 
     @Test
     void delegateReadWallCommandsToUserService() {
-        commandProcessor.process(READ_CHARLIE_WALL, now);
+        runCommand(READ_CHARLIE_WALL);
 
         verify(mockUserService).getWall(READ_CHARLIE_WALL, now);
+    }
+
+    private void runCommand(String command) {
+        System.setIn(new ByteArrayInputStream(command.getBytes()));
+        commandProcessor.process(now);
     }
 }
