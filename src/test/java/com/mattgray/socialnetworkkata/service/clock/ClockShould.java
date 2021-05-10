@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.clock;
+package com.mattgray.socialnetworkkata.service.clock;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

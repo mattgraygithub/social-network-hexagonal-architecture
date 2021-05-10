@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.posting;
+package com.mattgray.socialnetworkkata.domain;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,6 @@
 package com.mattgray.socialnetworkkata.following;
 
+import com.mattgray.socialnetworkkata.adapter.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.port.FolloweeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,7 @@
 package com.mattgray.socialnetworkkata.posting;
 
+import com.mattgray.socialnetworkkata.adapter.InMemoryPostRepository;
+import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

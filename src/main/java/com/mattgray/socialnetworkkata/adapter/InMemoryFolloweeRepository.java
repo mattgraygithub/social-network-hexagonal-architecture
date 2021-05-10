@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.following;
+package com.mattgray.socialnetworkkata.adapter;
 
 import com.mattgray.socialnetworkkata.port.FolloweeRepository;
 

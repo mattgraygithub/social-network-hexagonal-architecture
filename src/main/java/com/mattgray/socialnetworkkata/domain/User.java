@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.users;
+package com.mattgray.socialnetworkkata.domain;
 
 import com.mattgray.socialnetworkkata.port.FolloweeRepository;
 import com.mattgray.socialnetworkkata.port.PostRepository;

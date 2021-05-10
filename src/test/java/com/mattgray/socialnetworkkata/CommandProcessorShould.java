@@ -1,6 +1,6 @@
 package com.mattgray.socialnetworkkata;
 
-import com.mattgray.socialnetworkkata.users.UserService;
+import com.mattgray.socialnetworkkata.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

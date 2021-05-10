@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.clock;
+package com.mattgray.socialnetworkkata.service.clock;
 
 public enum Clock {
 

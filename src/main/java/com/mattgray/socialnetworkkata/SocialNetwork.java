@@ -1,15 +1,15 @@
 package com.mattgray.socialnetworkkata;
 
-import com.mattgray.socialnetworkkata.clock.ClockService;
-import com.mattgray.socialnetworkkata.clock.ClockServiceImpl;
+import com.mattgray.socialnetworkkata.service.clock.ClockService;
+import com.mattgray.socialnetworkkata.service.clock.ClockServiceImpl;
 import com.mattgray.socialnetworkkata.port.WallService;
-import com.mattgray.socialnetworkkata.following.WallServiceImpl;
+import com.mattgray.socialnetworkkata.adapter.WallServiceImpl;
 import com.mattgray.socialnetworkkata.port.TimelineService;
-import com.mattgray.socialnetworkkata.posting.TimelineServiceImpl;
-import com.mattgray.socialnetworkkata.users.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.users.User;
+import com.mattgray.socialnetworkkata.adapter.TimelineServiceImpl;
+import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
+import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.UserRepository;
-import com.mattgray.socialnetworkkata.users.UserService;
+import com.mattgray.socialnetworkkata.service.UserService;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
