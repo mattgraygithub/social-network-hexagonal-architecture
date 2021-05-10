@@ -18,12 +18,12 @@ import java.util.Scanner;
 
 public class SocialNetwork {
 
-    private static final ArrayList<User> users = new ArrayList<>();
-    private static final UserRepository userRepository = new InMemoryUserRepository(users);
-    private static final ClockService clockService = new ClockServiceImpl();
-    private static final TimelineService timelineService = new TimelineConsoleAdapter(clockService);
-    private static final WallService wallService = new WallConsoleAdapter(clockService);
-    private static final UserService userService = new UserService(userRepository, timelineService, wallService);
+    private static final ArrayList<User> USERS = new ArrayList<>();
+    private static final UserRepository USER_REPOSITORY = new InMemoryUserRepository(USERS);
+    private static final ClockService CLOCK_SERVICE = new ClockServiceImpl();
+    private static final TimelineService TIMELINE_SERVICE = new TimelineConsoleAdapter(CLOCK_SERVICE);
+    private static final WallService WALL_SERVICE = new WallConsoleAdapter(CLOCK_SERVICE);
+    private static final UserService USER_SERVICE = new UserService(USER_REPOSITORY, TIMELINE_SERVICE, WALL_SERVICE);
     private final CommandProcessor commandProcessor;
     private final Clock clock;
 
@@ -35,7 +35,7 @@ public class SocialNetwork {
     public static void main(String[] args) {
         System.out.println("Welcome to the Social Network. Please enter a command");
 
-        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(userService), Clock.systemDefaultZone());
+        SocialNetwork socialNetwork = new SocialNetwork(new CommandProcessor(USER_SERVICE), Clock.systemDefaultZone());
 
         socialNetwork.run();
     }
