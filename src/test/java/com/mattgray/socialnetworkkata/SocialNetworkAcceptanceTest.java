@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
+import com.mattgray.socialnetworkkata.adapter.console.CommandProcessor;
 import com.mattgray.socialnetworkkata.adapter.console.TimelineConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
 import com.mattgray.socialnetworkkata.domain.User;

@@ -1,11 +1,12 @@
-package com.mattgray.socialnetworkkata;
+package com.mattgray.socialnetworkkata.adapter.console;
 
+import com.mattgray.socialnetworkkata.port.UserController;
 import com.mattgray.socialnetworkkata.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-public class CommandProcessor {
+public class CommandProcessor implements UserController {
 
     private static final String POST_COMMAND = "->";
     private static final String FOLLOW_COMMAND = "follows";
@@ -17,6 +18,7 @@ public class CommandProcessor {
         this.userService = userService;
     }
 
+    @Override
     public void process(String command, LocalDateTime time) {
         if (isPost(command)) {
             userService.addPost(command, time);

@@ -1,5 +1,6 @@
 package com.mattgray.socialnetworkkata;
 
+import com.mattgray.socialnetworkkata.port.UserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +17,14 @@ import static org.mockito.Mockito.*;
 class SocialNetworkShould {
 
     private static SocialNetwork socialNetwork;
-    private static CommandProcessor mockCommandProcessor;
+    private static UserController mockUserController;
     private static Clock clockStub;
 
     @BeforeEach
     void setUp() {
-        mockCommandProcessor = mock(CommandProcessor.class);
+        mockUserController = mock(UserController.class);
         clockStub = mock(Clock.class);
-        socialNetwork = new SocialNetwork(mockCommandProcessor, clockStub);
+        socialNetwork = new SocialNetwork(mockUserController, clockStub);
     }
 
     @Test
@@ -35,6 +36,6 @@ class SocialNetworkShould {
         System.setIn(new ByteArrayInputStream(ALICE_USER_NAME.getBytes()));
         socialNetwork.run();
 
-        verify(mockCommandProcessor).process(ALICE_USER_NAME, LocalDateTime.now(clockStub));
+        verify(mockUserController).process(ALICE_USER_NAME, LocalDateTime.now(clockStub));
     }
 }

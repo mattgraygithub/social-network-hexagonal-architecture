@@ -1,10 +1,12 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
+import com.mattgray.socialnetworkkata.adapter.console.CommandProcessor;
 import com.mattgray.socialnetworkkata.adapter.console.TimelineConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.TimelineService;
+import com.mattgray.socialnetworkkata.port.UserController;
 import com.mattgray.socialnetworkkata.port.UserRepository;
 import com.mattgray.socialnetworkkata.port.WallService;
 import com.mattgray.socialnetworkkata.service.UserService;
@@ -24,11 +26,11 @@ public class SocialNetwork {
     private static final TimelineService TIMELINE_SERVICE = new TimelineConsoleAdapter(CLOCK_SERVICE);
     private static final WallService WALL_SERVICE = new WallConsoleAdapter(CLOCK_SERVICE);
     private static final UserService USER_SERVICE = new UserService(USER_REPOSITORY, TIMELINE_SERVICE, WALL_SERVICE);
-    private final CommandProcessor commandProcessor;
+    private final UserController userController;
     private final Clock clock;
 
-    public SocialNetwork(CommandProcessor commandProcessor, Clock clock) {
-        this.commandProcessor = commandProcessor;
+    public SocialNetwork(UserController userController, Clock clock) {
+        this.userController = userController;
         this.clock = clock;
     }
 
@@ -44,7 +46,7 @@ public class SocialNetwork {
         Scanner scanner = new Scanner(System.in);
 
         while (scanner.hasNext()) {
-            commandProcessor.process(scanner.nextLine(), LocalDateTime.now(clock));
+            userController.process(scanner.nextLine(), LocalDateTime.now(clock));
         }
     }
 }
