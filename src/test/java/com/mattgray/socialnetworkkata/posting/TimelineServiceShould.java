@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata.posting;
 
 import com.mattgray.socialnetworkkata.clock.ClockService;
+import com.mattgray.socialnetworkkata.port.TimelineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

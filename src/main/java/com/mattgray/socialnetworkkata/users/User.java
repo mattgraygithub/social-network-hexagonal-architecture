@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata.users;
 
-import com.mattgray.socialnetworkkata.following.FolloweeRepository;
-import com.mattgray.socialnetworkkata.posting.PostRepository;
+import com.mattgray.socialnetworkkata.port.FolloweeRepository;
+import com.mattgray.socialnetworkkata.port.PostRepository;
 
 public class User {
 

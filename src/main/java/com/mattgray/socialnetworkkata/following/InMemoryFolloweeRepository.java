@@ -1,5 +1,7 @@
 package com.mattgray.socialnetworkkata.following;
 
+import com.mattgray.socialnetworkkata.port.FolloweeRepository;
+
 import java.util.ArrayList;
 
 public class InMemoryFolloweeRepository implements FolloweeRepository {

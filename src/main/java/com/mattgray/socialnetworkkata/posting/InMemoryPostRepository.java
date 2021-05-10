@@ -1,5 +1,7 @@
 package com.mattgray.socialnetworkkata.posting;
 
+import com.mattgray.socialnetworkkata.port.PostRepository;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

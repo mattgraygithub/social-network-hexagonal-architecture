@@ -1,6 +1,7 @@
 package com.mattgray.socialnetworkkata.posting;
 
 import com.mattgray.socialnetworkkata.clock.ClockService;
+import com.mattgray.socialnetworkkata.port.TimelineService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
