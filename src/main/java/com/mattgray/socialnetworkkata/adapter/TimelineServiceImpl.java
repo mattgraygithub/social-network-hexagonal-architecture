@@ -1,8 +1,8 @@
 package com.mattgray.socialnetworkkata.adapter;
 
-import com.mattgray.socialnetworkkata.service.clock.ClockService;
-import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.domain.Post;
+import com.mattgray.socialnetworkkata.port.TimelineService;
+import com.mattgray.socialnetworkkata.service.clock.ClockService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

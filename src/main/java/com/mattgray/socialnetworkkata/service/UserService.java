@@ -1,8 +1,8 @@
 package com.mattgray.socialnetworkkata.service;
 
+import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserRepository;
 import com.mattgray.socialnetworkkata.port.WallService;
-import com.mattgray.socialnetworkkata.port.TimelineService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

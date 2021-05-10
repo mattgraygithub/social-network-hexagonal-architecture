@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata.adapter;
 
-import com.mattgray.socialnetworkkata.port.PostRepository;
 import com.mattgray.socialnetworkkata.domain.Post;
+import com.mattgray.socialnetworkkata.port.PostRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

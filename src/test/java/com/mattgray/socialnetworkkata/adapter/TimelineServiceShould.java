@@ -1,9 +1,8 @@
 package com.mattgray.socialnetworkkata.adapter;
 
-import com.mattgray.socialnetworkkata.adapter.TimelineServiceImpl;
-import com.mattgray.socialnetworkkata.service.clock.ClockService;
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
+import com.mattgray.socialnetworkkata.service.clock.ClockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,7 @@
 package com.mattgray.socialnetworkkata.adapter;
 
-import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.adapter.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.UserRepository;
-import com.mattgray.socialnetworkkata.adapter.InMemoryPostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

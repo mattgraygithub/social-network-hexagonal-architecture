@@ -1,13 +1,12 @@
 package com.mattgray.socialnetworkkata.service;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryFolloweeRepository;
-import com.mattgray.socialnetworkkata.domain.User;
-import com.mattgray.socialnetworkkata.port.UserRepository;
-import com.mattgray.socialnetworkkata.port.WallService;
 import com.mattgray.socialnetworkkata.adapter.InMemoryPostRepository;
 import com.mattgray.socialnetworkkata.domain.Post;
+import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.TimelineService;
-import com.mattgray.socialnetworkkata.service.UserService;
+import com.mattgray.socialnetworkkata.port.UserRepository;
+import com.mattgray.socialnetworkkata.port.WallService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
