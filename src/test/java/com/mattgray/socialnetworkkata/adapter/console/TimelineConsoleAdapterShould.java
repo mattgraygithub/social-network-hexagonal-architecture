@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.adapter;
+package com.mattgray.socialnetworkkata.adapter.console;
 
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
@@ -21,7 +21,7 @@ import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
-public class TimelineServiceShould {
+public class TimelineConsoleAdapterShould {
 
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static ClockService clockServiceMock;
@@ -32,7 +32,7 @@ public class TimelineServiceShould {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockServiceMock = mock(ClockService.class);
-        timelineService = new TimelineServiceImpl(clockServiceMock);
+        timelineService = new TimelineConsoleAdapter(clockServiceMock);
     }
 
     @Test

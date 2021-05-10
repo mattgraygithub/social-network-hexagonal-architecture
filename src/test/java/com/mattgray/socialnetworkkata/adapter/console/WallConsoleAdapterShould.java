@@ -1,5 +1,7 @@
-package com.mattgray.socialnetworkkata.adapter;
+package com.mattgray.socialnetworkkata.adapter.console;
 
+import com.mattgray.socialnetworkkata.adapter.InMemoryFolloweeRepository;
+import com.mattgray.socialnetworkkata.adapter.InMemoryPostRepository;
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.FolloweeRepository;
@@ -23,7 +25,7 @@ import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
-class WallServiceShould {
+class WallConsoleAdapterShould {
 
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static ClockService clockServiceMock;
@@ -34,7 +36,7 @@ class WallServiceShould {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockServiceMock = mock(ClockService.class);
-        wallService = new WallServiceImpl(clockServiceMock);
+        wallService = new WallConsoleAdapter(clockServiceMock);
     }
 
     @Test

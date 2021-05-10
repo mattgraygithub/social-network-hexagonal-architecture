@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.adapter;
+package com.mattgray.socialnetworkkata.adapter.console;
 
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TimelineServiceImpl implements TimelineService {
+public class TimelineConsoleAdapter implements TimelineService {
 
     private final ClockService clockService;
 
-    public TimelineServiceImpl(ClockService clockService) {
+    public TimelineConsoleAdapter(ClockService clockService) {
         this.clockService = clockService;
     }
 

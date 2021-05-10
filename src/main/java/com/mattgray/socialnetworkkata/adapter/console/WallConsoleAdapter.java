@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.adapter;
+package com.mattgray.socialnetworkkata.adapter.console;
 
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.domain.User;
@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class WallServiceImpl implements WallService {
+public class WallConsoleAdapter implements WallService {
 
     private static final String DELIMITER_BETWEEN_USERNAME_AND_POST = " - ";
     private final ClockService clockService;
 
-    public WallServiceImpl(ClockService clockService) {
+    public WallConsoleAdapter(ClockService clockService) {
         this.clockService = clockService;
     }
 

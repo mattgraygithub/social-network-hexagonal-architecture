@@ -1,8 +1,8 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.adapter.TimelineServiceImpl;
-import com.mattgray.socialnetworkkata.adapter.WallServiceImpl;
+import com.mattgray.socialnetworkkata.adapter.console.TimelineConsoleAdapter;
+import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserRepository;
@@ -42,8 +42,8 @@ public class SocialNetworkAcceptanceTest {
         ArrayList<User> users = new ArrayList<>();
         UserRepository userRepository = new InMemoryUserRepository(users);
         ClockService clockService = new ClockServiceImpl();
-        TimelineService timelineService = new TimelineServiceImpl(clockService);
-        WallService wallService = new WallServiceImpl(clockService);
+        TimelineService timelineService = new TimelineConsoleAdapter(clockService);
+        WallService wallService = new WallConsoleAdapter(clockService);
         UserService userService = new UserService(userRepository, timelineService, wallService);
         socialNetwork = new SocialNetwork(new CommandProcessor(userService), clockStub);
     }
