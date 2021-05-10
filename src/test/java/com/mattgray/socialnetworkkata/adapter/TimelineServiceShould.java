@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.posting;
+package com.mattgray.socialnetworkkata.adapter;
 
 import com.mattgray.socialnetworkkata.adapter.TimelineServiceImpl;
 import com.mattgray.socialnetworkkata.service.clock.ClockService;

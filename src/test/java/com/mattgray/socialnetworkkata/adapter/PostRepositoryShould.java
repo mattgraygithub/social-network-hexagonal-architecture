@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.posting;
+package com.mattgray.socialnetworkkata.adapter;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryPostRepository;
 import com.mattgray.socialnetworkkata.domain.Post;

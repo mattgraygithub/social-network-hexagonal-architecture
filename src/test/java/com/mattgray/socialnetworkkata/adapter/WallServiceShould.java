@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.following;
+package com.mattgray.socialnetworkkata.adapter;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryFolloweeRepository;
 import com.mattgray.socialnetworkkata.adapter.WallServiceImpl;

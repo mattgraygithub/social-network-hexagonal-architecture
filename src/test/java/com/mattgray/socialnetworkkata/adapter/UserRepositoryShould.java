@@ -1,4 +1,4 @@
-package com.mattgray.socialnetworkkata.users;
+package com.mattgray.socialnetworkkata.adapter;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
 import com.mattgray.socialnetworkkata.adapter.InMemoryFolloweeRepository;
