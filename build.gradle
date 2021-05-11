@@ -20,7 +20,7 @@ dependencies {
     testImplementation ('org.junit.jupiter:junit-jupiter-api:5.3.1', 'org.mockito:mockito-inline:3.4.0')
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
     testCompile('org.assertj:assertj-core:3.19.0', 'org.junit.jupiter:junit-jupiter-params:5.7.0')
-    compile 'javax.json:javax.json-api:1.0'
+    implementation 'org.json:json:20171018'
 }
 
 mainClassName = 'com.mattgray.socialnetworkkata.SocialNetwork'

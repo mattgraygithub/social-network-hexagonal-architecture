@@ -37,7 +37,7 @@ public class SocialNetwork {
     public static void main(String[] args) throws IOException {
         System.out.println("Welcome to the Social Network. Please enter a command");
 
-        SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE), Clock.systemDefaultZone());
+        SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE, CLOCK_SERVICE), Clock.systemDefaultZone());
         webApp.runWebApp();
 
         SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE, TIMELINE_SERVICE), Clock.systemDefaultZone());
