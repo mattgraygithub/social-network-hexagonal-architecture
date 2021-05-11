@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 class UserServiceShould {
@@ -42,13 +43,11 @@ class UserServiceShould {
     }
 
     @Test
-    void callTimelineServiceToPrintTimelineForAUser() {
+    void returnAllPostsForAGivenUser() {
         ArrayList<Post> posts = generatePosts(ALICE_USER_NAME, ALICE_EXAMPLE_POST);
         when(mockUserRepository.getPostsFor((ALICE_USER_NAME))).thenReturn(new InMemoryPostRepository(posts));
 
-        userService.getTimeLine(ALICE_USER_NAME, now);
-
-        verify(mockTimelineService).displayTimeLine(posts, now);
+        assertThat(userService.getPosts(ALICE_USER_NAME)).isEqualTo(posts);
     }
 
     @Test

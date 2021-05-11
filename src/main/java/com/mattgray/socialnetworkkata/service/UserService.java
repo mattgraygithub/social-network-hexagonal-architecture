@@ -1,10 +1,12 @@
 package com.mattgray.socialnetworkkata.service;
 
+import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserRepository;
 import com.mattgray.socialnetworkkata.port.WallService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UserService {
@@ -22,8 +24,8 @@ public class UserService {
         userRepository.addPost(getUserName(command), getCommandArgument(command), time);
     }
 
-    public void getTimeLine(String userName, LocalDateTime time) {
-        timelineService.displayTimeLine(userRepository.getPostsFor(userName).getPosts(), time);
+    public ArrayList<Post> getPosts(String userName) {
+        return userRepository.getPostsFor(userName).getPosts();
     }
 
     public void addFollowee(String command) {

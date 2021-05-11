@@ -4,6 +4,7 @@ import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
 import com.mattgray.socialnetworkkata.adapter.console.CommandProcessor;
 import com.mattgray.socialnetworkkata.adapter.console.TimelineConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
+import com.mattgray.socialnetworkkata.adapter.web.HttpUserController;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserController;
@@ -13,8 +14,8 @@ import com.mattgray.socialnetworkkata.service.UserService;
 import com.mattgray.socialnetworkkata.service.clock.ClockService;
 import com.mattgray.socialnetworkkata.service.clock.ClockServiceImpl;
 
+import java.io.IOException;
 import java.time.Clock;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class SocialNetwork {
@@ -33,22 +34,22 @@ public class SocialNetwork {
         this.clock = clock;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Welcome to the Social Network. Please enter a command");
 
-        SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE), Clock.systemDefaultZone());
+        SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE), Clock.systemDefaultZone());
+        webApp.runWebApp();
+
+        SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE, TIMELINE_SERVICE), Clock.systemDefaultZone());
         consoleApp.runCLI();
 
-        SocialNetwork webApp = new SocialNetwork(new CommandProcessor(USER_SERVICE), Clock.systemDefaultZone());
-        webApp.runWebApp();
     }
 
-    public void runCLI() {
-        userController.process(LocalDateTime.now(clock));
+    public void runCLI() throws IOException {
+        userController.process(clock);
     }
 
-    public void runWebApp() {
-
-
+    public void runWebApp() throws IOException {
+        userController.process(clock);
     }
 }

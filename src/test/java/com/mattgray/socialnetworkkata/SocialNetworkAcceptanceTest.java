@@ -46,7 +46,7 @@ public class SocialNetworkAcceptanceTest {
         TimelineService timelineService = new TimelineConsoleAdapter(clockService);
         WallService wallService = new WallConsoleAdapter(clockService);
         UserService userService = new UserService(userRepository, timelineService, wallService);
-        socialNetwork = new SocialNetwork(new CommandProcessor(userService), clockStub);
+        socialNetwork = new SocialNetwork(new CommandProcessor(userService, timelineService), clockStub);
     }
 
     @Test
@@ -106,13 +106,13 @@ public class SocialNetworkAcceptanceTest {
         );
     }
 
-    private void runAliceAndBobPostCommands() {
+    private void runAliceAndBobPostCommands() throws IOException {
         runCommand(ALICE_EXAMPLE_POST_COMMAND, AT_5_MINUTES_BEFORE_12PM);
         runCommand(BOB_EXAMPLE_POST_COMMAND_ONE, AT_2_MINUTES_BEFORE_12PM);
         runCommand(BOB_EXAMPLE_POST_COMMAND_TWO, AT_1_MINUTE_BEFORE_12PM);
     }
 
-    private void runCommand(String command, LocalDateTime timeOfCommand) {
+    private void runCommand(String command, LocalDateTime timeOfCommand) throws IOException {
         setUpClockStubWith(timeOfCommand);
         System.setIn(new ByteArrayInputStream(command.getBytes()));
         socialNetwork.runCLI();

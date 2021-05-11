@@ -1,8 +1,9 @@
 package com.mattgray.socialnetworkkata.port;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.time.Clock;
 
 public interface UserController {
 
-    void process(LocalDateTime time);
+    void process(Clock clock) throws IOException;
 }

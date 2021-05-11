@@ -1,9 +1,13 @@
 package com.mattgray.socialnetworkkata.adapter.console;
 
+import com.mattgray.socialnetworkkata.domain.Post;
+import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserController;
 import com.mattgray.socialnetworkkata.service.UserService;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -14,13 +18,15 @@ public class CommandProcessor implements UserController {
     private static final String WALL_COMMAND = "wall";
 
     private final UserService userService;
+    private final TimelineService timelineService;
 
-    public CommandProcessor(UserService userService) {
+    public CommandProcessor(UserService userService, TimelineService timelineService) {
         this.userService = userService;
+        this.timelineService = timelineService;
     }
 
     @Override
-    public void process(LocalDateTime time) {
+    public void process(Clock clock) {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -28,11 +34,12 @@ public class CommandProcessor implements UserController {
 
             String command = scanner.nextLine();
             if (isPost(command)) {
-                userService.addPost(command, time);
+                userService.addPost(command, LocalDateTime.now(clock));
             }
 
             if (isRead(command)) {
-                userService.getTimeLine(command, time);
+                ArrayList<Post> posts = userService.getPosts(command);
+                timelineService.displayTimeLine(posts, LocalDateTime.now(clock));
             }
 
             if (isFollow(command)) {
@@ -40,11 +47,9 @@ public class CommandProcessor implements UserController {
             }
 
             if (isWall(command)) {
-                userService.getWall(command, time);
+                userService.getWall(command, LocalDateTime.now(clock));
             }
         }
-
-
     }
 
     private boolean isPost(String command) {

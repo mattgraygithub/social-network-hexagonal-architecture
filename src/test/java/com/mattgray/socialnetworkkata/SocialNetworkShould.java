@@ -4,8 +4,8 @@ import com.mattgray.socialnetworkkata.port.UserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.Clock;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
@@ -26,13 +26,13 @@ class SocialNetworkShould {
     }
 
     @Test
-    void callCommandProcessorWithCommandEnteredAndTimeOfCommandWhenAnythingIsEnteredInConsole() {
+    void callCommandProcessorWithCommandEnteredAndTimeOfCommandWhenAnythingIsEnteredInConsole() throws IOException {
         Clock fixedClock = Clock.fixed(AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         when(clockStub.instant()).thenReturn(fixedClock.instant());
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
 
         socialNetwork.runCLI();
 
-        verify(mockUserController).process(LocalDateTime.now(clockStub));
+        verify(mockUserController).process(clockStub);
     }
 }
