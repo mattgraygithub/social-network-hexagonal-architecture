@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SocialNetworkAcceptanceTest {
+public class SocialNetworkCLIAcceptanceTest {
 
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static Clock clockStub;
@@ -115,7 +115,7 @@ public class SocialNetworkAcceptanceTest {
     private void runCommand(String command, LocalDateTime timeOfCommand) throws IOException {
         setUpClockStubWith(timeOfCommand);
         System.setIn(new ByteArrayInputStream(command.getBytes()));
-        socialNetwork.runCLI();
+        socialNetwork.run();
     }
 
     private void setUpClockStubWith(LocalDateTime timeOfCommand) {
