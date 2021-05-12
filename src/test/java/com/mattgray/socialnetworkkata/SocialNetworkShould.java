@@ -31,7 +31,7 @@ class SocialNetworkShould {
         when(clockStub.instant()).thenReturn(fixedClock.instant());
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
 
-        socialNetwork.runCLI();
+        socialNetwork.run();
 
         verify(mockUserController).process(clockStub);
     }
