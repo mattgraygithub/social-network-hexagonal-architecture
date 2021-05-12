@@ -38,18 +38,13 @@ public class SocialNetwork {
         System.out.println("Welcome to the Social Network. Please enter a command");
 
         SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE, CLOCK_SERVICE), Clock.systemDefaultZone());
-        webApp.runWebApp();
+        webApp.run();
 
         SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE, TIMELINE_SERVICE), Clock.systemDefaultZone());
-        consoleApp.runCLI();
-
+        consoleApp.run();
     }
 
-    public void runCLI() throws IOException {
-        userController.process(clock);
-    }
-
-    public void runWebApp() throws IOException {
+    public void run() throws IOException {
         userController.process(clock);
     }
 }
