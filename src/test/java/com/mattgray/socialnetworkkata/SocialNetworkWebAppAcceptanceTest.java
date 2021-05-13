@@ -111,7 +111,10 @@ public class SocialNetworkWebAppAcceptanceTest {
             while ((scanner.hasNext())) {
                 response.append(scanner.nextLine());
             }
+            inputStream.close();
             return response.toString();
+        } finally {
+            connection.disconnect();
         }
     }
 }
