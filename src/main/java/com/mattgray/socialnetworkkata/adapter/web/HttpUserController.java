@@ -23,7 +23,6 @@ public class HttpUserController implements UserController {
     private final UserService userService;
     private final ClockService clockService;
     private final int serverPort;
-    private HttpServer server;
 
     public HttpUserController(UserService userService, ClockService clockService, int serverPort) {
         this.userService = userService;
@@ -34,7 +33,7 @@ public class HttpUserController implements UserController {
     @Override
     public void process(Clock clock) throws IOException {
 
-        server = HttpServer.create(new InetSocketAddress(serverPort), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
         String path = "/";
         server.createContext(path, exchange -> {
                     exchange.getResponseHeaders().set("Content-Type", "application/json");

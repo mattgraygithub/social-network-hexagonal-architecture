@@ -67,13 +67,13 @@ public class SocialNetworkWebAppAcceptanceTest {
         assertThat(makeGetRequestFor(ALICE_USER_NAME, ON_PORT_8001, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + ALICE_EXAMPLE_POST);
     }
 
-//    @Test
-//    void usersCanPostMessagesToTheirTimeLinesAndADifferentUsersTimelineCanBeRead() throws IOException {
-//        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8002), clockStub);
-//        socialNetwork.run();
-//        makeAliceAndBobPostRequests(ON_PORT_8002);
-//        assertThat(makeGetRequestFor(BOB_USER_NAME,ON_PORT_8002, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_COMMAND_ONE);
-//    }
+    @Test
+    void usersCanPostMessagesToTheirTimeLinesAndADifferentUsersTimelineCanBeRead() throws IOException {
+        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8002), clockStub);
+        socialNetwork.run();
+        makeAliceAndBobPostRequests(ON_PORT_8002);
+        assertThat(makeGetRequestFor(BOB_USER_NAME,ON_PORT_8002, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_COMMAND_ONE);
+    }
 
     private void makeAliceAndBobPostRequests(String port) throws IOException {
         makePostRequestFor(ALICE_USER_NAME, ALICE_EXAMPLE_POST, port, AT_5_MINUTES_BEFORE_12PM);
