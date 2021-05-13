@@ -37,44 +37,52 @@ public class SocialNetworkWebAppAcceptanceTest {
     private static final String POST_REQUEST = "POST";
     private static final String GET_REQUEST = "GET";
     private static final String HOST = "http://localhost";
-    private static final String PORT = ":8000/";
+    private static final String ON_PORT_8001 = ":8001/";
+    private static final String ON_PORT_8002 = ":8002/";
     private static final String TIME_PROPERTY_NAME = "timeAgo\":\"";
     private static final String POST_PROPERTY_NAME = "\",\"post\":\"";
+    private static final int PORT_8001 = 8001;
+    private static final int PORT_8002 = 8002;
 
     private static Clock clockStub;
-    private static SocialNetwork webApp;
+    private static ClockService clockService;
+    private static UserService userService;
 
     @BeforeEach
     void setUp() {
         clockStub = mock(Clock.class);
+        clockService = new ClockServiceImpl();
         ArrayList<User> users = new ArrayList<>();
         UserRepository userRepository = new InMemoryUserRepository(users);
-        ClockService clockService = new ClockServiceImpl();
         TimelineService timelineService = new TimelineConsoleAdapter(clockService);
         WallService wallService = new WallConsoleAdapter(clockService);
-        UserService userService = new UserService(userRepository, timelineService, wallService);
-        webApp = new SocialNetwork(new HttpUserController(userService, clockService), clockStub);
+        userService = new UserService(userRepository, timelineService, wallService);
     }
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndAUsersTimelineCanBeRead() throws IOException {
-        runApplication();
-        makeAliceAndBobPostRequests();
-        assertThat(makeGetRequestFor(ALICE_USER_NAME, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + ALICE_EXAMPLE_POST);
+        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8001), clockStub);
+        socialNetwork.run();
+        makeAliceAndBobPostRequests(ON_PORT_8001);
+        assertThat(makeGetRequestFor(ALICE_USER_NAME, ON_PORT_8001, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + ALICE_EXAMPLE_POST);
     }
 
-    private void runApplication() throws IOException {
-        webApp.run();
+//    @Test
+//    void usersCanPostMessagesToTheirTimeLinesAndADifferentUsersTimelineCanBeRead() throws IOException {
+//        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8002), clockStub);
+//        socialNetwork.run();
+//        makeAliceAndBobPostRequests(ON_PORT_8002);
+//        assertThat(makeGetRequestFor(BOB_USER_NAME,ON_PORT_8002, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_COMMAND_ONE);
+//    }
+
+    private void makeAliceAndBobPostRequests(String port) throws IOException {
+        makePostRequestFor(ALICE_USER_NAME, ALICE_EXAMPLE_POST, port, AT_5_MINUTES_BEFORE_12PM);
+        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, port, AT_2_MINUTES_BEFORE_12PM);
+        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, port, AT_1_MINUTE_BEFORE_12PM);
     }
 
-    private void makeAliceAndBobPostRequests() throws IOException {
-        makePostRequestFor(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_5_MINUTES_BEFORE_12PM);
-        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, AT_2_MINUTES_BEFORE_12PM);
-        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, AT_1_MINUTE_BEFORE_12PM);
-    }
-
-    private void makePostRequestFor(String userName, String commandString, LocalDateTime timeOfConnection) throws IOException {
-        HttpURLConnection connection = setUpHttpURLConnectionFor(userName, POST_REQUEST, timeOfConnection);
+    private void makePostRequestFor(String userName, String commandString, String port, LocalDateTime timeOfConnection) throws IOException {
+        HttpURLConnection connection = setUpHttpURLConnectionFor(userName, POST_REQUEST, port, timeOfConnection);
         try (OutputStream outputStream = connection.getOutputStream()) {
             byte[] command = commandString.getBytes(StandardCharsets.UTF_8);
             outputStream.write(command);
@@ -82,16 +90,16 @@ public class SocialNetworkWebAppAcceptanceTest {
         getResponse(connection);
     }
 
-    private String makeGetRequestFor(String userName, LocalDateTime timeOfConnection) throws IOException {
-        HttpURLConnection connection = setUpHttpURLConnectionFor(userName, GET_REQUEST, timeOfConnection);
+    private String makeGetRequestFor(String userName, String port, LocalDateTime timeOfConnection) throws IOException {
+        HttpURLConnection connection = setUpHttpURLConnectionFor(userName, GET_REQUEST, port, timeOfConnection);
         String response = getResponse(connection);
         String trimmedResponse = response.substring(3, response.length() - 3);
         return trimmedResponse;
     }
 
-    private HttpURLConnection setUpHttpURLConnectionFor(String userName, String requestMethod, LocalDateTime timeOfConnection) throws IOException {
+    private HttpURLConnection setUpHttpURLConnectionFor(String userName, String requestMethod, String port, LocalDateTime timeOfConnection) throws IOException {
         setUpClockStubWith(timeOfConnection);
-        URL url = new URL(HOST + PORT + userName);
+        URL url = new URL(HOST + ON_PORT_8001 + userName);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(requestMethod);
         connection.setDoOutput(true);

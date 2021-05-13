@@ -22,16 +22,19 @@ public class HttpUserController implements UserController {
 
     private final UserService userService;
     private final ClockService clockService;
+    private final int serverPort;
+    private HttpServer server;
 
-    public HttpUserController(UserService userService, ClockService clockService) {
+    public HttpUserController(UserService userService, ClockService clockService, int serverPort) {
         this.userService = userService;
         this.clockService = clockService;
+        this.serverPort = serverPort;
     }
 
     @Override
     public void process(Clock clock) throws IOException {
-        int serverPort = 8000;
-        HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
+
+        server = HttpServer.create(new InetSocketAddress(serverPort), 0);
         String path = "/";
         server.createContext(path, exchange -> {
                     exchange.getResponseHeaders().set("Content-Type", "application/json");
@@ -40,8 +43,10 @@ public class HttpUserController implements UserController {
                     switch (requestMethod) {
                         case "GET":
                             handleReadWallGetRequest(exchange, clock);
+                            break;
                         case "POST":
                             handlePostRequest(exchange, clock);
+                            break;
                     }
                 }
         );

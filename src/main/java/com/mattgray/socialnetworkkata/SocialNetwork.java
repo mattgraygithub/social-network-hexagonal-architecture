@@ -26,6 +26,7 @@ public class SocialNetwork {
     private static final TimelineService TIMELINE_SERVICE = new TimelineConsoleAdapter(CLOCK_SERVICE);
     private static final WallService WALL_SERVICE = new WallConsoleAdapter(CLOCK_SERVICE);
     private static final UserService USER_SERVICE = new UserService(USER_REPOSITORY, TIMELINE_SERVICE, WALL_SERVICE);
+    private static final int SERVER_PORT = 8000;
     private final UserController userController;
     private final Clock clock;
 
@@ -37,7 +38,7 @@ public class SocialNetwork {
     public static void main(String[] args) throws IOException {
         System.out.println("Welcome to the Social Network. Please enter a command");
 
-        SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE, CLOCK_SERVICE), Clock.systemDefaultZone());
+        SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE, CLOCK_SERVICE, SERVER_PORT), Clock.systemDefaultZone());
         webApp.run();
 
         SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE, TIMELINE_SERVICE), Clock.systemDefaultZone());
