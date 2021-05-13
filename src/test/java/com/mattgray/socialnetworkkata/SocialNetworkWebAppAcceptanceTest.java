@@ -14,7 +14,9 @@ import com.mattgray.socialnetworkkata.service.clock.ClockServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +36,10 @@ public class SocialNetworkWebAppAcceptanceTest {
 
     private static final String POST_REQUEST = "POST";
     private static final String GET_REQUEST = "GET";
+    private static final String HOST = "http://localhost";
+    private static final String PORT = ":8000/";
+    private static final String TIME_PROPERTY_NAME = "timeAgo\":\"";
+    private static final String POST_PROPERTY_NAME = "\",\"post\":\"";
 
     private static Clock clockStub;
     private static SocialNetwork webApp;
@@ -54,7 +60,7 @@ public class SocialNetworkWebAppAcceptanceTest {
     void usersCanPostMessagesToTheirTimeLinesAndAUsersTimelineCanBeRead() throws IOException {
         runApplication();
         makeAliceAndBobPostRequests();
-        assertThat(makeGetRequestFor(ALICE_USER_NAME, AT_12PM)).isEqualTo("[{\"timeAgo\":\" (5 minutes ago)\",\"post\":\"I love the weather today\"}]");
+        assertThat(makeGetRequestFor(ALICE_USER_NAME, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + ALICE_EXAMPLE_POST);
     }
 
     private void runApplication() throws IOException {
@@ -71,31 +77,23 @@ public class SocialNetworkWebAppAcceptanceTest {
         HttpURLConnection connection = setUpHttpURLConnectionFor(userName, POST_REQUEST, timeOfConnection);
         try (OutputStream outputStream = connection.getOutputStream()) {
             byte[] command = commandString.getBytes(StandardCharsets.UTF_8);
-            outputStream.write(command, 0, command.length);
+            outputStream.write(command);
         }
         getResponse(connection);
     }
 
     private String makeGetRequestFor(String userName, LocalDateTime timeOfConnection) throws IOException {
         HttpURLConnection connection = setUpHttpURLConnectionFor(userName, GET_REQUEST, timeOfConnection);
-
-        try (InputStream inputStream = connection.getInputStream()) {
-            Scanner scanner = new Scanner(inputStream);
-            StringBuilder content = new StringBuilder();
-            while (scanner.hasNext()) {
-                content.append(scanner.nextLine());
-            }
-            return content.toString();
-        }
+        String response = getResponse(connection);
+        String trimmedResponse = response.substring(3, response.length() - 3);
+        return trimmedResponse;
     }
 
     private HttpURLConnection setUpHttpURLConnectionFor(String userName, String requestMethod, LocalDateTime timeOfConnection) throws IOException {
         setUpClockStubWith(timeOfConnection);
-        URL url = new URL("http://localhost:8000/" + userName);
+        URL url = new URL(HOST + PORT + userName);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(requestMethod);
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setRequestProperty("Accept", "application/json");
         connection.setDoOutput(true);
         return connection;
     }
