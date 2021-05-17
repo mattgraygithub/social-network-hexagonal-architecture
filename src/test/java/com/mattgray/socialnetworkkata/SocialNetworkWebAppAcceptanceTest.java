@@ -39,11 +39,13 @@ public class SocialNetworkWebAppAcceptanceTest {
     private static final String HOST = "http://localhost";
     private static final String ON_PORT_8001 = ":8001/";
     private static final String ON_PORT_8002 = ":8002/";
+    private static final String ON_PORT_8003 = ":8003/";
     private static final String TIME_PROPERTY_NAME = "timeAgo\":\"";
     private static final String POST_PROPERTY_NAME = "\",\"post\":\"";
     private static final String JSON_ENTRY_DIVIDER = "\"},{\"";
     private static final int PORT_8001 = 8001;
     private static final int PORT_8002 = 8002;
+    private static final int PORT_8003 = 8003;
 
     private static Clock clockStub;
     private static ClockService clockService;
@@ -74,14 +76,14 @@ public class SocialNetworkWebAppAcceptanceTest {
         socialNetwork.run();
         makeAliceAndBobPostRequests(ON_PORT_8002);
         assertThat(makeGetRequestFor(BOB_USER_NAME, ON_PORT_8002, AT_12PM)).
-                isEqualTo(TIME_PROPERTY_NAME + ONE_MINUTE_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_COMMAND_TWO + JSON_ENTRY_DIVIDER +
-                        TIME_PROPERTY_NAME + TWO_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_COMMAND_ONE);
+                isEqualTo(TIME_PROPERTY_NAME + ONE_MINUTE_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_TWO + JSON_ENTRY_DIVIDER +
+                        TIME_PROPERTY_NAME + TWO_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_ONE);
     }
 
     private void makeAliceAndBobPostRequests(String port) throws IOException {
         makePostRequestFor(ALICE_USER_NAME, ALICE_EXAMPLE_POST, port, AT_5_MINUTES_BEFORE_12PM);
-        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, port, AT_2_MINUTES_BEFORE_12PM);
-        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, port, AT_1_MINUTE_BEFORE_12PM);
+        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_ONE, port, AT_2_MINUTES_BEFORE_12PM);
+        makePostRequestFor(BOB_USER_NAME, BOB_EXAMPLE_POST_TWO, port, AT_1_MINUTE_BEFORE_12PM);
     }
 
     private void makePostRequestFor(String userName, String commandString, String port, LocalDateTime timeOfConnection) throws IOException {
