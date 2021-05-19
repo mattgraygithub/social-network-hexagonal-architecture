@@ -34,26 +34,30 @@ public class HttpUserController implements UserController {
     public void process(Clock clock) throws IOException {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
-        String path = "/";
+        createContextForAddingAndReadingPosts(clock, server);
+        server.start();
+    }
+
+    private void createContextForAddingAndReadingPosts(Clock clock, HttpServer server) {
+        String path = "/posts/";
         server.createContext(path, exchange -> {
                     exchange.getResponseHeaders().set("Content-Type", "application/json");
                     String requestMethod = exchange.getRequestMethod();
 
                     switch (requestMethod) {
                         case "GET":
-                            handleReadWallGetRequest(exchange, clock);
+                            handleReadWallGetRequest(exchange, path, clock);
                             break;
                         case "POST":
-                            handlePostRequest(exchange, clock);
+                            handlePostRequest(exchange, path, clock);
                             break;
                     }
                 }
         );
-        server.start();
     }
 
-    private void handleReadWallGetRequest(HttpExchange exchange, Clock clock) throws IOException {
-        String userName = exchange.getRequestURI().toString().substring(1);
+    private void handleReadWallGetRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
+        String userName = exchange.getRequestURI().toString().substring(path.length() + 1);
         ArrayList<Post> posts = userService.getPosts(userName);
 
         ArrayList<FormattedPost> formattedPosts = new ArrayList<>();
@@ -72,8 +76,8 @@ public class HttpUserController implements UserController {
         exchange.close();
     }
 
-    private void handlePostRequest(HttpExchange exchange, Clock clock) throws IOException {
-        String userName = exchange.getRequestURI().toString().substring(1);
+    private void handlePostRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
+        String userName = exchange.getRequestURI().toString().substring(path.length() + 1);
 
         InputStream inputStream = exchange.getRequestBody();
         Scanner scanner = new Scanner(inputStream);
