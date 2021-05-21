@@ -82,9 +82,7 @@ public class HttpUserController implements UserController {
         InputStream inputStream = exchange.getRequestBody();
         Scanner scanner = new Scanner(inputStream);
         StringBuilder post = new StringBuilder();
-        while ((scanner.hasNext())) {
-            post.append(scanner.nextLine());
-        }
+        post.append(scanner.nextLine());
 
         userService.addPost(userName + " -> " + post, LocalDateTime.now(clock));
 
