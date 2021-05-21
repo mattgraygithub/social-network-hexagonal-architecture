@@ -35,6 +35,7 @@ public class HttpUserController implements UserController {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
         createContextForAddingAndReadingPosts(clock, server);
+        createContextForAddingFollowedUsers(server);
         server.start();
     }
 
@@ -49,15 +50,26 @@ public class HttpUserController implements UserController {
                             handleReadWallGetRequest(exchange, path, clock);
                             break;
                         case "POST":
-                            handlePostRequest(exchange, path, clock);
+                            handlePostingPostRequest(exchange, path, clock);
                             break;
                     }
                 }
         );
     }
 
+    private void createContextForAddingFollowedUsers(HttpServer server) {
+        String path = "/follow/";
+        server.createContext(path, exchange -> {
+                    exchange.getResponseHeaders().set("Content-Type", "application/json");
+                    if ("POST".equals(exchange.getRequestMethod())) {
+                        handleAddFollowedUserPostRequest(exchange, path);
+                    }
+                }
+        );
+    }
+
     private void handleReadWallGetRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
-        String userName = exchange.getRequestURI().toString().substring(path.length() + 1);
+        String userName = exchange.getRequestURI().toString().substring(path.length());
         ArrayList<Post> posts = userService.getPosts(userName);
 
         ArrayList<FormattedPost> formattedPosts = new ArrayList<>();
@@ -76,17 +88,33 @@ public class HttpUserController implements UserController {
         exchange.close();
     }
 
-    private void handlePostRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
-        String userName = exchange.getRequestURI().toString().substring(path.length() + 1);
+    private void handlePostingPostRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
+        String userName = exchange.getRequestURI().toString().substring(path.length());
 
         InputStream inputStream = exchange.getRequestBody();
         Scanner scanner = new Scanner(inputStream);
-        StringBuilder post = new StringBuilder();
-        post.append(scanner.nextLine());
+        String post = scanner.nextLine();
 
         userService.addPost(userName + " -> " + post, LocalDateTime.now(clock));
 
         final String responseBody = "Added post: \"" + post + "\" to user: " + userName;
+        final byte[] rawResponseBody = responseBody.getBytes();
+        exchange.sendResponseHeaders(200, rawResponseBody.length);
+        exchange.getResponseBody().write(rawResponseBody);
+
+        exchange.close();
+    }
+
+    private void handleAddFollowedUserPostRequest(HttpExchange exchange, String path) throws IOException {
+        String userName = exchange.getRequestURI().toString().substring(path.length());
+
+        InputStream inputStream = exchange.getRequestBody();
+        Scanner scanner = new Scanner(inputStream);
+        String followedUser = scanner.nextLine();
+
+        userService.addFollowee(userName + " follows " + followedUser);
+
+        final String responseBody = "Added user: \"" + followedUser + "\" to list of followed users for user: " + userName;
         final byte[] rawResponseBody = responseBody.getBytes();
         exchange.sendResponseHeaders(200, rawResponseBody.length);
         exchange.getResponseBody().write(rawResponseBody);

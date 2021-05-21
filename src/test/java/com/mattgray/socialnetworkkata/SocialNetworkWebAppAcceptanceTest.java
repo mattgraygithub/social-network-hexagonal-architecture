@@ -41,6 +41,9 @@ public class SocialNetworkWebAppAcceptanceTest {
     private static final String ON_PORT_8002 = ":8002/";
     private static final String ON_PORT_8003 = ":8003/";
     private static final String POSTS_PATH = "posts/";
+    private static final String FOLLOW_PATH = "follow/";
+    private static final String CHARLIE_FOLLOWS_ALICE_PATH = "charlie/alice";
+    private static final String CHARLIE_FOLLOWS_BOB_PATH = "charlie/bob";
     private static final String TIME_PROPERTY_NAME = "timeAgo\":\"";
     private static final String POST_PROPERTY_NAME = "\",\"post\":\"";
     private static final String JSON_ENTRY_DIVIDER = "\"},{\"";
@@ -79,6 +82,16 @@ public class SocialNetworkWebAppAcceptanceTest {
         assertThat(makeGetRequestFor(BOB_USER_NAME, ON_PORT_8002, POSTS_PATH, AT_12PM)).
                 isEqualTo(TIME_PROPERTY_NAME + ONE_MINUTE_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_TWO + JSON_ENTRY_DIVIDER +
                         TIME_PROPERTY_NAME + TWO_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_ONE);
+    }
+
+    @Test
+    void usersCanFollowOtherUsersAndViewAnAggregatedListOfTheirsAndTheirFollowedUsersPostsOnTheirWall() throws IOException {
+        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8003), clockStub);
+        socialNetwork.run();
+        makeAliceAndBobPostRequests(ON_PORT_8003);
+        makePostRequestFor(CHARLIE_USER_NAME, ALICE_USER_NAME, ON_PORT_8003, FOLLOW_PATH, AT_12PM);
+        makePostRequestFor(CHARLIE_USER_NAME, BOB_USER_NAME, ON_PORT_8003, FOLLOW_PATH, AT_12PM);
+
     }
 
     private void makeAliceAndBobPostRequests(String port) throws IOException {
