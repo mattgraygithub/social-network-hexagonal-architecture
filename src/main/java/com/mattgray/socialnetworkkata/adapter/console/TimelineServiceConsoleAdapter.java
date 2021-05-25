@@ -22,7 +22,7 @@ public class TimelineServiceConsoleAdapter implements TimelineService {
         Collections.reverse(usersTimeline);
         StringBuilder formattedPosts = new StringBuilder();
         for (Post post : usersTimeline) {
-            formattedPosts.append(post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand) + "\n");
+            formattedPosts.append(post.getPost()).append(clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand)).append("\n");
         }
         return formattedPosts.toString();
     }
