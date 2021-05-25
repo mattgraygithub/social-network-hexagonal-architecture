@@ -21,7 +21,7 @@ import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
-public class TimelineConsoleAdapterShould {
+public class TimelineServiceConsoleAdapterShould {
 
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static ClockService clockServiceMock;
@@ -32,7 +32,7 @@ public class TimelineConsoleAdapterShould {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockServiceMock = mock(ClockService.class);
-        timelineService = new TimelineConsoleAdapter(clockServiceMock);
+        timelineService = new TimelineServiceConsoleAdapter(clockServiceMock);
     }
 
     @Test

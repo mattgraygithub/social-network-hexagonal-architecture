@@ -2,7 +2,7 @@ package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
 import com.mattgray.socialnetworkkata.adapter.console.CommandProcessor;
-import com.mattgray.socialnetworkkata.adapter.console.TimelineConsoleAdapter;
+import com.mattgray.socialnetworkkata.adapter.console.TimelineServiceConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.web.HttpUserController;
 import com.mattgray.socialnetworkkata.domain.User;
@@ -23,7 +23,7 @@ public class SocialNetwork {
     private static final ArrayList<User> USERS = new ArrayList<>();
     private static final UserRepository USER_REPOSITORY = new InMemoryUserRepository(USERS);
     private static final ClockService CLOCK_SERVICE = new ClockServiceImpl();
-    private static final TimelineService TIMELINE_SERVICE = new TimelineConsoleAdapter(CLOCK_SERVICE);
+    private static final TimelineService TIMELINE_SERVICE = new TimelineServiceConsoleAdapter(CLOCK_SERVICE);
     private static final WallService WALL_SERVICE = new WallConsoleAdapter(CLOCK_SERVICE);
     private static final UserService USER_SERVICE = new UserService(USER_REPOSITORY, TIMELINE_SERVICE, WALL_SERVICE);
     private static final int SERVER_PORT = 8000;

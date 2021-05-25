@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TimelineConsoleAdapter implements TimelineService {
+public class TimelineServiceConsoleAdapter implements TimelineService {
 
     private final ClockService clockService;
 
-    public TimelineConsoleAdapter(ClockService clockService) {
+    public TimelineServiceConsoleAdapter(ClockService clockService) {
         this.clockService = clockService;
     }
 
