@@ -6,9 +6,6 @@ import com.mattgray.socialnetworkkata.service.clock.ClockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -23,14 +20,11 @@ import static org.mockito.Mockito.*;
 
 public class TimelineServiceConsoleAdapterShould {
 
-    private static ByteArrayOutputStream byteArrayOutputStream;
     private static ClockService clockServiceMock;
     private static TimelineService timelineService;
 
     @BeforeEach
     void setUp() {
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(byteArrayOutputStream));
         clockServiceMock = mock(ClockService.class);
         timelineService = new TimelineServiceConsoleAdapter(clockServiceMock);
     }
@@ -38,22 +32,21 @@ public class TimelineServiceConsoleAdapterShould {
     @Test
     void callClockServiceToGetTimeBetweenPostAndReadCommand() {
         ArrayList<Post> timeline = getAliceTimelineWithOnePost();
-        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
+        timelineService.getTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
         verify(clockServiceMock).getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM));
     }
 
     @Test
-    void printATimelineWithOnePost() throws IOException {
+    void printATimelineWithOnePost() {
         ArrayList<Post> timeline = getAliceTimelineWithOnePost();
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
-        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
 
-        assertThat(getConsoleOutput()).isEqualTo(ALICE_EXAMPLE_POST + FIVE_MINUTES_AGO + NEW_LINE);
+        assertThat(timelineService.getTimeLine(timeline, stubbedLocalTimeOf(AT_12PM))).isEqualTo(ALICE_EXAMPLE_POST + FIVE_MINUTES_AGO + NEW_LINE);
     }
 
     @Test
-    void printATimelineMultiplePosts() throws IOException {
+    void printATimelineMultiplePosts() {
         ArrayList<Post> timeline = new ArrayList<>(Arrays.asList(
                 new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_ONE, stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM)),
                 new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_COMMAND_TWO, stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM))
@@ -61,9 +54,7 @@ public class TimelineServiceConsoleAdapterShould {
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_5_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(FIVE_MINUTES_AGO);
         when(clockServiceMock.getTimeBetween(stubbedLocalTimeOf(AT_2_MINUTES_BEFORE_12PM), stubbedLocalTimeOf(AT_12PM))).thenReturn(TWO_MINUTES_AGO);
 
-        timelineService.displayTimeLine(timeline, stubbedLocalTimeOf(AT_12PM));
-
-        assertThat(getConsoleOutput()).isEqualTo(
+        assertThat(timelineService.getTimeLine(timeline, stubbedLocalTimeOf(AT_12PM))).isEqualTo(
                 BOB_EXAMPLE_POST_COMMAND_TWO + TWO_MINUTES_AGO + NEW_LINE +
                         BOB_EXAMPLE_POST_COMMAND_ONE + FIVE_MINUTES_AGO + NEW_LINE
 
@@ -77,10 +68,5 @@ public class TimelineServiceConsoleAdapterShould {
     private LocalDateTime stubbedLocalTimeOf(LocalDateTime time) {
         Clock readCommandClock = Clock.fixed(time.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         return LocalDateTime.now(readCommandClock);
-    }
-
-    private String getConsoleOutput() throws IOException {
-        byteArrayOutputStream.flush();
-        return byteArrayOutputStream.toString();
     }
 }

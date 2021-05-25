@@ -17,11 +17,13 @@ public class TimelineServiceConsoleAdapter implements TimelineService {
     }
 
     @Override
-    public void displayTimeLine(ArrayList<Post> posts, LocalDateTime timeOfReadCommand) {
+    public String getTimeLine(ArrayList<Post> posts, LocalDateTime timeOfReadCommand) {
         ArrayList<Post> usersTimeline = new ArrayList<>(posts);
         Collections.reverse(usersTimeline);
+        StringBuilder formattedPosts = new StringBuilder();
         for (Post post : usersTimeline) {
-            System.out.println(post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand));
+            formattedPosts.append(post.getPost() + clockService.getTimeBetween(post.getTimeOfPost(), timeOfReadCommand) + "\n");
         }
+        return formattedPosts.toString();
     }
 }

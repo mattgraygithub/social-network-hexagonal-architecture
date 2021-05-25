@@ -39,7 +39,7 @@ public class CommandProcessor implements UserController {
 
             if (isRead(command)) {
                 ArrayList<Post> posts = userService.getPosts(command);
-                timelineService.displayTimeLine(posts, LocalDateTime.now(clock));
+                System.out.print(timelineService.getTimeLine(posts, LocalDateTime.now(clock)));
             }
 
             if (isFollow(command)) {

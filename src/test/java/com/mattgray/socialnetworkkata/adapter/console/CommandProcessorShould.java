@@ -1,22 +1,31 @@
 package com.mattgray.socialnetworkkata.adapter.console;
 
+import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class CommandProcessorShould {
 
     private static final Clock FIXED_CLOCK_AT_12PM = Clock.fixed(AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+    private static final ArrayList<Post> ALICE_EXAMPLE_POST_LIST = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_5_MINUTES_BEFORE_12PM)));
+    private static ByteArrayOutputStream byteArrayOutputStream;
     private static Clock clockStub;
     private static CommandProcessor commandProcessor;
     private static UserService mockUserService;
@@ -24,6 +33,8 @@ class CommandProcessorShould {
 
     @BeforeEach
     void setUp() {
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteArrayOutputStream));
         clockStub = mock(Clock.class);
         mockUserService = mock(UserService.class);
         mockTimelineService = mock(TimelineService.class);
@@ -38,10 +49,30 @@ class CommandProcessorShould {
     }
 
     @Test
-    void delegateReadTimelineCommandsToUserService() {
+    void callUserServiceToGetPostsForAGivenUserNameWhenAReadTimelineCommandIsReceived() {
         runCommand(READ_ALICE_TIMELINE);
 
         verify(mockUserService).getPosts(ALICE_USER_NAME);
+    }
+
+    @Test
+    void callTimelineServiceToGetCorrectlyFormattedTimelineWhenAReadTimelineCommandIsReceived() {
+        when(mockUserService.getPosts(ALICE_USER_NAME)).thenReturn(ALICE_EXAMPLE_POST_LIST);
+        runCommand(READ_ALICE_TIMELINE);
+
+        verify(mockTimelineService).getTimeLine(ALICE_EXAMPLE_POST_LIST, LocalDateTime.now(FIXED_CLOCK_AT_12PM));
+    }
+
+    @Test
+    void printTimelineToConsoleWhenAReadTimelineCommandIsReceived() throws IOException {
+        when(mockUserService.getPosts(ALICE_USER_NAME)).thenReturn(ALICE_EXAMPLE_POST_LIST);
+
+        setUpClockStub();
+        when(mockTimelineService.getTimeLine(ALICE_EXAMPLE_POST_LIST, LocalDateTime.now(clockStub))).thenReturn(ALICE_EXAMPLE_POST + FIVE_MINUTES_AGO);
+
+        runCommand(READ_ALICE_TIMELINE);
+
+        assertThat(getConsoleOutput()).isEqualTo(ALICE_EXAMPLE_POST + FIVE_MINUTES_AGO);
     }
 
     @Test
@@ -67,5 +98,10 @@ class CommandProcessorShould {
     private void setUpClockStub() {
         when(clockStub.instant()).thenReturn(FIXED_CLOCK_AT_12PM.instant());
         when(clockStub.getZone()).thenReturn(FIXED_CLOCK_AT_12PM.getZone());
+    }
+
+    private String getConsoleOutput() throws IOException {
+        byteArrayOutputStream.flush();
+        return byteArrayOutputStream.toString();
     }
 }
