@@ -47,7 +47,7 @@ public class HttpUserController implements UserController {
 
                     switch (requestMethod) {
                         case "GET":
-                            handleReadWallGetRequest(exchange, path, clock);
+                            handleReadTimelineGetRequest(exchange, path, clock);
                             break;
                         case "POST":
                             handlePostingPostRequest(exchange, path, clock);
@@ -68,7 +68,7 @@ public class HttpUserController implements UserController {
         );
     }
 
-    private void handleReadWallGetRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
+    private void handleReadTimelineGetRequest(HttpExchange exchange, String path, Clock clock) throws IOException {
         String userName = exchange.getRequestURI().toString().substring(path.length());
         ArrayList<Post> posts = userService.getPosts(userName);
 
