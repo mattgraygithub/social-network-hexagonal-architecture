@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class CommandProcessor implements UserController {
+public class ConsoleUserController implements UserController {
 
     private static final String POST_COMMAND = "->";
     private static final String FOLLOW_COMMAND = "follows";
@@ -20,7 +20,7 @@ public class CommandProcessor implements UserController {
     private final UserService userService;
     private final TimelineService timelineService;
 
-    public CommandProcessor(UserService userService, TimelineService timelineService) {
+    public ConsoleUserController(UserService userService, TimelineService timelineService) {
         this.userService = userService;
         this.timelineService = timelineService;
     }

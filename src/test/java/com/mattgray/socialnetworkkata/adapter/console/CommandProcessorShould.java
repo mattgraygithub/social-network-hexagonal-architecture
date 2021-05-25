@@ -27,7 +27,7 @@ class CommandProcessorShould {
     private static final ArrayList<Post> ALICE_EXAMPLE_POST_LIST = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_5_MINUTES_BEFORE_12PM)));
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static Clock clockStub;
-    private static CommandProcessor commandProcessor;
+    private static ConsoleUserController commandProcessor;
     private static UserService mockUserService;
     private static TimelineService mockTimelineService;
 
@@ -38,7 +38,7 @@ class CommandProcessorShould {
         clockStub = mock(Clock.class);
         mockUserService = mock(UserService.class);
         mockTimelineService = mock(TimelineService.class);
-        commandProcessor = new CommandProcessor(mockUserService, mockTimelineService);
+        commandProcessor = new ConsoleUserController(mockUserService, mockTimelineService);
     }
 
     @Test

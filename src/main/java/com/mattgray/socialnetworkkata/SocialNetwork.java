@@ -1,7 +1,7 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.adapter.console.CommandProcessor;
+import com.mattgray.socialnetworkkata.adapter.console.ConsoleUserController;
 import com.mattgray.socialnetworkkata.adapter.console.TimelineServiceConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.web.HttpUserController;
@@ -41,7 +41,7 @@ public class SocialNetwork {
         SocialNetwork webApp = new SocialNetwork(new HttpUserController(USER_SERVICE, CLOCK_SERVICE, SERVER_PORT), Clock.systemDefaultZone());
         webApp.run();
 
-        SocialNetwork consoleApp = new SocialNetwork(new CommandProcessor(USER_SERVICE, TIMELINE_SERVICE), Clock.systemDefaultZone());
+        SocialNetwork consoleApp = new SocialNetwork(new ConsoleUserController(USER_SERVICE, TIMELINE_SERVICE), Clock.systemDefaultZone());
         consoleApp.run();
     }
 
