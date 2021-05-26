@@ -40,6 +40,13 @@ public class HTTPUserControllerShould {
     private static UserService mockUserService;
     private static TimelineService mockHTTPTimelineService;
 
+    private static Stream<Arguments> getInputsAndExpectedOutputs() {
+        return Stream.of(
+                Arguments.of(PORT_8007, ALICE_USER_NAME, ALICE_EXAMPLE_POST_LIST, ALICE_EXPECTED_JSON_RESPONSE),
+                Arguments.of(PORT_8008, BOB_USER_NAME, BOB_EXAMPLE_POST_LIST, BOB_EXPECTED_JSON_RESPONSE)
+        );
+    }
+
     @BeforeEach
     void setUp() {
         clockStub = mock(Clock.class);
@@ -50,22 +57,22 @@ public class HTTPUserControllerShould {
     @Test
     void callUserServiceToAddPostWhenAPostRequestIsReceivedAtThePostsEndpoint() throws IOException {
         initialiseUserControllerOn(PORT_8004);
-        setUpClockStubWith(AT_12PM);
-        makePostRequest(HTTP_LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
+        setUpClockStub();
+        makePostRequest(HTTP_LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME);
         verify(mockUserService).addPost(ALICE_USER_NAME + POST_COMMAND + ALICE_EXAMPLE_POST, LocalDateTime.now(FIXED_CLOCK_AT_12PM));
     }
 
     @Test
     void giveResponseToPostRequestNotifyingUsThatThePostHasBeenAddedToTheCorrectUser() throws IOException {
         initialiseUserControllerOn(PORT_8005);
-        setUpClockStubWith(AT_12PM);
-        assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
+        setUpClockStub();
+        assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
     }
 
     @Test
     void callUserServiceToGetPostWhenAGetRequestIsReceivedAtThePostsEndpoint() throws IOException {
         when(mockUserService.getPosts(ALICE_USER_NAME)).thenReturn(ALICE_EXAMPLE_POST_LIST);
-        setUpClockStubWith(AT_12PM);
+        setUpClockStub();
         when(mockHTTPTimelineService.getTimeLine(ALICE_EXAMPLE_POST_LIST, LocalDateTime.now(clockStub))).thenReturn(
                 ALICE_EXPECTED_JSON_RESPONSE
         );
@@ -80,18 +87,11 @@ public class HTTPUserControllerShould {
     @MethodSource("getInputsAndExpectedOutputs")
     void returnPostsAsJSONForAGivenUserWhenAGetRequestIsReceivedAtThePostsEndpoint(int port, String username, ArrayList<Post> inputPostList, String expectedOutput) throws IOException {
         when(mockUserService.getPosts(username)).thenReturn(inputPostList);
-        setUpClockStubWith(AT_12PM);
+        setUpClockStub();
         when(mockHTTPTimelineService.getTimeLine(inputPostList, LocalDateTime.now(clockStub))).thenReturn(expectedOutput);
         initialiseUserControllerOn(port);
 
         assertThat(makeGetRequest(HTTP_LOCALHOST + port + POSTS_PATH + username)).isEqualTo(expectedOutput);
-    }
-
-    private static Stream<Arguments> getInputsAndExpectedOutputs() {
-        return Stream.of(
-                Arguments.of(PORT_8007, ALICE_USER_NAME, ALICE_EXAMPLE_POST_LIST, ALICE_EXPECTED_JSON_RESPONSE),
-                Arguments.of(PORT_8008, BOB_USER_NAME, BOB_EXAMPLE_POST_LIST, BOB_EXPECTED_JSON_RESPONSE)
-        );
     }
 
     private void initialiseUserControllerOn(int port) throws IOException {
@@ -99,15 +99,15 @@ public class HTTPUserControllerShould {
         userController.process(clockStub);
     }
 
-    private void setUpClockStubWith(LocalDateTime timeOfRequest) {
-        Clock fixedClock = Clock.fixed(timeOfRequest.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+    private void setUpClockStub() {
+        Clock fixedClock = Clock.fixed(com.mattgray.socialnetworkkata.TestData.AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         when(clockStub.instant()).thenReturn(fixedClock.instant());
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
     }
 
-    private String makePostRequest(String url, String requestBody) throws IOException {
+    private String makePostRequest(String url) throws IOException {
         HttpURLConnection connection = getHttpURLConnectionFor(url, POST_REQUEST);
-        setRequestBodyWith(requestBody, connection);
+        setRequestBodyWith(connection);
         return getResponse(connection);
     }
 
@@ -124,9 +124,9 @@ public class HTTPUserControllerShould {
         return connection;
     }
 
-    private void setRequestBodyWith(String postText, HttpURLConnection connection) throws IOException {
+    private void setRequestBodyWith(HttpURLConnection connection) throws IOException {
         try (OutputStream outputStream = connection.getOutputStream()) {
-            byte[] command = postText.getBytes(StandardCharsets.UTF_8);
+            byte[] command = com.mattgray.socialnetworkkata.TestData.ALICE_EXAMPLE_POST.getBytes(StandardCharsets.UTF_8);
             outputStream.write(command);
         }
     }

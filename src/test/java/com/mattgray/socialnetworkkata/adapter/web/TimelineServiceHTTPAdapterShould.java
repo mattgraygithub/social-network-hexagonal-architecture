@@ -21,6 +21,13 @@ class TimelineServiceHTTPAdapterShould {
     private static ClockService clockService;
     private static TimelineService timelineService;
 
+    private static Stream<Arguments> getExamplePostListsAndOutputs() {
+        return Stream.of(
+                Arguments.of(ALICE_EXAMPLE_POST_LIST, ALICE_EXPECTED_JSON_RESPONSE),
+                Arguments.of(BOB_EXAMPLE_POST_LIST, BOB_EXPECTED_JSON_RESPONSE)
+        );
+    }
+
     @BeforeEach
     void setUp() {
         clockService = mock(ClockService.class);
@@ -40,12 +47,5 @@ class TimelineServiceHTTPAdapterShould {
         when(clockService.getTimeBetween(AT_2_MINUTES_BEFORE_12PM, AT_12PM)).thenReturn(TWO_MINUTES_AGO);
         when(clockService.getTimeBetween(AT_5_MINUTES_BEFORE_12PM, AT_12PM)).thenReturn(FIVE_MINUTES_AGO);
         assertThat(timelineService.getTimeLine(inputPostList, AT_12PM)).isEqualTo(expectedOutput);
-    }
-
-    private static Stream<Arguments> getExamplePostListsAndOutputs() {
-        return Stream.of(
-                Arguments.of(ALICE_EXAMPLE_POST_LIST, ALICE_EXPECTED_JSON_RESPONSE),
-                Arguments.of(BOB_EXAMPLE_POST_LIST, BOB_EXPECTED_JSON_RESPONSE)
-        );
     }
 }
