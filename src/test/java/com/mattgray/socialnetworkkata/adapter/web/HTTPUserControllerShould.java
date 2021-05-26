@@ -25,10 +25,6 @@ import static org.mockito.Mockito.*;
 public class HTTPUserControllerShould {
 
     private static final Clock FIXED_CLOCK_AT_12PM = Clock.fixed(AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-    private static final String LOCALHOST = "http://localhost:";
-    private static final String POSTS_PATH = "/posts/";
-    private static final String POST_REQUEST = "POST";
-    private static final String GET_REQUEST = "GET";
     private static final int PORT_8004 = 8004;
     private static final int PORT_8005 = 8005;
     private static final int PORT_8006 = 8006;
@@ -49,7 +45,7 @@ public class HTTPUserControllerShould {
     void callUserServiceToAddPostWhenAPostRequestIsReceivedAtThePostsEndpoint() throws IOException {
         initialiseUserControllerOn(PORT_8004);
         setUpClockStubWith(AT_12PM);
-        makePostRequest(LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
+        makePostRequest(HTTP_LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
         verify(mockUserService).addPost(ALICE_USER_NAME + POST_COMMAND + ALICE_EXAMPLE_POST, LocalDateTime.now(FIXED_CLOCK_AT_12PM));
     }
 
@@ -57,7 +53,7 @@ public class HTTPUserControllerShould {
     void giveResponseToPostRequestNotifyingUsThatThePostHasBeenAddedToTheCorrectUser() throws IOException {
         initialiseUserControllerOn(PORT_8005);
         setUpClockStubWith(AT_12PM);
-        assertThat(makePostRequest(LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
+        assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
     }
 
     @Test
@@ -69,7 +65,7 @@ public class HTTPUserControllerShould {
         );
 
         initialiseUserControllerOn(PORT_8006);
-        makeGetRequest(LOCALHOST + PORT_8006 + POSTS_PATH + ALICE_USER_NAME);
+        makeGetRequest(HTTP_LOCALHOST + PORT_8006 + POSTS_PATH + ALICE_USER_NAME);
 
         verify(mockUserService).getPosts(ALICE_USER_NAME);
     }
@@ -83,7 +79,7 @@ public class HTTPUserControllerShould {
         );
         initialiseUserControllerOn(PORT_8007);
 
-        assertThat(makeGetRequest(LOCALHOST + PORT_8007 + POSTS_PATH + ALICE_USER_NAME)).isEqualTo(ALICE_EXPECTED_JSON_RESPONSE);
+        assertThat(makeGetRequest(HTTP_LOCALHOST + PORT_8007 + POSTS_PATH + ALICE_USER_NAME)).isEqualTo(ALICE_EXPECTED_JSON_RESPONSE);
     }
 
     private void initialiseUserControllerOn(int port) throws IOException {
