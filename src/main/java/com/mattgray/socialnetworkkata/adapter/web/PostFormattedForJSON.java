@@ -1,11 +1,11 @@
-package com.mattgray.socialnetworkkata.domain;
+package com.mattgray.socialnetworkkata.adapter.web;
 
-public class FormattedPost {
+public class PostFormattedForJSON {
 
     private final String post;
     private final String timeAgo;
 
-    public FormattedPost(String post, String timeAgo) {
+    public PostFormattedForJSON(String post, String timeAgo) {
         this.post = post;
         this.timeAgo = timeAgo;
     }

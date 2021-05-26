@@ -1,6 +1,5 @@
 package com.mattgray.socialnetworkkata.adapter.web;
 
-import com.mattgray.socialnetworkkata.domain.FormattedPost;
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.service.clock.ClockService;
@@ -20,8 +19,8 @@ public class TimelineServiceHTTPAdapter implements TimelineService {
 
     @Override
     public String getTimeLine(ArrayList<Post> posts, LocalDateTime time) {
-        ArrayList<FormattedPost> formattedPosts = new ArrayList<>();
-        posts.forEach(post -> formattedPosts.add(new FormattedPost(post.getPost(), clockService.getTimeBetween(post.getTimeOfPost(), time))));
+        ArrayList<PostFormattedForJSON> formattedPosts = new ArrayList<>();
+        posts.forEach(post -> formattedPosts.add(new PostFormattedForJSON(post.getPost(), clockService.getTimeBetween(post.getTimeOfPost(), time))));
         Collections.reverse(formattedPosts);
 
         return new JSONArray(formattedPosts).toString();
