@@ -1,10 +1,14 @@
 package com.mattgray.socialnetworkkata.adapter.web;
 
+import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserController;
 import com.mattgray.socialnetworkkata.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +20,9 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,6 +35,7 @@ public class HTTPUserControllerShould {
     private static final int PORT_8005 = 8005;
     private static final int PORT_8006 = 8006;
     private static final int PORT_8007 = 8007;
+    private static final int PORT_8008 = 8008;
     private static Clock clockStub;
     private static UserService mockUserService;
     private static TimelineService mockHTTPTimelineService;
@@ -69,16 +76,22 @@ public class HTTPUserControllerShould {
         verify(mockUserService).getPosts(ALICE_USER_NAME);
     }
 
-    @Test
-    void returnPostsAsJSONForAGivenUserWhenAGetRequestIsReceivedAtThePostsEndpoint() throws IOException {
-        when(mockUserService.getPosts(ALICE_USER_NAME)).thenReturn(ALICE_EXAMPLE_POST_LIST);
+    @ParameterizedTest
+    @MethodSource("getInputsAndExpectedOutputs")
+    void returnPostsAsJSONForAGivenUserWhenAGetRequestIsReceivedAtThePostsEndpoint(int port, String username, ArrayList<Post> inputPostList, String expectedOutput) throws IOException {
+        when(mockUserService.getPosts(username)).thenReturn(inputPostList);
         setUpClockStubWith(AT_12PM);
-        when(mockHTTPTimelineService.getTimeLine(ALICE_EXAMPLE_POST_LIST, LocalDateTime.now(clockStub))).thenReturn(
-                ALICE_EXPECTED_JSON_RESPONSE
-        );
-        initialiseUserControllerOn(PORT_8007);
+        when(mockHTTPTimelineService.getTimeLine(inputPostList, LocalDateTime.now(clockStub))).thenReturn(expectedOutput);
+        initialiseUserControllerOn(port);
 
-        assertThat(makeGetRequest(HTTP_LOCALHOST + PORT_8007 + POSTS_PATH + ALICE_USER_NAME)).isEqualTo(ALICE_EXPECTED_JSON_RESPONSE);
+        assertThat(makeGetRequest(HTTP_LOCALHOST + port + POSTS_PATH + username)).isEqualTo(expectedOutput);
+    }
+
+    private static Stream<Arguments> getInputsAndExpectedOutputs() {
+        return Stream.of(
+                Arguments.of(PORT_8007, ALICE_USER_NAME, ALICE_EXAMPLE_POST_LIST, ALICE_EXPECTED_JSON_RESPONSE),
+                Arguments.of(PORT_8008, BOB_USER_NAME, BOB_EXAMPLE_POST_LIST, BOB_EXPECTED_JSON_RESPONSE)
+        );
     }
 
     private void initialiseUserControllerOn(int port) throws IOException {
