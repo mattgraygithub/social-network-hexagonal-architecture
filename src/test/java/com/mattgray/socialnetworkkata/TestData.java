@@ -4,6 +4,7 @@ import com.mattgray.socialnetworkkata.domain.Post;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class TestData {
@@ -46,5 +47,6 @@ public class TestData {
     public static final String FIVE_MINUTES_AGO = " (5 minutes ago)";
     public static final ArrayList<Post> ALICE_EXAMPLE_POST_LIST = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_5_MINUTES_BEFORE_12PM)));
     public static final String ALICE_EXPECTED_JSON_RESPONSE = "[{\"timeAgo\":\" (5 minutes ago)\",\"post\":\"" + ALICE_EXAMPLE_POST + "\"}]";
-
+    public static final ArrayList<Post> BOB_EXAMPLE_POST_LIST = new ArrayList<>(Arrays.asList(new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_ONE, AT_2_MINUTES_BEFORE_12PM), new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_TWO, AT_1_MINUTE_BEFORE_12PM)));
+    public static final String BOB_EXPECTED_JSON_RESPONSE = "[{\"timeAgo\":\" (1 minute ago)\",\"post\":\"" + BOB_EXAMPLE_POST_TWO + "\"},{\"timeAgo\":\" (2 minutes ago)\",\"post\":\"" + BOB_EXAMPLE_POST_ONE + "\"}]";
 }
