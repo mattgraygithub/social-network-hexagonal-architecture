@@ -1,6 +1,5 @@
 package com.mattgray.socialnetworkkata.adapter.console;
 
-import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +13,6 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +21,6 @@ import static org.mockito.Mockito.*;
 class CommandProcessorShould {
 
     private static final Clock FIXED_CLOCK_AT_12PM = Clock.fixed(AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-    private static final ArrayList<Post> ALICE_EXAMPLE_POST_LIST = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_5_MINUTES_BEFORE_12PM)));
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static Clock clockStub;
     private static ConsoleUserController commandProcessor;

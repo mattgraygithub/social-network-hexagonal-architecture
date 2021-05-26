@@ -1,6 +1,10 @@
 package com.mattgray.socialnetworkkata;
 
+import com.mattgray.socialnetworkkata.domain.Post;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class TestData {
     public static final String POST_COMMAND = " -> ";
@@ -35,4 +39,5 @@ public class TestData {
     public static final String ONE_MINUTE_AGO = " (1 minute ago)";
     public static final String TWO_MINUTES_AGO = " (2 minutes ago)";
     public static final String FIVE_MINUTES_AGO = " (5 minutes ago)";
+    public static final ArrayList<Post> ALICE_EXAMPLE_POST_LIST = new ArrayList<>(Collections.singletonList(new Post(ALICE_USER_NAME, ALICE_EXAMPLE_POST, AT_5_MINUTES_BEFORE_12PM)));
 }

@@ -1,13 +1,11 @@
 package com.mattgray.socialnetworkkata.adapter.web;
 
-import com.mattgray.socialnetworkkata.domain.FormattedPost;
 import com.mattgray.socialnetworkkata.domain.Post;
+import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserController;
 import com.mattgray.socialnetworkkata.service.UserService;
-import com.mattgray.socialnetworkkata.service.clock.ClockService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import org.json.JSONArray;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,18 +13,17 @@ import java.net.InetSocketAddress;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
-public class HttpUserController implements UserController {
+public class HTTPUserController implements UserController {
 
     private final UserService userService;
-    private final ClockService clockService;
+    private final TimelineService timelineService;
     private final int serverPort;
 
-    public HttpUserController(UserService userService, ClockService clockService, int serverPort) {
+    public HTTPUserController(UserService userService, TimelineService timelineService, int serverPort) {
         this.userService = userService;
-        this.clockService = clockService;
+        this.timelineService = timelineService;
         this.serverPort = serverPort;
     }
 
@@ -72,15 +69,7 @@ public class HttpUserController implements UserController {
         String userName = exchange.getRequestURI().toString().substring(path.length());
         ArrayList<Post> posts = userService.getPosts(userName);
 
-        ArrayList<FormattedPost> formattedPosts = new ArrayList<>();
-
-        posts.forEach(post -> formattedPosts.add(new FormattedPost(post.getPost(), clockService.getTimeBetween(post.getTimeOfPost(), LocalDateTime.now(clock)))));
-
-        Collections.reverse(formattedPosts);
-
-        final String responseBody = new JSONArray(formattedPosts).toString();
-
-        final byte[] rawResponseBody = responseBody.getBytes();
+        final byte[] rawResponseBody = timelineService.getTimeLine(posts, LocalDateTime.now(clock)).getBytes();
 
         exchange.sendResponseHeaders(200, rawResponseBody.length);
         exchange.getResponseBody().write(rawResponseBody);

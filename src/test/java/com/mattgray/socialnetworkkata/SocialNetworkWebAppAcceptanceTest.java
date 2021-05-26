@@ -1,9 +1,9 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.adapter.console.TimelineServiceConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
-import com.mattgray.socialnetworkkata.adapter.web.HttpUserController;
+import com.mattgray.socialnetworkkata.adapter.web.HTTPUserController;
+import com.mattgray.socialnetworkkata.adapter.web.TimelineServiceHTTPAdapter;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserRepository;
@@ -54,6 +54,7 @@ public class SocialNetworkWebAppAcceptanceTest {
     private static Clock clockStub;
     private static ClockService clockService;
     private static UserService userService;
+    private static TimelineService timelineService;
 
     @BeforeEach
     void setUp() {
@@ -61,14 +62,14 @@ public class SocialNetworkWebAppAcceptanceTest {
         clockService = new ClockServiceImpl();
         ArrayList<User> users = new ArrayList<>();
         UserRepository userRepository = new InMemoryUserRepository(users);
-        TimelineService timelineService = new TimelineServiceConsoleAdapter(clockService);
+        timelineService = new TimelineServiceHTTPAdapter(clockService);
         WallService wallService = new WallConsoleAdapter(clockService);
         userService = new UserService(userRepository, timelineService, wallService);
     }
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndAUsersTimelineCanBeRead() throws IOException {
-        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8001), clockStub);
+        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, PORT_8001), clockStub);
         socialNetwork.run();
         makeAliceAndBobPostRequests(ON_PORT_8001);
         assertThat(makeGetRequestFor(ALICE_USER_NAME, ON_PORT_8001, POSTS_PATH, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + ALICE_EXAMPLE_POST);
@@ -76,7 +77,7 @@ public class SocialNetworkWebAppAcceptanceTest {
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndADifferentUsersTimelineCanBeRead() throws IOException {
-        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8002), clockStub);
+        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, PORT_8002), clockStub);
         socialNetwork.run();
         makeAliceAndBobPostRequests(ON_PORT_8002);
         assertThat(makeGetRequestFor(BOB_USER_NAME, ON_PORT_8002, POSTS_PATH, AT_12PM)).
@@ -86,7 +87,7 @@ public class SocialNetworkWebAppAcceptanceTest {
 
     @Test
     void usersCanFollowOtherUsersAndViewAnAggregatedListOfTheirsAndTheirFollowedUsersPostsOnTheirWall() throws IOException {
-        SocialNetwork socialNetwork = new SocialNetwork(new HttpUserController(userService, clockService, PORT_8003), clockStub);
+        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, PORT_8003), clockStub);
         socialNetwork.run();
         makeAliceAndBobPostRequests(ON_PORT_8003);
         makePostRequestFor(CHARLIE_USER_NAME, ALICE_USER_NAME, ON_PORT_8003, FOLLOW_PATH, AT_12PM);
