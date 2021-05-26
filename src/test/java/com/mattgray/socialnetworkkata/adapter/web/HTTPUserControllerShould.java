@@ -36,6 +36,8 @@ public class HTTPUserControllerShould {
     private static final int PORT_8006 = 8006;
     private static final int PORT_8007 = 8007;
     private static final int PORT_8008 = 8008;
+    private static final int PORT_8009 = 8009;
+    private static final int PORT_8010 = 8010;
     private static Clock clockStub;
     private static UserService mockUserService;
     private static TimelineService mockHTTPTimelineService;
@@ -58,7 +60,8 @@ public class HTTPUserControllerShould {
     void callUserServiceToAddPostWhenAPostRequestIsReceivedAtThePostsEndpoint() throws IOException {
         initialiseUserControllerOn(PORT_8004);
         setUpClockStub();
-        makePostRequest(HTTP_LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME);
+        makePostRequest(HTTP_LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
+
         verify(mockUserService).addPost(ALICE_USER_NAME + POST_COMMAND + ALICE_EXAMPLE_POST, LocalDateTime.now(FIXED_CLOCK_AT_12PM));
     }
 
@@ -66,7 +69,8 @@ public class HTTPUserControllerShould {
     void giveResponseToPostRequestNotifyingUsThatThePostHasBeenAddedToTheCorrectUser() throws IOException {
         initialiseUserControllerOn(PORT_8005);
         setUpClockStub();
-        assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
+
+        assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
     }
 
     @Test
@@ -94,6 +98,19 @@ public class HTTPUserControllerShould {
         assertThat(makeGetRequest(HTTP_LOCALHOST + port + POSTS_PATH + username)).isEqualTo(expectedOutput);
     }
 
+    @Test
+    void callUserServiceToAddFolloweeWhenAPostRequestIsReceivedAtTheFollowEndpoint() throws IOException {
+        initialiseUserControllerOn(PORT_8009);
+        setUpClockStub();
+        makePostRequest(HTTP_LOCALHOST + PORT_8009 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
+
+        initialiseUserControllerOn(PORT_8010);
+        setUpClockStub();
+        makePostRequest(HTTP_LOCALHOST + PORT_8010 + FOLLOW_PATH + ALICE_USER_NAME, BOB_USER_NAME);
+
+        verify(mockUserService).addFollowee(ALICE_USER_NAME + FOLLOW_COMMAND + BOB_USER_NAME);
+    }
+
     private void initialiseUserControllerOn(int port) throws IOException {
         UserController userController = new HTTPUserController(mockUserService, mockHTTPTimelineService, port);
         userController.process(clockStub);
@@ -105,9 +122,9 @@ public class HTTPUserControllerShould {
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
     }
 
-    private String makePostRequest(String url) throws IOException {
+    private String makePostRequest(String url, String requestBody) throws IOException {
         HttpURLConnection connection = getHttpURLConnectionFor(url, POST_REQUEST);
-        setRequestBodyWith(connection);
+        setRequestBodyWith(connection, requestBody);
         return getResponse(connection);
     }
 
@@ -124,9 +141,9 @@ public class HTTPUserControllerShould {
         return connection;
     }
 
-    private void setRequestBodyWith(HttpURLConnection connection) throws IOException {
+    private void setRequestBodyWith(HttpURLConnection connection, String requestBody) throws IOException {
         try (OutputStream outputStream = connection.getOutputStream()) {
-            byte[] command = com.mattgray.socialnetworkkata.TestData.ALICE_EXAMPLE_POST.getBytes(StandardCharsets.UTF_8);
+            byte[] command = requestBody.getBytes(StandardCharsets.UTF_8);
             outputStream.write(command);
         }
     }
