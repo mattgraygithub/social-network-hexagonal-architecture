@@ -29,7 +29,6 @@ public class HTTPUserControllerShould {
     private static final int PORT_8005 = 8005;
     private static final int PORT_8006 = 8006;
     private static final int PORT_8007 = 8007;
-    private static final String ALICE_EXPECTED_JSON_RESPONSE = "[ { \"timeAgo\": \" (5 minutes ago)\", \"post\": \" " + ALICE_EXAMPLE_POST + "\" }]";
     private static Clock clockStub;
     private static UserService mockUserService;
     private static TimelineService mockHTTPTimelineService;
