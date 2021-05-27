@@ -38,6 +38,8 @@ public class HTTPUserControllerShould {
     private static final int PORT_8008 = 8008;
     private static final int PORT_8009 = 8009;
     private static final int PORT_8010 = 8010;
+    private static final int PORT_8011 = 8011;
+    private static final int PORT_8012 = 8012;
     private static Clock clockStub;
     private static UserService mockUserService;
     private static TimelineService mockHTTPTimelineService;
@@ -109,6 +111,18 @@ public class HTTPUserControllerShould {
         makePostRequest(HTTP_LOCALHOST + PORT_8010 + FOLLOW_PATH + ALICE_USER_NAME, BOB_USER_NAME);
 
         verify(mockUserService).addFollowee(ALICE_USER_NAME + FOLLOW_COMMAND + BOB_USER_NAME);
+    }
+
+    @Test
+    void giveResponseNotifyingThatTheFollowedUserAHasBeenAddedToTheUserWhenAPostRequestIsReceivedAtTheFollowEndpoint() throws IOException {
+        initialiseUserControllerOn(PORT_8011);
+        setUpClockStub();
+        makePostRequest(HTTP_LOCALHOST + PORT_8011 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
+
+        initialiseUserControllerOn(PORT_8012);
+        setUpClockStub();
+
+        assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8012 + FOLLOW_PATH + ALICE_USER_NAME, BOB_USER_NAME)).isEqualTo("Added user: \"" + BOB_USER_NAME + "\" to list of followed users for user: " + ALICE_USER_NAME);
     }
 
     private void initialiseUserControllerOn(int port) throws IOException {
