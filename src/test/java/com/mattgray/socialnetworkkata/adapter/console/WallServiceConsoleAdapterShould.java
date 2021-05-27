@@ -25,7 +25,7 @@ import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
-class WallConsoleAdapterShould {
+class WallServiceConsoleAdapterShould {
 
     private static ByteArrayOutputStream byteArrayOutputStream;
     private static ClockService clockServiceMock;
@@ -36,7 +36,7 @@ class WallConsoleAdapterShould {
         byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         clockServiceMock = mock(ClockService.class);
-        wallService = new WallConsoleAdapter(clockServiceMock);
+        wallService = new WallServiceConsoleAdapter(clockServiceMock);
     }
 
     @Test

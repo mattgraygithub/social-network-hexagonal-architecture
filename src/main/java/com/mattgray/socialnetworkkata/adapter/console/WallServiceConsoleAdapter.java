@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class WallConsoleAdapter implements WallService {
+public class WallServiceConsoleAdapter implements WallService {
 
     private static final String DELIMITER_BETWEEN_USERNAME_AND_POST = " - ";
     private final ClockService clockService;
 
-    public WallConsoleAdapter(ClockService clockService) {
+    public WallServiceConsoleAdapter(ClockService clockService) {
         this.clockService = clockService;
     }
 
