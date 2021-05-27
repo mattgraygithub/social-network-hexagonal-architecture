@@ -112,6 +112,4 @@ public class HTTPUserController implements UserController {
         Scanner scanner = new Scanner(inputStream);
         return scanner.nextLine();
     }
-
-
 }
