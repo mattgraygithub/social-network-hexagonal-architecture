@@ -18,7 +18,7 @@ import static com.mattgray.socialnetworkkata.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class CommandProcessorShould {
+class ConsoleUserControllerShould {
 
     private static final Clock FIXED_CLOCK_AT_12PM = Clock.fixed(AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
     private static ByteArrayOutputStream byteArrayOutputStream;
