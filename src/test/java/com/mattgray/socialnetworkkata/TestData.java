@@ -36,6 +36,7 @@ public class TestData {
     public static final String GET_REQUEST = "GET";
     public static final String POSTS_PATH = "/posts/";
     public static final String FOLLOW_PATH = "/follow/";
+    public static final String WALL_PATH = "/wall/";
     public static final LocalDateTime AT_12PM = LocalDateTime.of(2019, 6, 21, 12, 0, 0);
     public static final LocalDateTime AT_15_SECONDS_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 59, 45);
     public static final LocalDateTime AT_5_MINUTES_BEFORE_12PM = LocalDateTime.of(2019, 6, 21, 11, 55, 0);
@@ -49,4 +50,10 @@ public class TestData {
     public static final String ALICE_EXPECTED_JSON_RESPONSE = "[{\"timeAgo\":\" (5 minutes ago)\",\"post\":\"" + ALICE_EXAMPLE_POST + "\"}]";
     public static final ArrayList<Post> BOB_EXAMPLE_POST_LIST = new ArrayList<>(Arrays.asList(new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_ONE, AT_2_MINUTES_BEFORE_12PM), new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_TWO, AT_1_MINUTE_BEFORE_12PM)));
     public static final String BOB_EXPECTED_JSON_RESPONSE = "[{\"timeAgo\":\" (1 minute ago)\",\"post\":\"" + BOB_EXAMPLE_POST_TWO + "\"},{\"timeAgo\":\" (2 minutes ago)\",\"post\":\"" + BOB_EXAMPLE_POST_ONE + "\"}]";
+    public static final String CHARLIE_WALL_EXPECTED_JSON_RESPONSE = "[" +
+                    "{\"userName\":" + CHARLIE_USER_NAME + ",\"timeAgo\":\" (15 seconds ago)\",\"post\":\"" + CHARLIE_EXAMPLE_POST + "\"}," +
+                    "{\"userName\":" + BOB_USER_NAME + ",\"timeAgo\":\" (1 minute ago)\",\"post\":\"" + BOB_EXAMPLE_POST_TWO + "\"}," +
+                    "{\"userName\":" + BOB_USER_NAME + ",\"timeAgo\":\" (2 minutes ago)\",\"post\":\"" + BOB_EXAMPLE_POST_ONE + "\"}," +
+                    "{\"userName\":" + ALICE_USER_NAME + ",\"timeAgo\":\" (5 minutes ago)\",\"post\":\"" + ALICE_EXAMPLE_POST + "\"}," +
+                    "]";
 }

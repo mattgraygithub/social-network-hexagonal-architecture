@@ -99,7 +99,6 @@ public class SocialNetworkCLIAcceptanceTest {
         assertThat(getConsoleOutput()).isEqualTo(
                 BOB_EXAMPLE_POST_TWO + minutesAgo(3) + NEW_LINE +
                         BOB_EXAMPLE_POST_ONE + hoursAgo(1) + NEW_LINE +
-
                         BOB_EXAMPLE_POST_THREE + fifteenSecondsAgo() + NEW_LINE +
                         BOB_EXAMPLE_POST_TWO + minutesAgo(5) + NEW_LINE +
                         BOB_EXAMPLE_POST_ONE + hoursAgo(2) + NEW_LINE

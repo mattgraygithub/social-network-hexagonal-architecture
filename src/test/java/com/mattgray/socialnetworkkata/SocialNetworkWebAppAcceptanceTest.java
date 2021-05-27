@@ -81,7 +81,7 @@ public class SocialNetworkWebAppAcceptanceTest {
         makeAliceAndBobPostRequests(PORT_8003);
         makePostRequestFor(CHARLIE_USER_NAME, ALICE_USER_NAME, PORT_8003, FOLLOW_PATH, AT_12PM);
         makePostRequestFor(CHARLIE_USER_NAME, BOB_USER_NAME, PORT_8003, FOLLOW_PATH, AT_12PM);
-
+        assertThat(makeGetRequestFor(CHARLIE_USER_NAME, PORT_8003, WALL_PATH, AT_12PM)).isEqualTo(CHARLIE_WALL_EXPECTED_JSON_RESPONSE);
     }
 
     private void makeAliceAndBobPostRequests(int port) throws IOException {
