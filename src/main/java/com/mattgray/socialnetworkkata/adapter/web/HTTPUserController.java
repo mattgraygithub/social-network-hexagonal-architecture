@@ -3,6 +3,7 @@ package com.mattgray.socialnetworkkata.adapter.web;
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserController;
+import com.mattgray.socialnetworkkata.port.WallService;
 import com.mattgray.socialnetworkkata.service.UserService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -19,21 +20,25 @@ public class HTTPUserController implements UserController {
 
     private static final String POST_COMMAND = " -> ";
     private static final String FOLLOW_COMMAND = " follows ";
+    private static final String READ_WALL_COMMAND = " wall ";
     private static final String POSTS_PATH = "/posts/";
     private static final String FOLLOW_PATH = "/follow/";
+    private static final String WALL_PATH = "/wall/";
     private static final String POST_REQUEST = "POST";
     private static final String GET_REQUEST = "GET";
     private static final int OK_STATUS_CODE = 200;
 
     private final UserService userService;
     private final TimelineService timelineService;
+    private final WallService wallService;
     private final int serverPort;
     private Clock clock;
     private String userName;
 
-    public HTTPUserController(UserService userService, TimelineService timelineService, int serverPort) {
+    public HTTPUserController(UserService userService, TimelineService timelineService, WallService wallService, int serverPort) {
         this.userService = userService;
         this.timelineService = timelineService;
+        this.wallService = wallService;
         this.serverPort = serverPort;
     }
 
@@ -43,6 +48,7 @@ public class HTTPUserController implements UserController {
         HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
         createContextForAddingAndReadingPosts(server);
         createContextForAddingFollowedUsers(server);
+        createContextForGettingAUsersWall(server);
         server.start();
     }
 
@@ -75,6 +81,16 @@ public class HTTPUserController implements UserController {
         );
     }
 
+    public void createContextForGettingAUsersWall(HttpServer server) {
+        server.createContext(WALL_PATH, exchange -> {
+                    this.userName = getUserNameFromURL(WALL_PATH, exchange);
+                    setResponseHeader(exchange);
+                    handleReadWallGetRequest(exchange);
+                    exchange.close();
+                }
+        );
+    }
+
     private String getUserNameFromURL(String path, HttpExchange exchange) {
         return exchange.getRequestURI().toString().substring(path.length());
     }
@@ -99,6 +115,11 @@ public class HTTPUserController implements UserController {
         String followedUser = getRequestBody(exchange);
         userService.addFollowee(userName + FOLLOW_COMMAND + followedUser);
         writeResponseBody(exchange, "Added user: \"" + followedUser + "\" to list of followed users for user: " + userName);
+    }
+
+    private void handleReadWallGetRequest(HttpExchange exchange) {
+        ((WallServiceHTTPAdapter) wallService).setExchange(exchange);
+        userService.getWall(userName + READ_WALL_COMMAND, LocalDateTime.now(clock));
     }
 
     private void writeResponseBody(HttpExchange exchange, String responseBody) throws IOException {

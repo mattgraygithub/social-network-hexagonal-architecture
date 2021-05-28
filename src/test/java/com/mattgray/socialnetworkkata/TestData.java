@@ -51,9 +51,9 @@ public class TestData {
     public static final ArrayList<Post> BOB_EXAMPLE_POST_LIST = new ArrayList<>(Arrays.asList(new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_ONE, AT_2_MINUTES_BEFORE_12PM), new Post(BOB_USER_NAME, BOB_EXAMPLE_POST_TWO, AT_1_MINUTE_BEFORE_12PM)));
     public static final String BOB_EXPECTED_JSON_RESPONSE = "[{\"timeAgo\":\" (1 minute ago)\",\"post\":\"" + BOB_EXAMPLE_POST_TWO + "\"},{\"timeAgo\":\" (2 minutes ago)\",\"post\":\"" + BOB_EXAMPLE_POST_ONE + "\"}]";
     public static final String CHARLIE_WALL_EXPECTED_JSON_RESPONSE = "[" +
-                    "{\"userName\":" + CHARLIE_USER_NAME + ",\"timeAgo\":\" (15 seconds ago)\",\"post\":\"" + CHARLIE_EXAMPLE_POST + "\"}," +
-                    "{\"userName\":" + BOB_USER_NAME + ",\"timeAgo\":\" (1 minute ago)\",\"post\":\"" + BOB_EXAMPLE_POST_TWO + "\"}," +
-                    "{\"userName\":" + BOB_USER_NAME + ",\"timeAgo\":\" (2 minutes ago)\",\"post\":\"" + BOB_EXAMPLE_POST_ONE + "\"}," +
-                    "{\"userName\":" + ALICE_USER_NAME + ",\"timeAgo\":\" (5 minutes ago)\",\"post\":\"" + ALICE_EXAMPLE_POST + "\"}," +
+                    "{\"timeAgo\":\" (15 seconds ago)\",\"post\":\"" + CHARLIE_EXAMPLE_POST + "\",\"userName\":\"" + CHARLIE_USER_NAME + "\"}," +
+                    "{\"timeAgo\":\" (1 minute ago)\",\"post\":\"" + BOB_EXAMPLE_POST_TWO + "\",\"userName\":\"" + BOB_USER_NAME + "\"}," +
+                    "{\"timeAgo\":\" (2 minutes ago)\",\"post\":\"" + BOB_EXAMPLE_POST_ONE + "\",\"userName\":\"" + BOB_USER_NAME + "\"}," +
+                    "{\"timeAgo\":\" (5 minutes ago)\",\"post\":\"" + ALICE_EXAMPLE_POST + "\",\"userName\":\"" + ALICE_USER_NAME + "\"}" +
                     "]";
 }

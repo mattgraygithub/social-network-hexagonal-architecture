@@ -1,9 +1,10 @@
 package com.mattgray.socialnetworkkata;
 
 import com.mattgray.socialnetworkkata.adapter.InMemoryUserRepository;
-import com.mattgray.socialnetworkkata.adapter.console.WallConsoleAdapter;
+import com.mattgray.socialnetworkkata.adapter.console.WallServiceConsoleAdapter;
 import com.mattgray.socialnetworkkata.adapter.web.HTTPUserController;
 import com.mattgray.socialnetworkkata.adapter.web.TimelineServiceHTTPAdapter;
+import com.mattgray.socialnetworkkata.adapter.web.WallServiceHTTPAdapter;
 import com.mattgray.socialnetworkkata.domain.User;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserRepository;
@@ -44,6 +45,7 @@ public class SocialNetworkWebAppAcceptanceTest {
     private static Clock clockStub;
     private static UserService userService;
     private static TimelineService timelineService;
+    private static WallService wallService;
 
     @BeforeEach
     void setUp() {
@@ -52,33 +54,33 @@ public class SocialNetworkWebAppAcceptanceTest {
         ArrayList<User> users = new ArrayList<>();
         UserRepository userRepository = new InMemoryUserRepository(users);
         timelineService = new TimelineServiceHTTPAdapter(clockService);
-        WallService wallService = new WallConsoleAdapter(clockService);
+        wallService = new WallServiceHTTPAdapter(clockService);
         userService = new UserService(userRepository, timelineService, wallService);
     }
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndAUsersTimelineCanBeRead() throws IOException {
-        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, PORT_8001), clockStub);
+        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, wallService, PORT_8001), clockStub);
         socialNetwork.run();
         makeAliceAndBobPostRequests(PORT_8001);
-        assertThat(makeGetRequestFor(ALICE_USER_NAME, PORT_8001, POSTS_PATH, AT_12PM)).isEqualTo(TIME_PROPERTY_NAME + FIVE_MINUTES_AGO + POST_PROPERTY_NAME + ALICE_EXAMPLE_POST);
+        assertThat(makeGetRequestFor(ALICE_USER_NAME, PORT_8001, POSTS_PATH, AT_12PM)).isEqualTo(ALICE_EXPECTED_JSON_RESPONSE);
     }
 
     @Test
     void usersCanPostMessagesToTheirTimeLinesAndADifferentUsersTimelineCanBeRead() throws IOException {
-        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, PORT_8002), clockStub);
+        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService,wallService, PORT_8002), clockStub);
         socialNetwork.run();
         makeAliceAndBobPostRequests(PORT_8002);
         assertThat(makeGetRequestFor(BOB_USER_NAME, PORT_8002, POSTS_PATH, AT_12PM)).
-                isEqualTo(TIME_PROPERTY_NAME + ONE_MINUTE_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_TWO + JSON_ENTRY_DIVIDER +
-                        TIME_PROPERTY_NAME + TWO_MINUTES_AGO + POST_PROPERTY_NAME + BOB_EXAMPLE_POST_ONE);
+                isEqualTo(BOB_EXPECTED_JSON_RESPONSE);
     }
 
     @Test
     void usersCanFollowOtherUsersAndViewAnAggregatedListOfTheirsAndTheirFollowedUsersPostsOnTheirWall() throws IOException {
-        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, PORT_8003), clockStub);
+        SocialNetwork socialNetwork = new SocialNetwork(new HTTPUserController(userService, timelineService, wallService, PORT_8003), clockStub);
         socialNetwork.run();
         makeAliceAndBobPostRequests(PORT_8003);
+        makePostRequestFor(CHARLIE_USER_NAME, CHARLIE_EXAMPLE_POST, PORT_8003, POSTS_PATH, AT_15_SECONDS_BEFORE_12PM);
         makePostRequestFor(CHARLIE_USER_NAME, ALICE_USER_NAME, PORT_8003, FOLLOW_PATH, AT_12PM);
         makePostRequestFor(CHARLIE_USER_NAME, BOB_USER_NAME, PORT_8003, FOLLOW_PATH, AT_12PM);
         assertThat(makeGetRequestFor(CHARLIE_USER_NAME, PORT_8003, WALL_PATH, AT_12PM)).isEqualTo(CHARLIE_WALL_EXPECTED_JSON_RESPONSE);
@@ -101,9 +103,7 @@ public class SocialNetworkWebAppAcceptanceTest {
 
     private String makeGetRequestFor(String userName, int port, String path, LocalDateTime timeOfConnection) throws IOException {
         HttpURLConnection connection = setUpHttpURLConnectionFor(userName, GET_REQUEST, port, path, timeOfConnection);
-        String response = getResponse(connection);
-        String trimmedResponse = response.substring(3, response.length() - 3);
-        return trimmedResponse;
+        return getResponse(connection);
     }
 
     private HttpURLConnection setUpHttpURLConnectionFor(String userName, String requestMethod, int port, String path, LocalDateTime timeOfConnection) throws IOException {

@@ -3,6 +3,7 @@ package com.mattgray.socialnetworkkata.adapter.web;
 import com.mattgray.socialnetworkkata.domain.Post;
 import com.mattgray.socialnetworkkata.port.TimelineService;
 import com.mattgray.socialnetworkkata.port.UserController;
+import com.mattgray.socialnetworkkata.port.WallService;
 import com.mattgray.socialnetworkkata.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,9 +41,12 @@ public class HTTPUserControllerShould {
     private static final int PORT_8010 = 8010;
     private static final int PORT_8011 = 8011;
     private static final int PORT_8012 = 8012;
+    private static final int PORT_8013 = 8013;
+    private static final int PORT_8014 = 8014;
     private static Clock clockStub;
     private static UserService mockUserService;
-    private static TimelineService mockHTTPTimelineService;
+    private static TimelineService mockTimelineService;
+    private static WallService mockWallService;
 
     private static Stream<Arguments> getInputsAndExpectedOutputs() {
         return Stream.of(
@@ -55,13 +59,14 @@ public class HTTPUserControllerShould {
     void setUp() {
         clockStub = mock(Clock.class);
         mockUserService = mock(UserService.class);
-        mockHTTPTimelineService = mock(TimelineServiceHTTPAdapter.class);
+        mockTimelineService = mock(TimelineServiceHTTPAdapter.class);
+        mockWallService = mock(WallService.class);
     }
 
     @Test
     void callUserServiceToAddPostWhenAPostRequestIsReceivedAtThePostsEndpoint() throws IOException {
         initialiseUserControllerOn(PORT_8004);
-        setUpClockStub();
+        setUpClockStubFor12PM();
         makePostRequest(HTTP_LOCALHOST + PORT_8004 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
 
         verify(mockUserService).addPost(ALICE_USER_NAME + POST_COMMAND + ALICE_EXAMPLE_POST, LocalDateTime.now(FIXED_CLOCK_AT_12PM));
@@ -70,7 +75,7 @@ public class HTTPUserControllerShould {
     @Test
     void giveResponseToPostRequestNotifyingUsThatThePostHasBeenAddedToTheCorrectUser() throws IOException {
         initialiseUserControllerOn(PORT_8005);
-        setUpClockStub();
+        setUpClockStubFor12PM();
 
         assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8005 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST)).isEqualTo("Added post: \"" + ALICE_EXAMPLE_POST + "\" to user: " + ALICE_USER_NAME);
     }
@@ -78,8 +83,8 @@ public class HTTPUserControllerShould {
     @Test
     void callUserServiceToGetPostWhenAGetRequestIsReceivedAtThePostsEndpoint() throws IOException {
         when(mockUserService.getPosts(ALICE_USER_NAME)).thenReturn(ALICE_EXAMPLE_POST_LIST);
-        setUpClockStub();
-        when(mockHTTPTimelineService.getTimeLine(ALICE_EXAMPLE_POST_LIST, LocalDateTime.now(clockStub))).thenReturn(
+        setUpClockStubFor12PM();
+        when(mockTimelineService.getTimeLine(ALICE_EXAMPLE_POST_LIST, LocalDateTime.now(clockStub))).thenReturn(
                 ALICE_EXPECTED_JSON_RESPONSE
         );
 
@@ -93,8 +98,8 @@ public class HTTPUserControllerShould {
     @MethodSource("getInputsAndExpectedOutputs")
     void returnPostsAsJSONForAGivenUserWhenAGetRequestIsReceivedAtThePostsEndpoint(int port, String username, ArrayList<Post> inputPostList, String expectedOutput) throws IOException {
         when(mockUserService.getPosts(username)).thenReturn(inputPostList);
-        setUpClockStub();
-        when(mockHTTPTimelineService.getTimeLine(inputPostList, LocalDateTime.now(clockStub))).thenReturn(expectedOutput);
+        setUpClockStubFor12PM();
+        when(mockTimelineService.getTimeLine(inputPostList, LocalDateTime.now(clockStub))).thenReturn(expectedOutput);
         initialiseUserControllerOn(port);
 
         assertThat(makeGetRequest(HTTP_LOCALHOST + port + POSTS_PATH + username)).isEqualTo(expectedOutput);
@@ -103,11 +108,11 @@ public class HTTPUserControllerShould {
     @Test
     void callUserServiceToAddFolloweeWhenAPostRequestIsReceivedAtTheFollowEndpoint() throws IOException {
         initialiseUserControllerOn(PORT_8009);
-        setUpClockStub();
+        setUpClockStubFor12PM();
         makePostRequest(HTTP_LOCALHOST + PORT_8009 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
 
         initialiseUserControllerOn(PORT_8010);
-        setUpClockStub();
+        setUpClockStubFor12PM();
         makePostRequest(HTTP_LOCALHOST + PORT_8010 + FOLLOW_PATH + ALICE_USER_NAME, BOB_USER_NAME);
 
         verify(mockUserService).addFollowee(ALICE_USER_NAME + FOLLOW_COMMAND + BOB_USER_NAME);
@@ -116,21 +121,34 @@ public class HTTPUserControllerShould {
     @Test
     void giveResponseNotifyingThatTheFollowedUserAHasBeenAddedToTheUserWhenAPostRequestIsReceivedAtTheFollowEndpoint() throws IOException {
         initialiseUserControllerOn(PORT_8011);
-        setUpClockStub();
+        setUpClockStubFor12PM();
         makePostRequest(HTTP_LOCALHOST + PORT_8011 + POSTS_PATH + ALICE_USER_NAME, ALICE_EXAMPLE_POST);
 
         initialiseUserControllerOn(PORT_8012);
-        setUpClockStub();
+        setUpClockStubFor12PM();
 
         assertThat(makePostRequest(HTTP_LOCALHOST + PORT_8012 + FOLLOW_PATH + ALICE_USER_NAME, BOB_USER_NAME)).isEqualTo("Added user: \"" + BOB_USER_NAME + "\" to list of followed users for user: " + ALICE_USER_NAME);
     }
 
+    @Test
+    void callUserServiceToGetAUsersWallWhenAGetRequestIsReceivedAtTheWallEndpoint() throws IOException {
+        initialiseUserControllerOn(PORT_8013);
+        setUpClockStubFor12PM();
+        makePostRequest(HTTP_LOCALHOST + PORT_8013 + POSTS_PATH + CHARLIE_USER_NAME, CHARLIE_EXAMPLE_POST);
+
+        initialiseUserControllerOn(PORT_8014);
+        setUpClockStubFor12PM();
+        makeGetRequest(HTTP_LOCALHOST + PORT_8014 + WALL_PATH + CHARLIE_USER_NAME);
+
+        verify(mockUserService).getWall(CHARLIE_USER_NAME + READ_WALL_COMMAND, AT_12PM);
+    }
+
     private void initialiseUserControllerOn(int port) throws IOException {
-        UserController userController = new HTTPUserController(mockUserService, mockHTTPTimelineService, port);
+        UserController userController = new HTTPUserController(mockUserService, mockTimelineService, mockWallService, port);
         userController.process(clockStub);
     }
 
-    private void setUpClockStub() {
+    private void setUpClockStubFor12PM() {
         Clock fixedClock = Clock.fixed(com.mattgray.socialnetworkkata.TestData.AT_12PM.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         when(clockStub.instant()).thenReturn(fixedClock.instant());
         when(clockStub.getZone()).thenReturn(fixedClock.getZone());
